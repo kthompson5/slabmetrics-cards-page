@@ -53,16 +53,34 @@ img{max-width:100%;height:auto;display:block}
 .hint{text-align:center;color:var(--gray-500);font-size:.9rem;margin-top:8px}
 
 .overall{display:grid;place-items:center}
-.circle{
+
+/* Animateable custom property for the conic-gradient */
+@property --angle {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
+}
+
+.circle {
   --angle: 0%;
-  width:120px;height:120px;border-radius:50%;
+  width:120px;
+  height:120px;
+  border-radius:50%;
   background: conic-gradient(var(--green) var(--angle), var(--gray-200) 0);
-  display:grid;place-items:center;
+  display:grid;
+  place-items:center;
+  transition: --angle 0.9s cubic-bezier(.2,.7,.2,1);
 }
 .circle-inner{
-  width:86px;height:86px;border-radius:50%;background:var(--white);
-  display:grid;place-items:center;
-  font-size:1.6rem;font-weight:800;color:var(--black);
+  width:86px;
+  height:86px;
+  border-radius:50%;
+  background:var(--white);
+  display:grid;
+  place-items:center;
+  font-size:1.6rem;
+  font-weight:800;
+  color:var(--black);
   border:2px solid var(--gray-200);
 }
 .circle-label{text-align:center;margin-top:8px;font-weight:700}
