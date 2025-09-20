@@ -232,7 +232,8 @@ function animateCircleAngle(el, targetPct, duration = 900){
                 // animate from 0% → target
 circ.style.setProperty('--angle', '0%');
 requestAnimationFrame(() => {
-  circ.style.setProperty('--angle', angle + '%');
+// NEW (animate only the green fill to its target %):
+animateCircleAngle(circ, angle, 900);
 });
               }
             }
