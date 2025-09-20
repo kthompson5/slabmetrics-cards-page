@@ -21,7 +21,7 @@ img{max-width:100%;height:auto;display:block}
 .container{max-width:var(--container);margin:0 auto;padding:0 var(--pad)}
 .site-header{border-bottom:1px solid var(--gray-200);background:var(--white)}
 .brand{display:flex;gap:10px;align-items:center;text-decoration:none;color:inherit;font-weight:700}
-.logo{height:32px;width:auto}
+.logo{height:80px;width:auto}
 
 .hero{padding:28px 0;border-bottom:1px solid var(--gray-200);background:linear-gradient(0deg,var(--white),var(--gray-50))}
 .hero-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
