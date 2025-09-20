@@ -206,7 +206,11 @@
               const circ = box?.querySelector?.('.circle');
               if (!reduce && box && circ) {
                 const angle = Number(box.dataset.angle || 0);
-                circ.style.setProperty('--angle', angle + '%');
+                // animate from 0% → target
+circ.style.setProperty('--angle', '0%');
+requestAnimationFrame(() => {
+  circ.style.setProperty('--angle', angle + '%');
+});
               }
             }
           });
