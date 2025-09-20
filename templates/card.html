@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>{{player}} — {{set}} {{number}}</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="/index.html" class="brand">
+        <img src="/logo.png" alt="SlabMetrics" class="logo" />
+        <span>SlabMetrics</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero reveal">
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <h1 class="tight">
+          <span class="dim">{{player}}</span>
+          <span class="slash">—</span>
+          {{set}} <span class="no-wrap">{{number}}</span>
+        </h1>
+        <p class="meta">
+          <strong>Serial:</strong> {{serial}}
+          <span class="dot">•</span>
+          <strong>Graded:</strong> {{graded_at}}
+          <span class="dot">•</span>
+          <strong>Team:</strong> {{team}}
+        </p>
+        <div class="cta">
+          <a class="btn btn-green" href="{{ebay}}" target="_blank" rel="noopener">View eBay Comps</a>
+          <a class="btn" href="{{front_img}}" download>Download Front (JPG)</a>
+          <a class="btn" href="{{back_img}}" download>Download Back (JPG)</a>
+        </div>
+      </div>
+
+      <!-- Overall Circle -->
+      <div class="overall reveal" data-circle data-angle="{{overall_pct}}">
+        <div class="circle"><div class="circle-inner">{{overall_grade}}</div></div>
+        <div class="circle-label">Overall</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Flip Viewer -->
+  <section class="viewer reveal">
+    <div class="container">
+      <div class="flip-wrap" data-cardflip title="Click or tap to flip (←/→ also)">
+        <img class="flip-img front" src="{{front_img}}" alt="{{player}} front" loading="lazy" />
+        <img class="flip-img back"  src="{{back_img}}"  alt="{{player}} back"  loading="lazy" />
+      </div>
+      <p class="hint">Tip: tap/click to flip • ← / → keys work too</p>
+    </div>
+  </section>
+
+  <!-- Front Subgrades -->
+  <section class="grades reveal">
+    <div class="container grid-2">
+      <div>
+        <h2>Front Subgrades</h2>
+        <div class="g">
+          <div class="label">Surface</div>
+          <div class="bar"><span style="--pct: {{f_surface_pct}}%"></span></div>
+          <div class="value">{{f_surface}}</div>
+        </div>
+        <div class="g">
+          <div class="label">Centering</div>
+          <div class="bar"><span style="--pct: {{f_centering_pct}}%"></span></div>
+          <div class="value">{{f_centering}}</div>
+        </div>
+        <div class="g">
+          <div class="label">Corners (avg)</div>
+          <div class="bar"><span style="--pct: {{f_corners_pct}}%"></span></div>
+          <div class="value">{{f_corners_avg}}</div>
+        </div>
+        <div class="g">
+          <div class="label">Edges (avg)</div>
+          <div class="bar"><span style="--pct: {{f_edges_pct}}%"></span></div>
+          <div class="value">{{f_edges_avg}}</div>
+        </div>
+        <div class="remarks">
+          <div><strong>Surface:</strong> {{f_remarks_surface}}</div>
+          <div><strong>Centering:</strong> {{f_remarks_centering}}</div>
+          <div><strong>Corners:</strong> {{f_remarks_corners}}</div>
+          <div><strong>Edges:</strong> {{f_remarks_edges}}</div>
+        </div>
+      </div>
+
+      <!-- Back Subgrades -->
+      <div>
+        <h2>Back Subgrades</h2>
+        <div class="g">
+          <div class="label">Surface</div>
+          <div class="bar"><span style="--pct: {{b_surface_pct}}%"></span></div>
+          <div class="value">{{b_surface}}</div>
+        </div>
+        <div class="g">
+          <div class="label">Centering</div>
+          <div class="bar"><span style="--pct: {{b_centering_pct}}%"></span></div>
+          <div class="value">{{b_centering}}</div>
+        </div>
+        <div class="g">
+          <div class="label">Corners (avg)</div>
+          <div class="bar"><span style="--pct: {{b_corners_pct}}%"></span></div>
+          <div class="value">{{b_corners_avg}}</div>
+        </div>
+        <div class="g">
+          <div class="label">Edges (avg)</div>
+          <div class="bar"><span style="--pct: {{b_edges_pct}}%"></span></div>
+          <div class="value">{{b_edges_avg}}</div>
+        </div>
+        <div class="remarks">
+          <div><strong>Surface:</strong> {{b_remarks_surface}}</div>
+          <div><strong>Centering:</strong> {{b_remarks_centering}}</div>
+          <div><strong>Corners:</strong> {{b_remarks_corners}}</div>
+          <div><strong>Edges:</strong> {{b_remarks_edges}}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison Chart -->
+  <section class="compare reveal">
+    <div class="container">
+      <h2>How This Grade Compares</h2>
+      <div id="compare-chart" class="bars"></div>
+      <p class="fine">Distribution across recent slabs (by overall grade range).</p>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <a class="btn" href="/index.html">← Back to All Cards</a>
+    </div>
+  </footer>
+
+  <script>
+    // Flip behavior
+    (function(){
+      const root = document.querySelector('[data-cardflip]');
+      if (!root) return;
+      let flipped = false, startX = null;
+      function setFlipped(v){ flipped=v; root.classList.toggle('flipped', flipped); }
+      root.addEventListener('click', () => setFlipped(!flipped));
+      root.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, {passive:true});
+      root.addEventListener('touchend', e => {
+        if (startX==null) return;
+        const dx = e.changedTouches[0].clientX - startX;
+        if (Math.abs(dx) > 40) setFlipped(dx < 0);
+        startX = null;
+      }, {passive:true});
+      root.tabIndex = 0;
+      root.addEventListener('keydown', (e) => {
+        if (e.key==='Enter'||e.key===' ') { e.preventDefault(); setFlipped(!flipped); }
+        if (e.key==='ArrowLeft') setFlipped(true);
+        if (e.key==='ArrowRight') setFlipped(false);
+      });
+    })();
+
+    // Reveal + animations (bars + circle)
+    (function(){
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const reveals = document.querySelectorAll('.reveal');
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible');
+            if (!reduce && e.target.querySelector?.('[data-circle]')) {
+              const c = e.target.querySelector('[data-circle]');
+              const angle = Number(c?.dataset?.angle || 0);
+              c.style.setProperty('--angle', angle + '%');
+            }
+          }
+        });
+      }, { threshold: 0.2 });
+      reveals.forEach(el => io.observe(el));
+
+      document.querySelectorAll('.bar > span').forEach(s => {
+        const pct = s.getAttribute('style')?.match(/--pct:\s*([\d.]+)%/);
+        s.style.width = reduce ? (pct ? pct[1] + '%' : '0%') : '0%';
+        requestAnimationFrame(() => {
+          if (pct && !reduce) s.style.width = pct[1] + '%';
+        });
+      });
+    })();
+
+    // Overall circle % (set from data-angle on parent [data-circle])
+    (function(){
+      const c = document.querySelector('[data-circle]');
+      if (!c) return;
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const pct = Number(c.dataset.angle || 0);
+      if (reduce) c.style.setProperty('--angle', pct + '%');
+    })();
+
+    // Comparison chart
+    (function(){
+      const data = JSON.parse('{{compare_json}}' || '{}');
+      const el = document.getElementById('compare-chart');
+      if (!el || !Object.keys(data).length) {
+        const section = el ? el.closest('section') : null;
+        if (section) section.style.display = 'none';
+        return;
+      }
+      const max = Math.max(...Object.values(data));
+      el.innerHTML = Object.entries(data).map(([label, val]) => {
+        const h = max ? Math.round((val / max) * 100) : 0;
+        return \`
+          <div class="barv" style="--h: \${h}%">
+            <div class="barv-fill"></div>
+            <div class="barv-count">\${val}</div>
+            <div class="barv-label">\${label}</div>
+          </div>\`;
+      }).join('');
+      requestAnimationFrame(() => {
+        el.classList.add('animate');
+      });
+    })();
+  </script>
+</body>
+</html>
