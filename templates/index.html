@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>SlabMetrics Cards</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="/index.html" class="brand">
+        <img src="/logo.png" alt="SlabMetrics" class="logo" />
+        <span>SlabMetrics</span>
+      </a>
+    </div>
+  </header>
+
+  <section class="hero hero-index reveal">
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <h1 class="tight">Graded Card Showcase</h1>
+        <p class="meta">Browse {{count}} slabs • Tap to flip • Built for mobile and desktop</p>
+        <div class="search-wrap">
+          <input id="q" type="search" placeholder="Search player, set, team, #, variant…" aria-label="Search cards" />
+        </div>
+      </div>
+      <div class="overall reveal" data-circle data-angle="100">
+        <div class="circle"><div class="circle-inner">10.0</div></div>
+        <div class="circle-label">Minty</div>
+      </div>
+    </div>
+  </section>
+
+  <main class="container grid-tiles">
+    {{cards}}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span class="fine">SlabMetrics • Built for clarity & fun</span>
+    </div>
+  </footer>
+
+  <script>
+    // Reveal animations
+    (function(){
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const reveals = document.querySelectorAll('.reveal, .tile');
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) e.target.classList.add('is-visible');
+        });
+      }, { threshold: 0.15 });
+      reveals.forEach(el => io.observe(el));
+      if (reduce) document.querySelectorAll('[data-circle]').forEach(c => c.style.setProperty('--angle','100%'));
+      else requestAnimationFrame(()=>document.querySelectorAll('[data-circle]').forEach(c=>c.style.setProperty('--angle','100%')));
+    })();
+
+    // Search filter
+    (function(){
+      const q = document.getElementById('q');
+      const tiles = Array.from(document.querySelectorAll('.tile'));
+      const norm = (s)=> (s||'').toLowerCase();
+      const matches = (t, term) => {
+        if (!term) return true;
+        const fields = ['player','set','number','variant','serial'];
+        return fields.some(f => norm(t.dataset[f]).includes(term));
+      };
+      q.addEventListener('input', () => {
+        const term = norm(q.value);
+        tiles.forEach(t => { t.style.display = matches(t, term) ? '' : 'none'; });
+      });
+    })();
+  </script>
+</body>
+</html>
