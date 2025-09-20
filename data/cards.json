@@ -1,0 +1,45 @@
+[
+  {
+    "id": "xyz789",
+    "serial": "SM-2025-000124",
+    "player": "Shohei Ohtani",
+    "set": "2021 Topps Chrome",
+    "number": "#150",
+    "variant": "Refractor",
+    "images": {
+      "front": "/cards/xyz789-front.jpg",
+      "back": "/cards/xyz789-back.jpg"
+    },
+    "graded_at": "2025-09-17",
+    "weights": { "front": 0.8, "back": 0.2 },
+    "subgrades": {
+      "front": {
+        "surface": 9.5,
+        "centering": 9.0,
+        "corners": { "tl": 9.0, "tr": 9.5, "bl": 9.0, "br": 9.5 },
+        "edges":   { "top": 9.0, "right": 9.0, "bottom": 9.5, "left": 9.0 },
+        "remarks": {
+          "surface": "Very clean gloss, no roller lines.",
+          "centering": "Slightly left/right.",
+          "corners": "Minor factory softness top-left.",
+          "edges": "Tiny roughness along bottom."
+        }
+      },
+      "back": {
+        "surface": 9.0,
+        "centering": 9.0,
+        "corners": { "tl": 9.0, "tr": 9.0, "bl": 9.0, "br": 9.0 },
+        "edges":   { "top": 9.0, "right": 9.0, "bottom": 9.0, "left": 9.0 },
+        "remarks": {
+          "surface": "Small print speck near stat box.",
+          "centering": "",
+          "corners": "",
+          "edges": ""
+        }
+      }
+    },
+    "card_info": { "sport": "Baseball", "team": "Los Angeles Dodgers" },
+    "links": { "ebay_comps": "https://www.ebay.com/sch/i.html?_nkw=shohei+ohtani+2021+topps+chrome+refractor" },
+    "compare": { "distribution": { "9.0–9.4": 12, "9.5–9.9": 5, "10.0": 1 } }
+  }
+]
