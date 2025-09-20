@@ -166,10 +166,10 @@
   </footer>
 
 <script>
-// Smoothly animate the CSS variable --angle from current -> target (%)
+// ----- Helper: animate conic fill (--angle) smoothly everywhere -----
 function animateCircleAngle(el, targetPct, duration = 900){
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!el) return;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const startPct = parseFloat(getComputedStyle(el).getPropertyValue('--angle')) || 0;
   const endPct = Math.max(0, Math.min(100, targetPct));
   if (reduce) { el.style.setProperty('--angle', endPct + '%'); return; }
@@ -186,103 +186,100 @@ function animateCircleAngle(el, targetPct, duration = 900){
   }
   requestAnimationFrame(frame);
 }
+
+// ----- Flip behavior -----
+(function(){
+  const root = document.querySelector('[data-cardflip]');
+  if (!root) return;
+  let flipped = false, startX = null;
+  function setFlipped(v){ flipped=v; root.classList.toggle('flipped', flipped); }
+  root.addEventListener('click', () => setFlipped(!flipped));
+  root.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, {passive:true});
+  root.addEventListener('touchend', e => {
+    if (startX==null) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 40) setFlipped(dx < 0);
+    startX = null;
+  }, {passive:true});
+  root.tabIndex = 0;
+  root.addEventListener('keydown', (e) => {
+    if (e.key==='Enter'||e.key===' ') { e.preventDefault(); setFlipped(!flipped); }
+    if (e.key==='ArrowLeft') setFlipped(true);
+    if (e.key==='ArrowRight') setFlipped(false);
+  });
+})();
+
+// ----- Reveal + animations (bars + circle) with safe fallback -----
+(function(){
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reveals = document.querySelectorAll('.reveal');
+
+  // If IntersectionObserver isn't available, just show everything.
+  if (!('IntersectionObserver' in window)) {
+    reveals.forEach(el => el.classList.add('is-visible'));
+  } else {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+
+        e.target.classList.add('is-visible');
+
+        // Animate the overall circle (only the green fill)
+        const box = e.target.querySelector?.('[data-circle]');
+        const circ = box?.querySelector?.('.circle');
+        if (!reduce && box && circ) {
+          // Accept either 0–1 (e.g., 0.92) or 0–100 (e.g., 92)
+          const raw = Number(box.dataset.angle || 0);
+          const angle = raw <= 1 ? raw * 100 : raw;
+          animateCircleAngle(circ, angle, 900);
+        }
+      });
+    }, { threshold: 0.2 });
+    reveals.forEach(el => io.observe(el));
+  }
+
+  // Animate grade bars
+  document.querySelectorAll('.bar > span').forEach(s => {
+    const m = (s.getAttribute('style') || '').match(/--pct:\s*([\d.]+)%/);
+    const pct = m ? m[1] : '0';
+    s.style.width = reduce ? pct + '%' : '0%';
+    if (!reduce) requestAnimationFrame(() => { s.style.width = pct + '%'; });
+  });
+})();
+
+// ----- Overall circle % (ensure it sets even if reduced motion) -----
+(function(){
+  const box = document.querySelector('[data-circle]');
+  const circ = box?.querySelector?.('.circle');
+  if (!box || !circ) return;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const raw = Number(box.dataset.angle || 0);
+  const pct = raw <= 1 ? raw * 100 : raw;  // normalize 0–1 → 0–100
+  if (reduce) circ.style.setProperty('--angle', pct + '%');
+})();
+
+// ----- Comparison chart (tolerant JSON parse) -----
+(function(){
+  let data = {};
+  try { data = JSON.parse('{{compare_json}}' || '{}'); } catch(e) { data = {}; }
+  const el = document.getElementById('compare-chart');
+  if (!el || !Object.keys(data).length) {
+    const section = el ? el.closest('section') : null;
+    if (section) section.style.display = 'none';
+    return;
+  }
+  const max = Math.max(...Object.values(data));
+  el.innerHTML = Object.entries(data).map(([label, val]) => {
+    const h = max ? Math.round((val / max) * 100) : 0;
+    return `
+      <div class="barv" style="--h: ${h}%">
+        <div class="barv-fill"></div>
+        <div class="barv-count">${val}</div>
+        <div class="barv-label">${label}</div>
+      </div>`;
+  }).join('');
+  requestAnimationFrame(() => { el.classList.add('animate'); });
+})();
 </script>
-
-  <script>
-    // Flip behavior
-    (function(){
-      const root = document.querySelector('[data-cardflip]');
-      if (!root) return;
-      let flipped = false, startX = null;
-      function setFlipped(v){ flipped=v; root.classList.toggle('flipped', flipped); }
-      root.addEventListener('click', () => setFlipped(!flipped));
-      root.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, {passive:true});
-      root.addEventListener('touchend', e => {
-        if (startX==null) return;
-        const dx = e.changedTouches[0].clientX - startX;
-        if (Math.abs(dx) > 40) setFlipped(dx < 0);
-        startX = null;
-      }, {passive:true});
-      root.tabIndex = 0;
-      root.addEventListener('keydown', (e) => {
-        if (e.key==='Enter'||e.key===' ') { e.preventDefault(); setFlipped(!flipped); }
-        if (e.key==='ArrowLeft') setFlipped(true);
-        if (e.key==='ArrowRight') setFlipped(false);
-      });
-    })();
-
-    // Reveal + animations (bars + circle) with safe fallback
-    (function(){
-      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const reveals = document.querySelectorAll('.reveal');
-
-      // If IntersectionObserver isn't available, just show everything.
-      if (!('IntersectionObserver' in window)) {
-        reveals.forEach(el => el.classList.add('is-visible'));
-      } else {
-        const io = new IntersectionObserver((entries) => {
-          entries.forEach((e) => {
-            if (e.isIntersecting) {
-              e.target.classList.add('is-visible');
-              // trigger circle inside this section
-              const box = e.target.querySelector?.('[data-circle]');
-              const circ = box?.querySelector?.('.circle');
-              if (!reduce && box && circ) {
-                const angle = Number(box.dataset.angle || 0);
-                // animate from 0% → target
-circ.style.setProperty('--angle', '0%');
-requestAnimationFrame(() => {
-// NEW (animate only the green fill to its target %):
-animateCircleAngle(circ, angle, 900);
-});
-              }
-            }
-          });
-        }, { threshold: 0.2 });
-        reveals.forEach(el => io.observe(el));
-      }
-
-      // Animate grade bars
-      document.querySelectorAll('.bar > span').forEach(s => {
-        const m = (s.getAttribute('style') || '').match(/--pct:\s*([\d.]+)%/);
-        const pct = m ? m[1] : '0';
-        s.style.width = reduce ? pct + '%' : '0%';
-        if (!reduce) requestAnimationFrame(() => { s.style.width = pct + '%'; });
-      });
-    })();
-
-    // Overall circle % (ensure it sets even if reduced motion)
-    (function(){
-      const box = document.querySelector('[data-circle]');
-      const circ = box?.querySelector?.('.circle');
-      if (!box || !circ) return;
-      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const pct = Number(box.dataset.angle || 0);
-      if (reduce) circ.style.setProperty('--angle', pct + '%');
-    })();
-
-    // Comparison chart (tolerant JSON parse)
-    (function(){
-      let data = {};
-      try { data = JSON.parse('{{compare_json}}' || '{}'); } catch(e) { data = {}; }
-      const el = document.getElementById('compare-chart');
-      if (!el || !Object.keys(data).length) {
-        const section = el ? el.closest('section') : null;
-        if (section) section.style.display = 'none';
-        return;
-      }
-      const max = Math.max(...Object.values(data));
-      el.innerHTML = Object.entries(data).map(([label, val]) => {
-        const h = max ? Math.round((val / max) * 100) : 0;
-        return `
-          <div class="barv" style="--h: ${h}%">
-            <div class="barv-fill"></div>
-            <div class="barv-count">${val}</div>
-            <div class="barv-label">${label}</div>
-          </div>`;
-      }).join('');
-      requestAnimationFrame(() => { el.classList.add('animate'); });
-    })();
-  </script>
 </body>
 </html>
