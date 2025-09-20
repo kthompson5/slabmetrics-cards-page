@@ -36,39 +36,44 @@
     </div>
   </header>
 
-  <!-- HERO (pre-visible so it never looks blank) -->
-  <section class="hero reveal is-visible">
-    <div class="container hero-inner">
-      <div class="hero-text">
-        <h1 class="tight">
-          <span class="dim">{{player}}</span>
-          <span class="slash">—</span>
-          {{set}} <span class="no-wrap">{{number}}</span>
-        </h1>
-        <p class="meta">
-          <strong>Serial:</strong> {{serial}}
-          <span class="dot">•</span>
-          <strong>Graded:</strong> {{graded_at}}
-          <span class="dot">•</span>
-          <strong>Team:</strong> {{team}}
-        </p>
-        <div class="cta">
-          <a class="btn btn-green" href="{{ebay}}" target="_blank" rel="noopener">View eBay Comps</a>
-          <a class="btn" href="{{front_img}}" download="{{id}}-front.jpg">Download Front (JPG)</a>
-          <a class="btn" href="{{back_img}}"  download="{{id}}-back.jpg">Download Back (JPG)</a>
-        </div>
+  <!-- HERO -->
+<section class="hero reveal is-visible">
+  <div class="container hero-inner">
+
+    <!-- Title + meta stay as-is -->
+    <div class="hero-head">
+      <h1 class="tight">
+        <span class="dim">{{player}}</span>
+        <span class="slash">—</span>
+        {{set}} <span class="no-wrap">{{number}}</span>
+      </h1>
+      <p class="meta">
+        <strong>Serial:</strong> {{serial}}
+        <span class="dot">•</span>
+        <strong>Graded:</strong> {{graded_at}}
+        <span class="dot">•</span>
+        <strong>Team:</strong> {{team}}
+      </p>
+    </div>
+
+    <!-- NEW: Actions row = buttons (left) + overall circle (right) -->
+    <div class="hero-actions">
+      <div class="cta">
+        <a class="btn btn-green" href="{{ebay}}" target="_blank" rel="noopener">View eBay Comps</a>
+        <a class="btn" href="{{front_img}}" download="{{id}}-front.jpg">Download Front (JPG)</a>
+        <a class="btn" href="{{back_img}}"  download="{{id}}-back.jpg">Download Back (JPG)</a>
       </div>
 
-      <!-- Overall Circle -->
-      <div class="overall reveal" data-circle data-angle="{{overall_pct}}">
-        <!-- set --angle inline so it always renders -->
-        <div class="circle" style="--angle: {{overall_pct}}%">
+      <div class="overall" data-circle data-angle="{{overall_pct}}">
+        <div class="circle" style="--angle: 0%">
           <div class="circle-inner">{{overall_grade}}</div>
         </div>
         <div class="circle-label">Overall</div>
       </div>
     </div>
-  </section>
+
+  </div>
+</section>
 
   <!-- Flip Viewer -->
   <section class="viewer reveal">
