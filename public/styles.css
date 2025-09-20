@@ -24,11 +24,36 @@ img{max-width:100%;height:auto;display:block}
 .logo{height:80px;width:auto}
 
 .hero{padding:28px 0;border-bottom:1px solid var(--gray-200);background:linear-gradient(0deg,var(--white),var(--gray-50))}
-.hero-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.hero-inner{display:grid;grid-template-columns:1fr;gap:16px}
 .hero .tight{margin:0;font-size:clamp(1.3rem,3.2vw,2rem)}
 .hero .meta{color:var(--gray-500);margin:8px 0}
-.hero .cta{display:flex;gap:10px;flex-wrap:wrap}
-.hero .btn{margin-top:6px}
+
+/* Actions row: buttons on left, circle on right */
+.hero-actions{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:16px;
+  align-items:center;
+}
+@media(min-width:860px){
+  .hero-actions{
+    grid-template-columns:1fr auto;
+    gap:24px;
+  }
+}
+
+/* Uniform buttons */
+.hero .cta{
+  display:grid;
+  gap:10px;
+  grid-auto-rows:44px;
+  align-content:start;
+  max-width:420px;
+}
+.hero .btn{
+  width:100%;
+  justify-content:center;
+}
 
 .hero-index .search-wrap{margin-top:12px}
 #q{width:min(520px,100%);padding:12px 14px;border:1px solid var(--gray-200);border-radius:10px;outline:none}
@@ -173,7 +198,6 @@ img{max-width:100%;height:auto;display:block}
 
 /* --- Re-layout legacy .g rows (no HTML changes needed) --- */
 .grades .g {
-  /* override the old 3-column grid */
   display: grid !important;
   grid-template-columns: 1fr auto;
   grid-template-rows: auto auto;
@@ -184,10 +208,8 @@ img{max-width:100%;height:auto;display:block}
   gap: 6px 12px;
   margin: 12px 0;
 }
-
 .grades .g .label { grid-area: label; font-weight: 700; }
 .grades .g .value { grid-area: value; font-weight: 700; text-align: right; }
-
 .grades .g .bar {
   grid-area: bar;
   width: 100%;
@@ -196,7 +218,6 @@ img{max-width:100%;height:auto;display:block}
   border-radius: 999px;
   overflow: hidden;
 }
-
 .grades .g .bar > span {
   display: block;
   height: 100%;
