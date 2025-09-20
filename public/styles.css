@@ -99,8 +99,20 @@ img{max-width:100%;height:auto;display:block}
 .site-footer{border-top:1px solid var(--gray-200);padding:18px 0;margin-top:14px;background:var(--white)}
 .fine{color:var(--gray-500);font-size:.9rem}
 
-.reveal{opacity:0;transform:translateY(10px);transition:opacity var(--fade) ease, transform var(--fade) ease}
-.reveal.is-visible{opacity:1;transform:none}
+/* Default: visible (so pages never look blank if JS fails) */
+.reveal { opacity: 1; transform: none; }
+
+/* When JS is active, add animations */
+.js .reveal { 
+  opacity: 0; 
+  transform: translateY(10px); 
+  transition: opacity var(--fade) ease, transform var(--fade) ease; 
+}
+.js .reveal.is-visible { opacity: 1; transform: none; }
+
+/* Tiles too (optional but nice) */
+.js .tile { opacity: 0; transform: translateY(8px); transition: opacity var(--fade) ease, transform var(--fade) ease; }
+.js .tile.is-visible { opacity: 1; transform: none; }
 
 @media (prefers-reduced-motion: reduce){
   .reveal,.tile{opacity:1;transform:none;transition:none}
