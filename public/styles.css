@@ -71,8 +71,13 @@ img{max-width:100%;height:auto;display:block}
 .grid-2{display:grid;grid-template-columns:1fr;gap:20px}
 @media(min-width:860px){.grid-2{grid-template-columns:1fr 1fr}}
 
-.g{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;margin:10px 0}
-.g .label{font-weight:700}
+/* Subgrade rows: label/value above, bar full width below */
+.g{margin:12px 0}
+.g-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.g-head .label{font-weight:700}
+.g-head .value{font-weight:700}
+
+/* keep your existing .bar styles, but ensure width is 100% */
 .bar{height:10px;background:var(--gray-200);border-radius:999px;overflow:hidden}
 .bar>span{display:block;height:100%;width:0;background:var(--green);transition:width .6s ease}
 
