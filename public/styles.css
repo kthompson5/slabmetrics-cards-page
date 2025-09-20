@@ -72,14 +72,19 @@ img{max-width:100%;height:auto;display:block}
 @media(min-width:860px){.grid-2{grid-template-columns:1fr 1fr}}
 
 /* Subgrade rows: label/value above, bar full width below */
-.g{margin:12px 0}
-.g-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
-.g-head .label{font-weight:700}
-.g-head .value{font-weight:700}
+.g { margin: 12px 0; }
+.g-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+.g-head .label { font-weight: 700; }
+.g-head .value { font-weight: 700; min-width: 2ch; text-align: right; }
 
-/* keep your existing .bar styles, but ensure width is 100% */
-.bar{height:10px;background:var(--gray-200);border-radius:999px;overflow:hidden}
-.bar>span{display:block;height:100%;width:0;background:var(--green);transition:width .6s ease}
+/* Full-width bar */
+.bar { height: 10px; background: var(--gray-200); border-radius: 999px; overflow: hidden; width: 100%; }
+.bar > span { display: block; height: 100%; width: 0; background: var(--green); transition: width .6s ease; }
 
 .remarks{margin-top:10px;padding:10px;border:1px solid var(--gray-200);border-radius:var(--radius);background:var(--gray-50);font-size:.95rem}
 .remarks div{margin:4px 0}
