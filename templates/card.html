@@ -42,12 +42,13 @@
       </div>
 
       <!-- Overall Circle -->
-      <div class="overall reveal" data-circle data-angle="{{overall_pct}}">
-        <div class="circle"><div class="circle-inner">{{overall_grade}}</div></div>
-        <div class="circle-label">Overall</div>
-      </div>
-    </div>
-  </section>
+<div class="overall reveal" data-circle data-angle="{{overall_pct}}">
+  <!-- set --angle inline so it always renders -->
+  <div class="circle" style="--angle: {{overall_pct}}%">
+    <div class="circle-inner">{{overall_grade}}</div>
+  </div>
+  <div class="circle-label">Overall</div>
+</div>
 
   <!-- Flip Viewer -->
   <section class="viewer reveal">
