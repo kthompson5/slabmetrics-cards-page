@@ -144,3 +144,45 @@ img{max-width:100%;height:auto;display:block}
   .bar>span,.barv-fill{transition:none}
   .circle{background: conic-gradient(var(--green) var(--angle), var(--gray-200) 0)}
 }
+
+/* --- Subgrade heading stays on its own line --- */
+.grades h2 {
+  display: block;
+  width: 100%;
+  margin: 0 0 10px;
+  line-height: 1.2;
+}
+
+/* --- Re-layout legacy .g rows (no HTML changes needed) --- */
+.grades .g {
+  /* override the old 3-column grid */
+  display: grid !important;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "label value"
+    "bar bar";
+  align-items: center;
+  gap: 6px 12px;
+  margin: 12px 0;
+}
+
+.grades .g .label { grid-area: label; font-weight: 700; }
+.grades .g .value { grid-area: value; font-weight: 700; text-align: right; }
+
+.grades .g .bar {
+  grid-area: bar;
+  width: 100%;
+  height: 10px;
+  background: var(--gray-200);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.grades .g .bar > span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--green);
+  transition: width .6s ease;
+}
