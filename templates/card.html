@@ -60,71 +60,63 @@
     </div>
   </section>
 
-  <!-- Front Subgrades -->
-  <section class="grades reveal">
-    <div class="container grid-2">
-      <div>
-        <h2>Front Subgrades</h2>
-        <div class="g">
-          <div class="label">Surface</div>
-          <div class="bar"><span style="--pct: {{f_surface_pct}}%"></span></div>
-          <div class="value">{{f_surface}}</div>
-        </div>
-        <div class="g">
-          <div class="label">Centering</div>
-          <div class="bar"><span style="--pct: {{f_centering_pct}}%"></span></div>
-          <div class="value">{{f_centering}}</div>
-        </div>
-        <div class="g">
-          <div class="label">Corners (avg)</div>
-          <div class="bar"><span style="--pct: {{f_corners_pct}}%"></span></div>
-          <div class="value">{{f_corners_avg}}</div>
-        </div>
-        <div class="g">
-          <div class="label">Edges (avg)</div>
-          <div class="bar"><span style="--pct: {{f_edges_pct}}%"></span></div>
-          <div class="value">{{f_edges_avg}}</div>
-        </div>
-        <div class="remarks">
-          <div><strong>Surface:</strong> {{f_remarks_surface}}</div>
-          <div><strong>Centering:</strong> {{f_remarks_centering}}</div>
-          <div><strong>Corners:</strong> {{f_remarks_corners}}</div>
-          <div><strong>Edges:</strong> {{f_remarks_edges}}</div>
-        </div>
-      </div>
+  <h2>Front Subgrades</h2>
 
-      <!-- Back Subgrades -->
-      <div>
-        <h2>Back Subgrades</h2>
-        <div class="g">
-          <div class="label">Surface</div>
-          <div class="bar"><span style="--pct: {{b_surface_pct}}%"></span></div>
-          <div class="value">{{b_surface}}</div>
-        </div>
-        <div class="g">
-          <div class="label">Centering</div>
-          <div class="bar"><span style="--pct: {{b_centering_pct}}%"></span></div>
-          <div class="value">{{b_centering}}</div>
-        </div>
-        <div class="g">
-          <div class="label">Corners (avg)</div>
-          <div class="bar"><span style="--pct: {{b_corners_pct}}%"></span></div>
-          <div class="value">{{b_corners_avg}}</div>
-        </div>
-        <div class="g">
-          <div class="label">Edges (avg)</div>
-          <div class="bar"><span style="--pct: {{b_edges_pct}}%"></span></div>
-          <div class="value">{{b_edges_avg}}</div>
-        </div>
-        <div class="remarks">
-          <div><strong>Surface:</strong> {{b_remarks_surface}}</div>
-          <div><strong>Centering:</strong> {{b_remarks_centering}}</div>
-          <div><strong>Corners:</strong> {{b_remarks_corners}}</div>
-          <div><strong>Edges:</strong> {{b_remarks_edges}}</div>
-        </div>
-      </div>
-    </div>
-  </section>
+<div class="g">
+  <div class="g-head"><div class="label">Surface</div><div class="value">{{f_surface}}</div></div>
+  <div class="bar"><span style="--pct: {{f_surface_pct}}%"></span></div>
+</div>
+
+<div class="g">
+  <div class="g-head"><div class="label">Centering</div><div class="value">{{f_centering}}</div></div>
+  <div class="bar"><span style="--pct: {{f_centering_pct}}%"></span></div>
+</div>
+
+<div class="g">
+  <div class="g-head"><div class="label">Corners (avg)</div><div class="value">{{f_corners_avg}}</div></div>
+  <div class="bar"><span style="--pct: {{f_corners_pct}}%"></span></div>
+</div>
+
+<div class="g">
+  <div class="g-head"><div class="label">Edges (avg)</div><div class="value">{{f_edges_avg}}</div></div>
+  <div class="bar"><span style="--pct: {{f_edges_pct}}%"></span></div>
+</div>
+
+<div class="remarks">
+  <div><strong>Surface:</strong> {{f_remarks_surface}}</div>
+  <div><strong>Centering:</strong> {{f_remarks_centering}}</div>
+  <div><strong>Corners:</strong> {{f_remarks_corners}}</div>
+  <div><strong>Edges:</strong> {{f_remarks_edges}}</div>
+</div>
+
+      <h2>Back Subgrades</h2>
+
+<div class="g">
+  <div class="g-head"><div class="label">Surface</div><div class="value">{{b_surface}}</div></div>
+  <div class="bar"><span style="--pct: {{b_surface_pct}}%"></span></div>
+</div>
+
+<div class="g">
+  <div class="g-head"><div class="label">Centering</div><div class="value">{{b_centering}}</div></div>
+  <div class="bar"><span style="--pct: {{b_centering_pct}}%"></span></div>
+</div>
+
+<div class="g">
+  <div class="g-head"><div class="label">Corners (avg)</div><div class="value">{{b_corners_avg}}</div></div>
+  <div class="bar"><span style="--pct: {{b_corners_pct}}%"></span></div>
+</div>
+
+<div class="g">
+  <div class="g-head"><div class="label">Edges (avg)</div><div class="value">{{b_edges_avg}}</div></div>
+  <div class="bar"><span style="--pct: {{b_edges_pct}}%"></span></div>
+</div>
+
+<div class="remarks">
+  <div><strong>Surface:</strong> {{b_remarks_surface}}</div>
+  <div><strong>Centering:</strong> {{b_remarks_centering}}</div>
+  <div><strong>Corners:</strong> {{b_remarks_corners}}</div>
+  <div><strong>Edges:</strong> {{b_remarks_edges}}</div>
+</div>
 
   <!-- Comparison Chart -->
   <section class="compare reveal">
