@@ -1,14 +1,14 @@
 [
   {
-    "id": "xyz789",
+    "id": "XYZ789",
     "serial": "SM-2025-000124",
     "player": "Shohei Ohtani",
     "set": "2021 Topps Chrome",
     "number": "#150",
     "variant": "Refractor",
     "images": {
-      "front": "/cards/xyz789-front.jpg",
-      "back": "/cards/xyz789-back.jpg"
+      "front": "/cards/XYZ789-front.JPEG",
+      "back": "/cards/XYZ789-back.JPEG"
     },
     "graded_at": "2025-09-17",
     "weights": { "front": 0.8, "back": 0.2 },
