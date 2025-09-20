@@ -6,7 +6,25 @@
   <script>document.documentElement.classList.add('js');</script>
   <title>{{player}} — {{set}} {{number}}</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link rel="stylesheet" href="/styles.css?v=6" />
+  <link rel="stylesheet" href="/styles.css?v=8" />
+
+  <!-- Inline safety net so subgrades look right even if old CSS is cached -->
+  <style>
+    /* Heading on its own line */
+    .grades h2{display:block;width:100%;margin:0 0 10px;line-height:1.2;}
+    /* Two-column layout on wide screens */
+    .grid-2{display:grid;grid-template-columns:1fr;gap:20px}
+    @media(min-width:860px){.grid-2{grid-template-columns:1fr 1fr}}
+    /* Stacked subgrade rows: label/value above, full-width bar below */
+    .subgrade{margin:12px 0}
+    .subgrade-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+    .subgrade-head .label{font-weight:700}
+    .subgrade-head .value{font-weight:700;min-width:2ch;text-align:right}
+    .subgrade .bar{width:100%;height:10px;background:var(--gray-200);border-radius:999px;overflow:hidden}
+    .subgrade .bar>span{display:block;height:100%;width:0;background:var(--green);transition:width .6s ease}
+    /* Overall circle has a default but we set it inline too */
+    .circle{--angle:0%}
+  </style>
 </head>
 <body>
   <header class="site-header">
@@ -36,19 +54,21 @@
         </p>
         <div class="cta">
           <a class="btn btn-green" href="{{ebay}}" target="_blank" rel="noopener">View eBay Comps</a>
-          <a class="btn" href="{{front_img}}" download>Download Front (JPG)</a>
-          <a class="btn" href="{{back_img}}" download>Download Back (JPG)</a>
+          <a class="btn" href="{{front_img}}" download="{{id}}-front.jpg">Download Front (JPG)</a>
+          <a class="btn" href="{{back_img}}"  download="{{id}}-back.jpg">Download Back (JPG)</a>
         </div>
       </div>
 
       <!-- Overall Circle -->
-<div class="overall reveal" data-circle data-angle="{{overall_pct}}">
-  <!-- set --angle inline so it always renders -->
-  <div class="circle" style="--angle: {{overall_pct}}%">
-    <div class="circle-inner">{{overall_grade}}</div>
-  </div>
-  <div class="circle-label">Overall</div>
-</div>
+      <div class="overall reveal" data-circle data-angle="{{overall_pct}}">
+        <!-- set --angle inline so it always renders -->
+        <div class="circle" style="--angle: {{overall_pct}}%">
+          <div class="circle-inner">{{overall_grade}}</div>
+        </div>
+        <div class="circle-label">Overall</div>
+      </div>
+    </div>
+  </section>
 
   <!-- Flip Viewer -->
   <section class="viewer reveal">
@@ -61,63 +81,74 @@
     </div>
   </section>
 
-  <h2>Front Subgrades</h2>
+  <!-- Subgrades (front + back) -->
+  <section class="grades reveal">
+    <div class="container grid-2">
+      <!-- FRONT -->
+      <div>
+        <h2>Front Subgrades</h2>
 
-<div class="subgrade">
-  <div class="subgrade-head"><div class="label">Surface</div><div class="value">{{f_surface}}</div></div>
-  <div class="bar"><span style="--pct: {{f_surface_pct}}%"></span></div>
-</div>
+        <div class="subgrade">
+          <div class="subgrade-head"><div class="label">Surface</div><div class="value">{{f_surface}}</div></div>
+          <div class="bar"><span style="--pct: {{f_surface_pct}}%"></span></div>
+        </div>
 
-<div class="subgrade">
-  <div class="subgrade-head"><div class="label">Centering</div><div class="value">{{f_centering}}</div></div>
-  <div class="bar"><span style="--pct: {{f_centering_pct}}%"></span></div>
-</div>
+        <div class="subgrade">
+          <div class="subgrade-head"><div class="label">Centering</div><div class="value">{{f_centering}}</div></div>
+          <div class="bar"><span style="--pct: {{f_centering_pct}}%"></span></div>
+        </div>
 
-<div class="subgrade">
-  <div class="subgrade-head"><div class="label">Corners (avg)</div><div class="value">{{f_corners_avg}}</div></div>
-  <div class="bar"><span style="--pct: {{f_corners_pct}}%"></span></div>
-</div>
+        <div class="subgrade">
+          <div class="subgrade-head"><div class="label">Corners (avg)</div><div class="value">{{f_corners_avg}}</div></div>
+          <div class="bar"><span style="--pct: {{f_corners_pct}}%"></span></div>
+        </div>
 
-<div class="subgrade">
-  <div class="subgrade-head"><div class="label">Edges (avg)</div><div class="value">{{f_edges_avg}}</div></div>
-  <div class="bar"><span style="--pct: {{f_edges_pct}}%"></span></div>
-</div>
+        <div class="subgrade">
+          <div class="subgrade-head"><div class="label">Edges (avg)</div><div class="value">{{f_edges_avg}}</div></div>
+          <div class="bar"><span style="--pct: {{f_edges_pct}}%"></span></div>
+        </div>
 
-<div class="remarks">
-  <div><strong>Surface:</strong> {{f_remarks_surface}}</div>
-  <div><strong>Centering:</strong> {{f_remarks_centering}}</div>
-  <div><strong>Corners:</strong> {{f_remarks_corners}}</div>
-  <div><strong>Edges:</strong> {{f_remarks_edges}}</div>
-</div>
+        <div class="remarks">
+          <div><strong>Surface:</strong> {{f_remarks_surface}}</div>
+          <div><strong>Centering:</strong> {{f_remarks_centering}}</div>
+          <div><strong>Corners:</strong> {{f_remarks_corners}}</div>
+          <div><strong>Edges:</strong> {{f_remarks_edges}}</div>
+        </div>
+      </div>
 
-      <h2>Back Subgrades</h2>
+      <!-- BACK -->
+      <div>
+        <h2>Back Subgrades</h2>
 
-<div class="subgrade">
-  <div class="subgrade-head"><div class="label">Surface</div><div class="value">{{b_surface}}</div></div>
-  <div class="bar"><span style="--pct: {{b_surface_pct}}%"></span></div>
-</div>
+        <div class="subgrade">
+          <div class="subgrade-head"><div class="label">Surface</div><div class="value">{{b_surface}}</div></div>
+          <div class="bar"><span style="--pct: {{b_surface_pct}}%"></span></div>
+        </div>
 
-<div class="subgrade">
-  <div class="subgrade-head"><div class="label">Centering</div><div class="value">{{b_centering}}</div></div>
-  <div class="bar"><span style="--pct: {{b_centering_pct}}%"></span></div>
-</div>
+        <div class="subgrade">
+          <div class="subgrade-head"><div class="label">Centering</div><div class="value">{{b_centering}}</div></div>
+          <div class="bar"><span style="--pct: {{b_centering_pct}}%"></span></div>
+        </div>
 
-<div class="subgrade">
-  <div class="subgrade-head"><div class="label">Corners (avg)</div><div class="value">{{b_corners_avg}}</div></div>
-  <div class="bar"><span style="--pct: {{b_corners_pct}}%"></span></div>
-</div>
+        <div class="subgrade">
+          <div class="subgrade-head"><div class="label">Corners (avg)</div><div class="value">{{b_corners_avg}}</div></div>
+          <div class="bar"><span style="--pct: {{b_corners_pct}}%"></span></div>
+        </div>
 
-<div class="subgrade">
-  <div class="subgrade-head"><div class="label">Edges (avg)</div><div class="value">{{b_edges_avg}}</div></div>
-  <div class="bar"><span style="--pct: {{b_edges_pct}}%"></span></div>
-</div>
+        <div class="subgrade">
+          <div class="subgrade-head"><div class="label">Edges (avg)</div><div class="value">{{b_edges_avg}}</div></div>
+          <div class="bar"><span style="--pct: {{b_edges_pct}}%"></span></div>
+        </div>
 
-<div class="remarks">
-  <div><strong>Surface:</strong> {{b_remarks_surface}}</div>
-  <div><strong>Centering:</strong> {{b_remarks_centering}}</div>
-  <div><strong>Corners:</strong> {{b_remarks_corners}}</div>
-  <div><strong>Edges:</strong> {{b_remarks_edges}}</div>
-</div>
+        <div class="remarks">
+          <div><strong>Surface:</strong> {{b_remarks_surface}}</div>
+          <div><strong>Centering:</strong> {{b_remarks_centering}}</div>
+          <div><strong>Corners:</strong> {{b_remarks_corners}}</div>
+          <div><strong>Edges:</strong> {{b_remarks_edges}}</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Comparison Chart -->
   <section class="compare reveal">
@@ -171,10 +202,11 @@
             if (e.isIntersecting) {
               e.target.classList.add('is-visible');
               // trigger circle inside this section
-              const c = e.target.querySelector?.('[data-circle]');
-              if (!reduce && c) {
-                const angle = Number(c.dataset.angle || 0);
-                c.style.setProperty('--angle', angle + '%');
+              const box = e.target.querySelector?.('[data-circle]');
+              const circ = box?.querySelector?.('.circle');
+              if (!reduce && box && circ) {
+                const angle = Number(box.dataset.angle || 0);
+                circ.style.setProperty('--angle', angle + '%');
               }
             }
           });
@@ -193,11 +225,12 @@
 
     // Overall circle % (ensure it sets even if reduced motion)
     (function(){
-      const c = document.querySelector('[data-circle]');
-      if (!c) return;
+      const box = document.querySelector('[data-circle]');
+      const circ = box?.querySelector?.('.circle');
+      if (!box || !circ) return;
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const pct = Number(c.dataset.angle || 0);
-      if (reduce) c.style.setProperty('--angle', pct + '%');
+      const pct = Number(box.dataset.angle || 0);
+      if (reduce) circ.style.setProperty('--angle', pct + '%');
     })();
 
     // Comparison chart (tolerant JSON parse)
