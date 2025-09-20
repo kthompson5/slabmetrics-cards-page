@@ -82,6 +82,21 @@ img{max-width:100%;height:auto;display:block}
 .g-head .label { font-weight: 700; }
 .g-head .value { font-weight: 700; min-width: 2ch; text-align: right; }
 
+/* Stacked subgrade rows: text above, full-width bar below */
+.subgrade { margin: 12px 0; }
+.subgrade-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+.subgrade-head .label { font-weight: 700; }
+.subgrade-head .value { font-weight: 700; min-width: 2ch; text-align: right; }
+
+/* Ensure the bar is 100% width and animates */
+.subgrade .bar { width: 100%; height: 10px; background: var(--gray-200); border-radius: 999px; overflow: hidden; }
+.subgrade .bar > span { display: block; height: 100%; width: 0; background: var(--green); transition: width .6s ease; }
+
 /* Full-width bar */
 .bar { height: 10px; background: var(--gray-200); border-radius: 999px; overflow: hidden; width: 100%; }
 .bar > span { display: block; height: 100%; width: 0; background: var(--green); transition: width .6s ease; }
