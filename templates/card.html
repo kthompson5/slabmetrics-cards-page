@@ -165,6 +165,29 @@
     </div>
   </footer>
 
+<script>
+// Smoothly animate the CSS variable --angle from current -> target (%)
+function animateCircleAngle(el, targetPct, duration = 900){
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!el) return;
+  const startPct = parseFloat(getComputedStyle(el).getPropertyValue('--angle')) || 0;
+  const endPct = Math.max(0, Math.min(100, targetPct));
+  if (reduce) { el.style.setProperty('--angle', endPct + '%'); return; }
+
+  const start = performance.now();
+  const ease = t => 1 - Math.pow(1 - t, 3); // cubic ease-out
+
+  function frame(now){
+    const t = Math.min(1, (now - start) / duration);
+    const k = ease(t);
+    const v = startPct + (endPct - startPct) * k;
+    el.style.setProperty('--angle', v.toFixed(2) + '%');
+    if (t < 1) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+</script>
+
   <script>
     // Flip behavior
     (function(){
