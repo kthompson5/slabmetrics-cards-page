@@ -329,3 +329,69 @@ img{max-width:100%;height:auto;display:block}
   .pop-row .bar{ background:#2a2a2a; }
   .gem-ring::before{ background:#111; }
 }
+
+/* ===== Big 4 brand palette ===== */
+:root{
+  --psa-red:#d0021b;
+  --psa-blue:#1155cc;
+  --sgc-black:#000000;
+  --sgc-white:#ffffff;
+  --cgc-red:#cc1f1f;
+  --cgc-black:#000000;
+  --bgs-gold:#b48b2c;
+  --bgs-black:#000000;
+}
+
+/* Brand dots next to labels */
+.dot.psa{ display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--psa-blue);margin-right:6px; }
+.dot.sgc{ display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--sgc-black);margin-right:6px;border:1px solid #444; }
+.dot.cgc{ display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--cgc-red);margin-right:6px; }
+.dot.bgs{ display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--bgs-gold);margin-right:6px; }
+
+/* POP bars: label color + fill per company */
+.pop-row[data-co="psa"] .co{ color:var(--psa-red); }
+.pop-row[data-co="psa"] .bar > span{ 
+  background: linear-gradient(90deg, var(--psa-blue) 0%, #1a73e8 100%);
+}
+
+.pop-row[data-co="sgc"] .co{ color:var(--sgc-black); }
+.pop-row[data-co="sgc"] .bar{ background: #e6e6e6; } /* light track keeps contrast */
+.pop-row[data-co="sgc"] .bar > span{ background: var(--sgc-black); }
+
+.pop-row[data-co="cgc"] .co{ color: var(--cgc-black); }
+.pop-row[data-co="cgc"] .bar > span{ background: var(--cgc-red); }
+
+.pop-row[data-co="bgs"] .co{ color: var(--bgs-black); }
+.pop-row[data-co="bgs"] .bar > span{ background: var(--bgs-gold); }
+
+/* GEM rings use brand color instead of generic green */
+.gem-ring{ 
+  --size: 120px; --thick: 12px; --angle: 0%; --brand: var(--green);
+  width:var(--size); height:var(--size); border-radius:50%;
+  background: conic-gradient(var(--brand) var(--angle), var(--gray-200) 0);
+  display:grid; place-items:center;
+  transition: --angle .9s cubic-bezier(.2,.7,.2,1);
+  box-shadow: 0 1px 6px rgba(0,0,0,.06);
+  position: relative;
+}
+.gem[data-co="psa"] .gem-ring{ --brand: var(--psa-blue); }
+.gem[data-co="sgc"] .gem-ring{ --brand: var(--sgc-black); }
+.gem[data-co="cgc"] .gem-ring{ --brand: var(--cgc-red); }
+.gem[data-co="bgs"] .gem-ring{ --brand: var(--bgs-gold); }
+
+/* Optional: brand the gem label text a bit (PSA red accent) */
+.gem[data-co="psa"] .gem-label{ color: var(--psa-red); }
+.gem[data-co="sgc"] .gem-label{ color: var(--sgc-black); }
+.gem[data-co="cgc"] .gem-label{ color: var(--cgc-black); }
+.gem[data-co="bgs"] .gem-label{ color: var(--bgs-black); }
+
+/* Dark mode polish */
+@media (prefers-color-scheme: dark){
+  .pop-bars, .gem{ background:#111; border-color:#222; }
+  .pop-row .bar{ background:#2a2a2a; }
+  .gem-ring::before{ background:#111; }
+  .pop-row[data-co="psa"] .co,
+  .pop-row[data-co="sgc"] .co,
+  .pop-row[data-co="cgc"] .co,
+  .pop-row[data-co="bgs"] .co { color:#eaeaea; } /* keep labels legible in dark */
+}
