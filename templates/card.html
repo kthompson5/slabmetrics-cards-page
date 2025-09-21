@@ -176,6 +176,65 @@
   </footer>
 
 <script>
+
+// --- Badge mapping & autopopulation ---
+(function(){
+  // Map discrete display buckets to fun names + emoji
+  const TIERS = [
+    {value:10.0,  key:'elite',     name:'Perfect Gem', em:'🏆'},
+    {value:9.5,   key:'gemplus',   name:'Gem+',        em:'💎'},
+    {value:9.0,   key:'gem',       name:'Gem',         em:'💠'},
+    {value:8.5,   key:'neargem',   name:'Near Gem',    em:'✨'},
+    {value:8.0,   key:'excellent', name:'Excellent',   em:'✅'},
+    {value:7.0,   key:'verygood',  name:'Very Good',   em:'👍'},
+    {value:6.0,   key:'goodplus',  name:'Good+',       em:'🙂'},
+    {value:5.0,   key:'good',      name:'Good',        em:'😌'},
+    {value:4.0,   key:'fairplus',  name:'Fair+',       em:'➕'},
+    {value:3.0,   key:'fair',      name:'Fair',        em:'➖'},
+    {value:2.0,   key:'poor',      name:'Poor',        em:'⚠️'},
+    {value:1.0,   key:'rough',     name:'Rough',       em:'🧱'},
+  ];
+
+  // Convert raw numeric grade to the nearest of our allowed buckets
+  function binGrade(x){
+    const g = Math.max(1, Math.min(10, Number(x) || 0));
+    // Half-steps above 8, whole numbers below: use thresholds
+    if (g >= 9.75) return 10.0;
+    if (g >= 9.25) return 9.5;
+    if (g >= 8.75) return 9.0;
+    if (g >= 8.25) return 8.5;
+    if (g >= 7.50) return 8.0;
+    if (g >= 6.50) return 7.0;
+    if (g >= 5.50) return 6.0;
+    if (g >= 4.50) return 5.0;
+    if (g >= 3.50) return 4.0;
+    if (g >= 2.50) return 3.0;
+    if (g >= 1.50) return 2.0;
+    return 1.0;
+  }
+
+  function tierFor(value){
+    return TIERS.find(t => t.value === value) || TIERS[TIERS.length-1];
+  }
+
+  const badgeEl = document.querySelector('[data-badge]');
+  const gradeText = document.querySelector('.circle-inner')?.textContent || '';
+  if (!badgeEl || !gradeText) return;
+
+  const raw = parseFloat(gradeText.replace(/[^\d.]/g,'')) || 0;
+  const binned = binGrade(raw);
+  const t = tierFor(binned);
+
+  badgeEl.classList.remove(
+    'badge-elite','badge-gemplus','badge-gem','badge-neargem','badge-excellent',
+    'badge-verygood','badge-goodplus','badge-good','badge-fairplus','badge-fair',
+    'badge-poor','badge-rough'
+  );
+  badgeEl.classList.add('badge-lite', `badge-${t.key}`);
+  badgeEl.innerHTML = `<span class="em">${t.em}</span><span class="label">${t.name}</span>`;
+})();
+</script>;
+
 // ----- Helper: animate conic fill (--angle) smoothly everywhere -----
 function animateCircleAngle(el, targetPct, duration = 900){
   if (!el) return;
