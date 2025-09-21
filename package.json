@@ -7,9 +7,8 @@
     "build": "node scripts/build-cards.js",
     "clean": "node -e \"await import('node:fs').then(fs=>fs.rmSync('dist',{recursive:true,force:true}))\"",
     "csv:build": "node scripts/csv-to-json.js && node scripts/build-cards.js"
-    "dependencies": {
-  "csv-parse": "^5.5.0"
-}
-
+  },
+  "dependencies": {
+    "csv-parse": "^5.5.0"
   }
 }
