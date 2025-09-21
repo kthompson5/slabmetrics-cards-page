@@ -156,14 +156,81 @@
     </div>
   </section>
 
-  <!-- Comparison Chart -->
-  <section class="compare reveal">
-    <div class="container">
-      <h2>How This Grade Compares</h2>
-      <div id="compare-chart" class="bars"></div>
-      <p class="fine">Distribution across recent slabs (by overall grade range).</p>
+  <!-- POP & GEM (replaces "How This Grade Compares") -->
+<section class="pop-gem reveal" id="popGem">
+  <div class="container">
+    <h2>Big 4 Pop & Gem Rate</h2>
+    <p class="fine">
+      <strong>Pop</strong> = how many of this card each company has graded. 
+      <strong>Gem Rate</strong> = share of those that earned the top grade 
+      (PSA/SGC/CGC = 10; <span class="bgs-note">BGS “gem” is 9.5</span>).
+    </p>
+
+    <!-- Pop bars -->
+    <div class="pop-bars" data-popbars>
+      <!-- Each row needs just the pop number in your CSV -->
+      <div class="pop-row" data-co="psa" data-pop="{{psa_pop||0}}">
+        <div class="co"><span class="dot psa"></span>PSA</div>
+        <div class="bar"><span></span></div>
+        <div class="val" data-out>—</div>
+      </div>
+
+      <div class="pop-row" data-co="sgc" data-pop="{{sgc_pop||0}}">
+        <div class="co"><span class="dot sgc"></span>SGC</div>
+        <div class="bar"><span></span></div>
+        <div class="val" data-out>—</div>
+      </div>
+
+      <div class="pop-row" data-co="cgc" data-pop="{{cgc_pop||0}}">
+        <div class="co"><span class="dot cgc"></span>CGC</div>
+        <div class="bar"><span></span></div>
+        <div class="val" data-out>—</div>
+      </div>
+
+      <div class="pop-row" data-co="bgs" data-pop="{{bgs_pop||0}}">
+        <div class="co"><span class="dot bgs"></span>Beckett</div>
+        <div class="bar"><span></span></div>
+        <div class="val" data-out>—</div>
+      </div>
     </div>
-  </section>
+
+    <!-- Gem rings -->
+    <div class="gem-grid" data-gemrings>
+      <!-- Each ring takes a % from your CSV (0–100). -->
+      <div class="gem" data-co="psa" data-rate="{{psa_gem_rate||0}}">
+        <div class="gem-ring" style="--angle: 0%">
+          <div class="gem-kpi"><span class="num" data-rate-out>0%</span></div>
+        </div>
+        <div class="gem-label"><span class="dot psa"></span>PSA Gem Rate</div>
+      </div>
+
+      <div class="gem" data-co="sgc" data-rate="{{sgc_gem_rate||0}}">
+        <div class="gem-ring" style="--angle: 0%">
+          <div class="gem-kpi"><span class="num" data-rate-out>0%</span></div>
+        </div>
+        <div class="gem-label"><span class="dot sgc"></span>SGC Gem Rate</div>
+      </div>
+
+      <div class="gem" data-co="cgc" data-rate="{{cgc_gem_rate||0}}">
+        <div class="gem-ring" style="--angle: 0%">
+          <div class="gem-kpi"><span class="num" data-rate-out>0%</span></div>
+        </div>
+        <div class="gem-label"><span class="dot cgc"></span>CGC Gem Rate</div>
+      </div>
+
+      <div class="gem" data-co="bgs" data-rate="{{bgs_gem_rate||0}}">
+        <div class="gem-ring" style="--angle: 0%">
+          <div class="gem-kpi"><span class="num" data-rate-out>0%</span></div>
+        </div>
+        <div class="gem-label"><span class="dot bgs"></span>BGS Gem Rate</div>
+      </div>
+    </div>
+
+    <p class="fine small-note">
+      Note: BGS “gem” generally refers to **9.5**; PSA/SGC/CGC “gem” refers to **10**.
+    </p>
+  </div>
+</section>
 
   <footer class="site-footer">
     <div class="container">
