@@ -354,6 +354,77 @@ function animateCircleAngle(el, targetPct, duration = 900){
   }).join('');
   requestAnimationFrame(() => { el.classList.add('animate'); });
 })();
+
+// --- If you don't already have this helper from earlier, it will be defined here ---
+window.animateCircleAngle = window.animateCircleAngle || function(el, targetPct, duration = 900){
+  if (!el) return;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const startPct = parseFloat(getComputedStyle(el).getPropertyValue('--angle')) || 0;
+  const endPct = Math.max(0, Math.min(100, targetPct));
+  if (reduce) { el.style.setProperty('--angle', endPct + '%'); return; }
+  const start = performance.now();
+  const ease = t => 1 - Math.pow(1 - t, 3);
+  function frame(now){
+    const t = Math.min(1, (now - start) / duration);
+    const k = ease(t);
+    const v = startPct + (endPct - startPct) * k;
+    el.style.setProperty('--angle', v.toFixed(2) + '%');
+    if (t < 1) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+};
+
+// --- Pop & Gem init on reveal ---
+(function(){
+  const section = document.getElementById('popGem');
+  if (!section) return;
+
+  function go(){
+    // POP bars
+    const rows = Array.from(section.querySelectorAll('[data-popbars] .pop-row'));
+    const pops = rows.map(r => Math.max(0, Number(r.dataset.pop || 0)));
+    const max = Math.max(...pops, 0);
+
+    rows.forEach((r, i) => {
+      const val = pops[i] || 0;
+      const out = r.querySelector('[data-out]');
+      const fill = r.querySelector('.bar > span');
+      out.textContent = val ? val.toLocaleString() : '0';
+      // scale width (avoid div by zero)
+      const pct = max ? (val / max) * 100 : 0;
+      // Respect reduced motion: if user prefers reduced, jump to final
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) fill.style.width = pct + '%';
+      else requestAnimationFrame(() => { fill.style.width = pct + '%'; });
+    });
+
+    // GEM rings
+    section.querySelectorAll('[data-gemrings] .gem').forEach(card => {
+      const rateRaw = Math.max(0, Number(card.dataset.rate || 0)); // expect 0–100
+      const ring = card.querySelector('.gem-ring');
+      const label = card.querySelector('[data-rate-out]');
+      const pct = Math.max(0, Math.min(100, rateRaw));
+      animateCircleAngle(ring, pct, 900);
+      label.textContent = Math.round(pct) + '%';
+    });
+  }
+
+  // If your global reveal IO is already marking .reveal.is-visible,
+  // we can hook into that; else run immediately.
+  if (section.classList.contains('is-visible')) {
+    go();
+  } else {
+    // Observe once
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        go();
+        io.disconnect();
+      });
+    }, { threshold: 0.2 });
+    io.observe(section);
+  }
+})();
 </script>
 </body>
 </html>
