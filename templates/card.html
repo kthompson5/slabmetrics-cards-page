@@ -64,13 +64,18 @@
         <a class="btn" href="{{back_img}}"  download="{{id}}-back.jpg">Download Back (JPG)</a>
       </div>
 
-      <div class="overall" data-circle data-angle="{{overall_pct}}">
-        <div class="circle" style="--angle: 0%">
-          <div class="circle-inner">{{overall_grade}}</div>
-        </div>
-        <div class="circle-label">Overall</div>
-      </div>
+      <!-- Right column: circle + badge side-by-side -->
+<div class="grade-side">
+  <div class="overall" data-circle data-angle="{{overall_pct}}">
+    <div class="circle" style="--angle: 0%">
+      <div class="circle-inner">{{overall_grade}}</div>
     </div>
+    <div class="circle-label">Overall</div>
+  </div>
+
+  <!-- NEW: the fun badge (auto-filled by JS) -->
+  <div class="badge-lite" data-badge title="Grade tier badge">Loading…</div>
+</div>
 
   </div>
 </section>
