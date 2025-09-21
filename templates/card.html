@@ -483,19 +483,19 @@ window.animateCircleAngle = window.animateCircleAngle || function(el, targetPct,
   }
 
   const NAMES = {
-    10.0: {name:'Pristine', base:'10'},
-    9.5:  {name:'Gem Mint', base:'9.5'},
-    9.0:  {name:'Mint+',    base:'9'},
-    8.5:  {name:'Mint',     base:'8.5'},
-    8.0:  {name:'NM-MT',    base:'8'},
-    7.0:  {name:'NM',       base:'7'},
-    6.0:  {name:'EX-MT',    base:'6'},
-    5.0:  {name:'EX',       base:'5'},
-    4.0:  {name:'VG-EX',    base:'4'},
-    3.0:  {name:'VG',       base:'3'},
-    2.0:  {name:'Good',     base:'2'},
-    1.0:  {name:'Poor',     base:'1'},
-  };
+  10.0: {name:'Apex (Pristine)', base:'10'},
+  9.5:  {name:'Elite (Gem Mint)', base:'9.5'},
+  9.0:  {name:'Mint', base:'9'},
+  8.5:  {name:'Strong', base:'8.5'},
+  8.0:  {name:'Solid (NM-MT)', base:'8'},
+  7.0:  {name:'Collector (NM)', base:'7'},
+  6.0:  {name:'Playable (EX-MT)', base:'6'},
+  5.0:  {name:'Classic (EX)', base:'5'},
+  4.0:  {name:'Vintage (VG-EX)', base:'4'},
+  3.0:  {name:'Worn (VG)', base:'3'},
+  2.0:  {name:'Poor+', base:'2'},
+  1.0:  {name:'Poor', base:'1'},
+};
 
   const bin = binned(raw);
   const meta = NAMES[bin] || {name:'—', base:'—'};
