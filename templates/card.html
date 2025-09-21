@@ -24,6 +24,35 @@
     .subgrade .bar>span{display:block;height:100%;width:0;background:var(--green);transition:width .6s ease}
     /* Overall circle has a default but we set it inline too */
     .circle{--angle:0%}
+
+    /* ====== NEW: Circle + Badge layout + Badge styles ====== */
+    .grade-side{display:grid;gap:10px;justify-items:center}
+    @media (min-width:860px){
+      .grade-side{grid-auto-flow:column;align-items:center;gap:14px}
+    }
+    .grade-tier{
+      --ring:#22c55e; --ink:#0a0a0a; --bg:#ffffff;
+      display:grid; gap:6px; min-width:180px; padding:12px 14px;
+      background:var(--bg); color:var(--ink);
+      border:1px solid var(--gray-200); border-radius:14px;
+      box-shadow:0 4px 14px rgba(0,0,0,.08);
+      position:relative;
+    }
+    .grade-tier::after{
+      content:""; position:absolute; left:0; top:8px; bottom:8px; width:4px;
+      border-radius:4px; background:var(--ring);
+    }
+    .grade-tier .tier-line{display:flex;align-items:baseline;gap:8px;justify-content:center}
+    .grade-tier .tier-name{font-weight:900;font-size:1.1rem;letter-spacing:.02em}
+    .grade-tier .tier-base{
+      font-weight:800;font-size:1rem;color:#0a0a0acc;
+      padding:2px 8px;border-radius:999px;border:1px solid var(--gray-200);background:var(--gray-50)
+    }
+    .grade-tier .tier-help{ text-align:center;font-size:.88rem;color:var(--gray-500) }
+    @media (prefers-color-scheme: dark){
+      .grade-tier{ background:#111; color:#f5f5f5; border-color:#222; }
+      .grade-tier .tier-base{ background:#181818; border-color:#2a2a2a; color:#e7e7e7; }
+    }
   </style>
 </head>
 <body>
@@ -65,15 +94,18 @@
       </div>
 
       <!-- Right column: circle + badge side-by-side -->
-<div class="grade-side">
-  <div class="overall" data-circle data-angle="{{overall_pct}}">
-    <div class="circle" style="--angle: 0%">
-      <div class="circle-inner">{{overall_grade}}</div>
-    </div>
-    <div class="circle-label">Overall</div>
-  </div>
+      <div class="grade-side">
+        <div class="overall" data-circle data-angle="{{overall_pct}}">
+          <div class="circle" style="--angle: 0%">
+            <div class="circle-inner">{{overall_grade}}</div>
+          </div>
+          <div class="circle-label">Overall</div>
+        </div>
 
-  </div>
+        <!-- NEW: SlabMetrics grade tier badge -->
+        <div class="grade-tier" data-tier aria-live="polite" aria-label="Grade tier"></div>
+      </div>
+    </div>
 </section>
 
   <!-- Flip Viewer -->
@@ -425,6 +457,56 @@ window.animateCircleAngle = window.animateCircleAngle || function(el, targetPct,
     }, { threshold: 0.2 });
     io.observe(section);
   }
+})();
+
+/* --- NEW: SlabMetrics grade tier badge logic --- */
+(function(){
+  const el = document.querySelector('[data-tier]');
+  const rawText = document.querySelector('.circle-inner')?.textContent || '';
+  if (!el || !rawText) return;
+
+  const raw = Math.max(1, Math.min(10, parseFloat(rawText.replace(/[^\d.]/g,'')) || 0));
+
+  function binned(v){
+    if (v >= 9.75) return 10.0;
+    if (v >= 9.25) return 9.5;
+    if (v >= 8.75) return 9.0;
+    if (v >= 8.25) return 8.5;
+    if (v >= 7.50) return 8.0;
+    if (v >= 6.50) return 7.0;
+    if (v >= 5.50) return 6.0;
+    if (v >= 4.50) return 5.0;
+    if (v >= 3.50) return 4.0;
+    if (v >= 2.50) return 3.0;
+    if (v >= 1.50) return 2.0;
+    return 1.0;
+  }
+
+  const NAMES = {
+    10.0: {name:'Pristine', base:'10'},
+    9.5:  {name:'Gem Mint', base:'9.5'},
+    9.0:  {name:'Mint+',    base:'9'},
+    8.5:  {name:'Mint',     base:'8.5'},
+    8.0:  {name:'NM-MT',    base:'8'},
+    7.0:  {name:'NM',       base:'7'},
+    6.0:  {name:'EX-MT',    base:'6'},
+    5.0:  {name:'EX',       base:'5'},
+    4.0:  {name:'VG-EX',    base:'4'},
+    3.0:  {name:'VG',       base:'3'},
+    2.0:  {name:'Good',     base:'2'},
+    1.0:  {name:'Poor',     base:'1'},
+  };
+
+  const bin = binned(raw);
+  const meta = NAMES[bin] || {name:'—', base:'—'};
+
+  el.innerHTML = `
+    <div class="tier-line">
+      <span class="tier-name">${meta.name}</span>
+      <span class="tier-base">· ${meta.base}</span>
+    </div>
+    <div class="tier-help">Your ${raw.toFixed(1).replace(/\.0$/,'')} maps to <strong>${meta.name}</strong> (${meta.base}).</div>
+  `;
 })();
 </script>
 </body>
