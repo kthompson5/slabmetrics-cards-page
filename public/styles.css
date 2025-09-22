@@ -413,3 +413,17 @@ html[data-theme="dark"] .bar > span{ background:var(--green); }
 
 .downloads { margin-top: 20px; text-align:center; }
 .downloads .btn-jpg { margin: 0 8px; }
+
+.comps-cta {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.comps-cta .btn {
+  min-width: 240px;   /* adjust this width as you like */
+  text-align: center;
+  padding: 12px 20px; /* makes it taller and more "button-like" */
+  font-size: 1rem;
+  font-weight: 600;
+}
