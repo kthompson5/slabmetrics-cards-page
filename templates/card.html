@@ -208,7 +208,7 @@
     </div>
   </section>
 
-  <!-- POP & GEM (replaces "How This Grade Compares") -->
+    <!-- POP & GEM (replaces "How This Grade Compares") -->
 <section class="pop-gem reveal" id="popGem">
   <div class="container">
     <h2>Big 4 Pop & Gem Rate</h2>
@@ -220,6 +220,7 @@
 
     <!-- Pop bars -->
     <div class="pop-bars" data-popbars>
+      <!-- Each row needs just the pop number in your CSV -->
       <div class="pop-row" data-co="psa" data-pop="{{psa_pop}}">
         <div class="co"><span class="dot psa"></span>PSA</div>
         <div class="bar"><span></span></div>
@@ -247,6 +248,7 @@
 
     <!-- Gem rings -->
     <div class="gem-grid" data-gemrings>
+      <!-- Each ring takes a % from your CSV (0–100). -->
       <div class="gem" data-co="psa" data-rate="{{psa_gem_rate}}">
         <div class="gem-ring" style="--angle: 0%">
           <div class="gem-kpi"><span class="num" data-rate-out>0%</span></div>
@@ -277,9 +279,10 @@
     </div>
 
     <p class="fine small-note">
-      Pop figures are a snapshot <strong>as of {{graded_at}}</strong>. 
-      “Gem” means the top grade (PSA/SGC/CGC = 10; <strong>BGS = 9.5</strong>).
-    </p>
+  Pop figures are a snapshot <strong>as of {{graded_at}}</strong>. 
+  “Gem” means the top grade (PSA/SGC/CGC = 10; <strong>BGS = 9.5</strong>).
+</p>
+  </div>
 
     <!-- eBay comps button INSIDE the same container -->
     <div class="comps-cta">
