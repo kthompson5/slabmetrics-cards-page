@@ -119,23 +119,23 @@
   </section><!-- /hero -->
 
   <!-- Flip Viewer -->
-  <section class="viewer">
-    <div class="container">
-      <div class="flip-wrap" data-cardflip title="Click or tap to flip (←/→ also)">
-        <img class="flip-img front" src="{{front_img}}" alt="{{player}} front" loading="lazy" />
-        <img class="flip-img back"  src="{{back_img}}"  alt="{{player}} back"  loading="lazy" />
-      </div>
-      <p class="hint">Tip: tap/click to flip • ← / → keys work too</p>
-    </div>
-  </section>
-
 <section class="viewer">
   <div class="container">
-    <div class="flip-wrap" data-cardflip …>
-      <img class="flip-img front" src="{{front_img}}" … />
-      <img class="flip-img back"  src="{{back_img}}"  … />
+    <div class="flip-wrap" data-cardflip title="Click or tap to flip (←/→ also)">
+      <img class="flip-img front" src="{{front_img}}" alt="{{player}} front" loading="lazy" />
+      <img class="flip-img back"  src="{{back_img}}"  alt="{{player}} back"  loading="lazy" />
     </div>
     <p class="hint">Tip: tap/click to flip • ← / → keys work too</p>
+  </div>
+</section>
+
+<!-- Downloads (buttons below the images) -->
+<section class="downloads">
+  <div class="container">
+    <div class="cta">
+      <a class="btn btn-jpg" href="{{front_img}}" download="{{id}}-front.jpg" rel="noopener">Download Front (JPG)</a>
+      <a class="btn btn-jpg" href="{{back_img}}"  download="{{id}}-back.jpg"  rel="noopener">Download Back (JPG)</a>
+    </div>
   </div>
 </section>
 
