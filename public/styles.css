@@ -410,3 +410,6 @@ html[data-theme="dark"] .bar > span{ background:var(--green); }
 
 /* space above the eBay button under Big 4 */
 .comps-cta { margin-top: 16px; }
+
+.downloads { margin-top: 20px; text-align:center; }
+.downloads .btn-jpg { margin: 0 8px; }
