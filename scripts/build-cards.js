@@ -191,18 +191,18 @@ function loadCSVCards() {
       },
 
       // Big-4 Pop & Gem
-      pops: {
-        psa: toNum(r.psa_pop, 0),
-        sgc: toNum(r.sgc_pop, 0),
-        cgc: toNum(r.cgc_pop, 0),
-        bgs: toNum(r.bgs_pop, 0),
-      },
-      gemRates: {
-        psa: toNum(r.psa_gem_rate, 0),
-        sgc: toNum(r.sgc_gem_rate, 0),
-        cgc: toNum(r.cgc_gem_rate, 0),
-        bgs: toNum(r.bgs_gem_rate, 0),
-      },
+pops: {
+  psa: toNumLoose(r.psa_pop, 0),
+  sgc: toNumLoose(r.sgc_pop, 0),
+  cgc: toNumLoose(r.cgc_pop, 0),
+  bgs: toNumLoose(r.bgs_pop, 0),
+},
+gemRates: {
+  psa: toRate0to100(r.psa_gem_rate, 0),
+  sgc: toRate0to100(r.sgc_gem_rate, 0),
+  cgc: toRate0to100(r.cgc_gem_rate, 0),
+  bgs: toRate0to100(r.bgs_gem_rate, 0),
+},
 
       // comparison
       compare: { distribution: {} }
