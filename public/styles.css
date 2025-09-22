@@ -380,40 +380,33 @@ html[data-theme="dark"] .gem-ring::before{ background:var(--white); }
 html[data-theme="dark"] .barv-fill{ background:var(--green); }
 html[data-theme="dark"] .bar > span{ background:var(--green); }
 
-/* --- JPG buttons with black/green/white treatment --- */
+/* --- JPG buttons: black body, white text, green edges --- */
 .btn-jpg {
   position: relative;
   font-weight: 700;
   letter-spacing: .01em;
   border-radius: 10px;
-  overflow: hidden; /* keeps the color stripe clipped */
-}
-
-/* subtle tri-color stripe across the top edge */
-.btn-jpg::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; height: 3px;
-  background: linear-gradient(90deg, #000 0 33%, #22c55e 33% 66%, #fff 66% 100%);
-}
-
-/* FRONT: black body, white text; green on focus/hover outline */
-.btn-jpg--front {
   background: var(--black);
   color: var(--white);
   border: 1px solid var(--black);
+  padding: 10px 14px;
+  overflow: hidden;
 }
-.btn-jpg--front:hover { filter: brightness(0.95); }
-.btn-jpg--front:focus-visible { outline: 3px solid #22c55e66; outline-offset: 2px; }
 
-/* BACK: white body, black text; green border */
-.btn-jpg--back {
-  background: var(--white);
-  color: var(--black);
-  border: 1px solid var(--green);
+/* green vertical edge stripes */
+.btn-jpg::before,
+.btn-jpg::after {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 4px;
+  background: var(--green);
 }
-.btn-jpg--back:hover { background: var(--gray-100); }
-.btn-jpg--back:focus-visible { outline: 3px solid #22c55e66; outline-offset: 2px; }
+.btn-jpg::before { left: 0; }
+.btn-jpg::after  { right: 0; }
+
+.btn-jpg:hover { filter: brightness(1.1); }
+.btn-jpg:focus-visible { outline: 3px solid #22c55e66; outline-offset: 2px; }
 
 /* space above the eBay button under Big 4 */
 .comps-cta { margin-top: 16px; }
