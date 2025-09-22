@@ -427,3 +427,19 @@ html[data-theme="dark"] .bar > span{ background:var(--green); }
   font-size: 1rem;
   font-weight: 600;
 }
+.comps-cta {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center; /* center the whole button */
+}
+
+.comps-cta .btn {
+  display: flex;              /* make button a flexbox */
+  justify-content: center;    /* center text horizontally */
+  align-items: center;        /* center text vertically */
+  min-width: 240px;           /* wider look */
+  text-align: center;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+}
