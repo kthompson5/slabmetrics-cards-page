@@ -54,7 +54,23 @@ function toPct0to100(n) {
 function todayISO() {
   return new Date().toISOString().slice(0,10);
 }
-
+function toNumLoose(n, def = 0) {
+  // Accept "1,234" → 1234    "  1234  " → 1234
+  if (n == null || n === '') return def;
+  const s = String(n).replace(/[^0-9.]/g, ''); // strip commas, spaces, etc.
+  const v = parseFloat(s);
+  return Number.isFinite(v) ? v : def;
+}
+function toRate0to100(n, def = 0) {
+  // Accept "42%" → 42, "0.42" → 42, "42" → 42
+  if (n == null || n === '') return def;
+  const raw = String(n).trim();
+  const hadPct = raw.includes('%');
+  const num = parseFloat(raw.replace(/[^0-9.]/g, ''));
+  if (!Number.isFinite(num)) return def;
+  if (hadPct) return Math.max(0, Math.min(100, num));
+  return num <= 1 ? Math.round(num * 100) : Math.round(num);
+}
 /* --------------- Loaders ----------------- */
 function loadJSONCards() {
   const cardsFile = path.join(DIRS.data, 'cards.json');
