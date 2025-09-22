@@ -443,3 +443,23 @@ html[data-theme="dark"] .bar > span{ background:var(--green); }
   font-size: 1rem;
   font-weight: 600;
 }
+
+.site-footer {
+  margin-top: 30px;
+}
+
+.site-footer .container {
+  display: flex;
+  justify-content: center; /* centers the button */
+}
+
+.site-footer .btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 220px;   /* adjust as you like */
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+}
