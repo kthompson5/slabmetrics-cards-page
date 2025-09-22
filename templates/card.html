@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link rel="stylesheet" href="/styles.css?v=8" />
 
-  <!-- Inline safety net so subgrades look right even if old CSS is cached -->
+  <!-- Inline safety net so subgrades / buttons look right even if old CSS is cached -->
   <style>
     /* Heading on its own line */
     .grades h2{display:block;width:100%;margin:0 0 10px;line-height:1.2;}
@@ -25,7 +25,7 @@
     /* Overall circle has a default but we set it inline too */
     .circle{--angle:0%}
 
-    /* ====== NEW: Circle + Badge layout + Badge styles ====== */
+    /* ====== Circle + Badge layout + Badge styles ====== */
     .grade-side{display:grid;gap:10px;justify-items:center}
     @media (min-width:860px){
       .grade-side{grid-auto-flow:column;align-items:center;gap:14px}
@@ -53,6 +53,22 @@
       .grade-tier{ background:#111; color:#f5f5f5; border-color:#222; }
       .grade-tier .tier-base{ background:#181818; border-color:#2a2a2a; color:#e7e7e7; }
     }
+
+    /* ====== NEW: JPG buttons — black w/ green left & right edge ====== */
+    .btn-jpg{
+      position:relative;font-weight:700;letter-spacing:.01em;border-radius:10px;
+      background:var(--black);color:var(--white);border:1px solid var(--black);
+      padding:10px 14px;overflow:hidden;
+    }
+    .btn-jpg::before,.btn-jpg::after{
+      content:"";position:absolute;top:0;bottom:0;width:4px;background:var(--green);
+    }
+    .btn-jpg::before{left:0}.btn-jpg::after{right:0}
+    .btn-jpg:hover{filter:brightness(1.1)}
+    .btn-jpg:focus-visible{outline:3px solid #22c55e66;outline-offset:2px}
+
+    /* spacing for the eBay button under Big 4 */
+    .comps-cta{margin-top:16px}
   </style>
 </head>
 <body>
@@ -66,53 +82,49 @@
   </header>
 
   <!-- HERO -->
-<section class="hero reveal is-visible">
-  <div class="container hero-inner">
+  <section class="hero reveal is-visible">
+    <div class="container hero-inner">
 
-    <!-- Title + meta stay as-is -->
-    <div class="hero-head">
-      <h1 class="tight">
-        <span class="dim">{{player}}</span>
-        <span class="slash">—</span>
-        {{set}} <span class="no-wrap">{{number}}</span>
-      </h1>
-      <p class="meta">
-        <strong>Serial:</strong> {{serial}}
-        <span class="dot">•</span>
-        <strong>Graded:</strong> {{graded_at}}
-        <span class="dot">•</span>
-        <strong>Team:</strong> {{team}}
-      </p>
-    </div>
-
-    <!-- NEW: Actions row = buttons (left) + overall circle (right) -->
-    <div class="hero-actions">
-      <div class="cta">
-        <a class="btn btn-jpg" href="{{front_img}}" download="{{id}}-front.jpg">
-  Download Front (JPG)
-</a>
-
-<a class="btn btn-jpg" href="{{back_img}}" download="{{id}}-back.jpg">
-  Download Back (JPG)
-</a>
-
-      <!-- Right column: circle + badge side-by-side -->
-      <div class="grade-side">
-        <div class="overall" data-circle data-angle="{{overall_pct}}">
-          <div class="circle" style="--angle: 0%">
-            <div class="circle-inner">{{overall_grade}}</div>
-          </div>
-          <div class="circle-label">Overall</div>
-        </div>
-
-        <!-- NEW: SlabMetrics grade tier badge -->
-        <div class="grade-tier" data-tier aria-live="polite" aria-label="Grade tier"></div>
+      <!-- Title + meta -->
+      <div class="hero-head">
+        <h1 class="tight">
+          <span class="dim">{{player}}</span>
+          <span class="slash">—</span>
+          {{set}} <span class="no-wrap">{{number}}</span>
+        </h1>
+        <p class="meta">
+          <strong>Serial:</strong> {{serial}}
+          <span class="dot">•</span>
+          <strong>Graded:</strong> {{graded_at}}
+          <span class="dot">•</span>
+          <strong>Team:</strong> {{team}}
+        </p>
       </div>
-    </div>
-</section>
+
+      <!-- Actions row = buttons (left) + overall circle (right) -->
+      <div class="hero-actions">
+        <div class="cta">
+          <a class="btn btn-jpg" href="{{front_img}}" download="{{id}}-front.jpg">Download Front (JPG)</a>
+          <a class="btn btn-jpg" href="{{back_img}}"  download="{{id}}-back.jpg">Download Back (JPG)</a>
+        </div><!-- /cta -->
+
+        <!-- Right column: circle + badge -->
+        <div class="grade-side">
+          <div class="overall" data-circle data-angle="{{overall_pct}}">
+            <div class="circle" style="--angle: 0%">
+              <div class="circle-inner">{{overall_grade}}</div>
+            </div>
+            <div class="circle-label">Overall</div>
+          </div>
+          <div class="grade-tier" data-tier aria-live="polite" aria-label="Grade tier"></div>
+        </div><!-- /grade-side -->
+      </div><!-- /hero-actions -->
+
+    </div><!-- /container -->
+  </section><!-- /hero -->
 
   <!-- Flip Viewer -->
-
+  <section class="viewer">
     <div class="container">
       <div class="flip-wrap" data-cardflip title="Click or tap to flip (←/→ also)">
         <img class="flip-img front" src="{{front_img}}" alt="{{player}} front" loading="lazy" />
@@ -191,87 +203,85 @@
     </div>
   </section>
 
-  <!-- POP & GEM (replaces "How This Grade Compares") -->
-<section class="pop-gem reveal" id="popGem">
-  <div class="container">
-    <h2>Big 4 Pop & Gem Rate</h2>
-    <p class="fine">
-      <strong>Pop</strong> = how many of this card each company has graded. 
-      <strong>Gem Rate</strong> = share of those that earned the top grade 
-      (PSA/SGC/CGC = 10; <span class="bgs-note">BGS “gem” is 9.5</span>).
-    </p>
+  <!-- POP & GEM -->
+  <section class="pop-gem reveal" id="popGem">
+    <div class="container">
+      <h2>Big 4 Pop & Gem Rate</h2>
+      <p class="fine">
+        <strong>Pop</strong> = how many of this card each company has graded. 
+        <strong>Gem Rate</strong> = share of those that earned the top grade 
+        (PSA/SGC/CGC = 10; <span class="bgs-note">BGS “gem” is 9.5</span>).
+      </p>
 
-    <!-- Pop bars -->
-    <div class="pop-bars" data-popbars>
-      <!-- Each row needs just the pop number in your CSV -->
-      <div class="pop-row" data-co="psa" data-pop="{{psa_pop}}">
-        <div class="co"><span class="dot psa"></span>PSA</div>
-        <div class="bar"><span></span></div>
-        <div class="val" data-out>—</div>
+      <!-- Pop bars -->
+      <div class="pop-bars" data-popbars>
+        <div class="pop-row" data-co="psa" data-pop="{{psa_pop}}">
+          <div class="co"><span class="dot psa"></span>PSA</div>
+          <div class="bar"><span></span></div>
+          <div class="val" data-out>—</div>
+        </div>
+
+        <div class="pop-row" data-co="sgc" data-pop="{{sgc_pop}}">
+          <div class="co"><span class="dot sgc"></span>SGC</div>
+          <div class="bar"><span></span></div>
+          <div class="val" data-out>—</div>
+        </div>
+
+        <div class="pop-row" data-co="cgc" data-pop="{{cgc_pop}}">
+          <div class="co"><span class="dot cgc"></span>CGC</div>
+          <div class="bar"><span></span></div>
+          <div class="val" data-out>—</div>
+        </div>
+
+        <div class="pop-row" data-co="bgs" data-pop="{{bgs_pop}}">
+          <div class="co"><span class="dot bgs"></span>Beckett</div>
+          <div class="bar"><span></span></div>
+          <div class="val" data-out>—</div>
+        </div>
       </div>
 
-      <div class="pop-row" data-co="sgc" data-pop="{{sgc_pop}}">
-        <div class="co"><span class="dot sgc"></span>SGC</div>
-        <div class="bar"><span></span></div>
-        <div class="val" data-out>—</div>
+      <!-- Gem rings -->
+      <div class="gem-grid" data-gemrings>
+        <div class="gem" data-co="psa" data-rate="{{psa_gem_rate}}">
+          <div class="gem-ring" style="--angle: 0%">
+            <div class="gem-kpi"><span class="num" data-rate-out>0%</span></div>
+          </div>
+          <div class="gem-label"><span class="dot psa"></span>PSA Gem Rate</div>
+        </div>
+
+        <div class="gem" data-co="sgc" data-rate="{{sgc_gem_rate}}">
+          <div class="gem-ring" style="--angle: 0%">
+            <div class="gem-kpi"><span class="num" data-rate-out>0%</span></div>
+          </div>
+          <div class="gem-label"><span class="dot sgc"></span>SGC Gem Rate</div>
+        </div>
+
+        <div class="gem" data-co="cgc" data-rate="{{cgc_gem_rate}}">
+          <div class="gem-ring" style="--angle: 0%">
+            <div class="gem-kpi"><span class="num" data-rate-out>0%</span></div>
+          </div>
+          <div class="gem-label"><span class="dot cgc"></span>CGC Gem Rate</div>
+        </div>
+
+        <div class="gem" data-co="bgs" data-rate="{{bgs_gem_rate}}">
+          <div class="gem-ring" style="--angle: 0%">
+            <div class="gem-kpi"><span class="num" data-rate-out>0%</span></div>
+          </div>
+          <div class="gem-label"><span class="dot bgs"></span>BGS Gem Rate</div>
+        </div>
       </div>
 
-      <div class="pop-row" data-co="cgc" data-pop="{{cgc_pop}}">
-        <div class="co"><span class="dot cgc"></span>CGC</div>
-        <div class="bar"><span></span></div>
-        <div class="val" data-out>—</div>
-      </div>
+      <p class="fine small-note">
+        Pop figures are a snapshot <strong>as of {{graded_at}}</strong>. 
+        “Gem” means the top grade (PSA/SGC/CGC = 10; <strong>BGS = 9.5</strong>).
+      </p>
 
-      <div class="pop-row" data-co="bgs" data-pop="{{bgs_pop}}">
-        <div class="co"><span class="dot bgs"></span>Beckett</div>
-        <div class="bar"><span></span></div>
-        <div class="val" data-out>—</div>
+      <!-- eBay comps button BELOW Big 4 -->
+      <div class="comps-cta">
+        <a class="btn btn-green" href="{{ebay}}" target="_blank" rel="noopener">View eBay Comps</a>
       </div>
     </div>
-
-    <!-- Gem rings -->
-    <div class="gem-grid" data-gemrings>
-      <!-- Each ring takes a % from your CSV (0–100). -->
-      <div class="gem" data-co="psa" data-rate="{{psa_gem_rate}}">
-        <div class="gem-ring" style="--angle: 0%">
-          <div class="gem-kpi"><span class="num" data-rate-out>0%</span></div>
-        </div>
-        <div class="gem-label"><span class="dot psa"></span>PSA Gem Rate</div>
-      </div>
-
-      <div class="gem" data-co="sgc" data-rate="{{sgc_gem_rate}}">
-        <div class="gem-ring" style="--angle: 0%">
-          <div class="gem-kpi"><span class="num" data-rate-out>0%</span></div>
-        </div>
-        <div class="gem-label"><span class="dot sgc"></span>SGC Gem Rate</div>
-      </div>
-
-      <div class="gem" data-co="cgc" data-rate="{{cgc_gem_rate}}">
-        <div class="gem-ring" style="--angle: 0%">
-          <div class="gem-kpi"><span class="num" data-rate-out>0%</span></div>
-        </div>
-        <div class="gem-label"><span class="dot cgc"></span>CGC Gem Rate</div>
-      </div>
-
-      <div class="gem" data-co="bgs" data-rate="{{bgs_gem_rate}}">
-        <div class="gem-ring" style="--angle: 0%">
-          <div class="gem-kpi"><span class="num" data-rate-out>0%</span></div>
-        </div>
-        <div class="gem-label"><span class="dot bgs"></span>BGS Gem Rate</div>
-      </div>
-    </div>
-
-    <p class="fine small-note">
-  Pop figures are a snapshot <strong>as of {{graded_at}}</strong>. 
-  “Gem” means the top grade (PSA/SGC/CGC = 10; <strong>BGS = 9.5</strong>).
-</p>
-  </div>
-</section>
-
-<!-- eBay comps button: placed below Big 4 Pop & Gem Rate -->
-<div class="comps-cta">
-  <a class="btn btn-green" href="{{ebay}}" target="_blank" rel="noopener">View eBay Comps</a>
-</div>
+  </section>
 
   <footer class="site-footer">
     <div class="container">
@@ -279,243 +289,167 @@
     </div>
   </footer>
 
-<script>
-
-// ----- Helper: animate conic fill (--angle) smoothly everywhere -----
-function animateCircleAngle(el, targetPct, duration = 900){
-  if (!el) return;
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const startPct = parseFloat(getComputedStyle(el).getPropertyValue('--angle')) || 0;
-  const endPct = Math.max(0, Math.min(100, targetPct));
-  if (reduce) { el.style.setProperty('--angle', endPct + '%'); return; }
-
-  const start = performance.now();
-  const ease = t => 1 - Math.pow(1 - t, 3); // cubic ease-out
-
-  function frame(now){
-    const t = Math.min(1, (now - start) / duration);
-    const k = ease(t);
-    const v = startPct + (endPct - startPct) * k;
-    el.style.setProperty('--angle', v.toFixed(2) + '%');
-    if (t < 1) requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
-}
-
-// ----- Flip behavior -----
-(function(){
-  const root = document.querySelector('[data-cardflip]');
-  if (!root) return;
-  let flipped = false, startX = null;
-  function setFlipped(v){ flipped=v; root.classList.toggle('flipped', flipped); }
-  root.addEventListener('click', () => setFlipped(!flipped));
-  root.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, {passive:true});
-  root.addEventListener('touchend', e => {
-    if (startX==null) return;
-    const dx = e.changedTouches[0].clientX - startX;
-    if (Math.abs(dx) > 40) setFlipped(dx < 0);
-    startX = null;
-  }, {passive:true});
-  root.tabIndex = 0;
-  root.addEventListener('keydown', (e) => {
-    if (e.key==='Enter'||e.key===' ') { e.preventDefault(); setFlipped(!flipped); }
-    if (e.key==='ArrowLeft') setFlipped(true);
-    if (e.key==='ArrowRight') setFlipped(false);
-  });
-})();
-
-// ----- Reveal + animations (bars + circle) with safe fallback -----
-(function(){
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const reveals = document.querySelectorAll('.reveal');
-
-  // If IntersectionObserver isn't available, just show everything.
-  if (!('IntersectionObserver' in window)) {
-    reveals.forEach(el => el.classList.add('is-visible'));
-  } else {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (!e.isIntersecting) return;
-
-        e.target.classList.add('is-visible');
-
-        // Animate the overall circle (only the green fill)
-        const box = e.target.querySelector?.('[data-circle]');
-        const circ = box?.querySelector?.('.circle');
-        if (!reduce && box && circ) {
-          // Accept either 0–1 (e.g., 0.92) or 0–100 (e.g., 92)
-          const raw = Number(box.dataset.angle || 0);
-          const angle = raw <= 1 ? raw * 100 : raw;
-          animateCircleAngle(circ, angle, 900);
-        }
-      });
-    }, { threshold: 0.2 });
-    reveals.forEach(el => io.observe(el));
+  <script>
+  // ----- Helper: animate conic fill (--angle) smoothly everywhere -----
+  function animateCircleAngle(el, targetPct, duration = 900){
+    if (!el) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const startPct = parseFloat(getComputedStyle(el).getPropertyValue('--angle')) || 0;
+    const endPct = Math.max(0, Math.min(100, targetPct));
+    if (reduce) { el.style.setProperty('--angle', endPct + '%'); return; }
+    const start = performance.now();
+    const ease = t => 1 - Math.pow(1 - t, 3); // cubic ease-out
+    function frame(now){
+      const t = Math.min(1, (now - start) / duration);
+      const k = ease(t);
+      const v = startPct + (endPct - startPct) * k;
+      el.style.setProperty('--angle', v.toFixed(2) + '%');
+      if (t < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
   }
 
-  // Animate grade bars
-  document.querySelectorAll('.bar > span').forEach(s => {
-    const m = (s.getAttribute('style') || '').match(/--pct:\s*([\d.]+)%/);
-    const pct = m ? m[1] : '0';
-    s.style.width = reduce ? pct + '%' : '0%';
-    if (!reduce) requestAnimationFrame(() => { s.style.width = pct + '%'; });
-  });
-})();
-
-// ----- Overall circle % (ensure it sets even if reduced motion) -----
-(function(){
-  const box = document.querySelector('[data-circle]');
-  const circ = box?.querySelector?.('.circle');
-  if (!box || !circ) return;
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const raw = Number(box.dataset.angle || 0);
-  const pct = raw <= 1 ? raw * 100 : raw;  // normalize 0–1 → 0–100
-  if (reduce) circ.style.setProperty('--angle', pct + '%');
-})();
-
-// ----- Comparison chart (tolerant JSON parse) -----
-(function(){
-  let data = {};
-  try { data = JSON.parse('{{compare_json}}' || '{}'); } catch(e) { data = {}; }
-  const el = document.getElementById('compare-chart');
-  if (!el || !Object.keys(data).length) {
-    const section = el ? el.closest('section') : null;
-    if (section) section.style.display = 'none';
-    return;
-  }
-  const max = Math.max(...Object.values(data));
-  el.innerHTML = Object.entries(data).map(([label, val]) => {
-    const h = max ? Math.round((val / max) * 100) : 0;
-    return `
-      <div class="barv" style="--h: ${h}%">
-        <div class="barv-fill"></div>
-        <div class="barv-count">${val}</div>
-        <div class="barv-label">${label}</div>
-      </div>`;
-  }).join('');
-  requestAnimationFrame(() => { el.classList.add('animate'); });
-})();
-
-// --- If you don't already have this helper from earlier, it will be defined here ---
-window.animateCircleAngle = window.animateCircleAngle || function(el, targetPct, duration = 900){
-  if (!el) return;
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const startPct = parseFloat(getComputedStyle(el).getPropertyValue('--angle')) || 0;
-  const endPct = Math.max(0, Math.min(100, targetPct));
-  if (reduce) { el.style.setProperty('--angle', endPct + '%'); return; }
-  const start = performance.now();
-  const ease = t => 1 - Math.pow(1 - t, 3);
-  function frame(now){
-    const t = Math.min(1, (now - start) / duration);
-    const k = ease(t);
-    const v = startPct + (endPct - startPct) * k;
-    el.style.setProperty('--angle', v.toFixed(2) + '%');
-    if (t < 1) requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
-};
-
-// --- Pop & Gem init on reveal ---
-(function(){
-  const section = document.getElementById('popGem');
-  if (!section) return;
-
-  function go(){
-    // POP bars
-    const rows = Array.from(section.querySelectorAll('[data-popbars] .pop-row'));
-    const pops = rows.map(r => Math.max(0, Number(r.dataset.pop || 0)));
-    const max = Math.max(...pops, 0);
-
-    rows.forEach((r, i) => {
-      const val = pops[i] || 0;
-      const out = r.querySelector('[data-out]');
-      const fill = r.querySelector('.bar > span');
-      out.textContent = val ? val.toLocaleString() : '0';
-      // scale width (avoid div by zero)
-      const pct = max ? (val / max) * 100 : 0;
-      // Respect reduced motion: if user prefers reduced, jump to final
-      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduce) fill.style.width = pct + '%';
-      else requestAnimationFrame(() => { fill.style.width = pct + '%'; });
+  // ----- Flip behavior -----
+  (function(){
+    const root = document.querySelector('[data-cardflip]');
+    if (!root) return;
+    let flipped = false, startX = null;
+    function setFlipped(v){ flipped=v; root.classList.toggle('flipped', flipped); }
+    root.addEventListener('click', () => setFlipped(!flipped));
+    root.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, {passive:true});
+    root.addEventListener('touchend', e => {
+      if (startX==null) return;
+      const dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 40) setFlipped(dx < 0);
+      startX = null;
+    }, {passive:true});
+    root.tabIndex = 0;
+    root.addEventListener('keydown', (e) => {
+      if (e.key==='Enter'||e.key===' ') { e.preventDefault(); setFlipped(!flipped); }
+      if (e.key==='ArrowLeft') setFlipped(true);
+      if (e.key==='ArrowRight') setFlipped(false);
     });
+  })();
 
-    // GEM rings
-    section.querySelectorAll('[data-gemrings] .gem').forEach(card => {
-      const rateRaw = Math.max(0, Number(card.dataset.rate || 0)); // expect 0–100
-      const ring = card.querySelector('.gem-ring');
-      const label = card.querySelector('[data-rate-out]');
-      const pct = Math.max(0, Math.min(100, rateRaw));
-      animateCircleAngle(ring, pct, 900);
-      label.textContent = Math.round(pct) + '%';
+  // ----- Reveal + animations (bars + circle) with safe fallback -----
+  (function(){
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reveals = document.querySelectorAll('.reveal');
+
+    // If IntersectionObserver isn't available, just show everything.
+    if (!('IntersectionObserver' in window)) {
+      reveals.forEach(el => el.classList.add('is-visible'));
+    } else {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('is-visible');
+
+          // Animate the overall circle (only the green fill)
+          const box = e.target.querySelector?.('[data-circle]');
+          const circ = box?.querySelector?.('.circle');
+          if (!reduce && box && circ) {
+            const raw = Number(box.dataset.angle || 0); // 0–1 or 0–100
+            const angle = raw <= 1 ? raw * 100 : raw;
+            animateCircleAngle(circ, angle, 900);
+          }
+        });
+      }, { threshold: 0.2 });
+      reveals.forEach(el => io.observe(el));
+    }
+
+    // Animate grade bars
+    document.querySelectorAll('.bar > span').forEach(s => {
+      const m = (s.getAttribute('style') || '').match(/--pct:\s*([\d.]+)%/);
+      const pct = m ? m[1] : '0';
+      s.style.width = reduce ? pct + '%' : '0%';
+      if (!reduce) requestAnimationFrame(() => { s.style.width = pct + '%'; });
     });
-  }
+  })();
 
-  // If your global reveal IO is already marking .reveal.is-visible,
-  // we can hook into that; else run immediately.
-  if (section.classList.contains('is-visible')) {
-    go();
-  } else {
-    // Observe once
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (!e.isIntersecting) return;
-        go();
-        io.disconnect();
-      });
-    }, { threshold: 0.2 });
-    io.observe(section);
-  }
-})();
+  // ----- Overall circle % (ensure it sets even if reduced motion) -----
+  (function(){
+    const box = document.querySelector('[data-circle]');
+    const circ = box?.querySelector?.('.circle');
+    if (!box || !circ) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const raw = Number(box.dataset.angle || 0);
+    const pct = raw <= 1 ? raw * 100 : raw;  // normalize 0–1 → 0–100
+    if (reduce) circ.style.setProperty('--angle', pct + '%');
+  })();
 
-/* --- NEW: SlabMetrics grade tier badge logic --- */
-(function(){
-  const el = document.querySelector('[data-tier]');
-  const rawText = document.querySelector('.circle-inner')?.textContent || '';
-  if (!el || !rawText) return;
+  // ----- Comparison chart (tolerant JSON parse) -----
+  (function(){
+    let data = {};
+    try { data = JSON.parse('{{compare_json}}' || '{}'); } catch(e) { data = {}; }
+    const el = document.getElementById('compare-chart');
+    if (!el || !Object.keys(data).length) {
+      const section = el ? el.closest('section') : null;
+      if (section) section.style.display = 'none';
+      return;
+    }
+    const max = Math.max(...Object.values(data));
+    el.innerHTML = Object.entries(data).map(([label, val]) => {
+      const h = max ? Math.round((val / max) * 100) : 0;
+      return `
+        <div class="barv" style="--h: ${h}%">
+          <div class="barv-fill"></div>
+          <div class="barv-count">${val}</div>
+          <div class="barv-label">${label}</div>
+        </div>`;
+    }).join('');
+    requestAnimationFrame(() => { el.classList.add('animate'); });
+  })();
 
-  const raw = Math.max(1, Math.min(10, parseFloat(rawText.replace(/[^\d.]/g,'')) || 0));
+  /* --- SlabMetrics grade tier badge logic --- */
+  (function(){
+    const el = document.querySelector('[data-tier]');
+    const rawText = document.querySelector('.circle-inner')?.textContent || '';
+    if (!el || !rawText) return;
 
-  function binned(v){
-    if (v >= 9.75) return 10.0;
-    if (v >= 9.25) return 9.5;
-    if (v >= 8.75) return 9.0;
-    if (v >= 8.25) return 8.5;
-    if (v >= 7.50) return 8.0;
-    if (v >= 6.50) return 7.0;
-    if (v >= 5.50) return 6.0;
-    if (v >= 4.50) return 5.0;
-    if (v >= 3.50) return 4.0;
-    if (v >= 2.50) return 3.0;
-    if (v >= 1.50) return 2.0;
-    return 1.0;
-  }
+    const raw = Math.max(1, Math.min(10, parseFloat(rawText.replace(/[^\d.]/g,'')) || 0));
 
-  const NAMES = {
-  10.0: {name:'Apex (Gem Mint)', base:'10'},
-  9.5:  {name:'Elite (Mint+)', base:'9.5'},
-  9.0:  {name:'Mint', base:'9'},
-  8.5:  {name:'Strong', base:'8.5'},
-  8.0:  {name:'Solid (NM-MT)', base:'8'},
-  7.0:  {name:'Collector (NM)', base:'7'},
-  6.0:  {name:'Playable (EX-MT)', base:'6'},
-  5.0:  {name:'Classic (EX)', base:'5'},
-  4.0:  {name:'Vintage (VG-EX)', base:'4'},
-  3.0:  {name:'Worn (VG)', base:'3'},
-  2.0:  {name:'Poor+', base:'2'},
-  1.0:  {name:'Poor', base:'1'},
-};
+    function binned(v){
+      if (v >= 9.75) return 10.0;
+      if (v >= 9.25) return 9.5;
+      if (v >= 8.75) return 9.0;
+      if (v >= 8.25) return 8.5;
+      if (v >= 7.50) return 8.0;
+      if (v >= 6.50) return 7.0;
+      if (v >= 5.50) return 6.0;
+      if (v >= 4.50) return 5.0;
+      if (v >= 3.50) return 4.0;
+      if (v >= 2.50) return 3.0;
+      if (v >= 1.50) return 2.0;
+      return 1.0;
+    }
 
-  const bin = binned(raw);
-  const meta = NAMES[bin] || {name:'—', base:'—'};
+    const NAMES = {
+      10.0: {name:'Apex (Gem Mint)', base:'10'},
+      9.5:  {name:'Elite (Mint+)', base:'9.5'},
+      9.0:  {name:'Mint', base:'9'},
+      8.5:  {name:'Strong', base:'8.5'},
+      8.0:  {name:'Solid (NM-MT)', base:'8'},
+      7.0:  {name:'Collector (NM)', base:'7'},
+      6.0:  {name:'Playable (EX-MT)', base:'6'},
+      5.0:  {name:'Classic (EX)', base:'5'},
+      4.0:  {name:'Vintage (VG-EX)', base:'4'},
+      3.0:  {name:'Worn (VG)', base:'3'},
+      2.0:  {name:'Poor+', base:'2'},
+      1.0:  {name:'Poor', base:'1'},
+    };
 
-  el.innerHTML = `
-    <div class="tier-line">
-      <span class="tier-name">${meta.name}</span>
-      <span class="tier-base">· ${meta.base}</span>
-    </div>
-    <div class="tier-help">Your ${raw.toFixed(1).replace(/\.0$/,'')} maps to <strong>${meta.name}</strong> (${meta.base}).</div>
-  `;
-})();
-</script>
+    const bin = binned(raw);
+    const meta = NAMES[bin] || {name:'—', base:'—'};
+
+    el.innerHTML = `
+      <div class="tier-line">
+        <span class="tier-name">${meta.name}</span>
+        <span class="tier-base">· ${meta.base}</span>
+      </div>
+      <div class="tier-help">Your ${raw.toFixed(1).replace(/\.0$/,'')} maps to <strong>${meta.name}</strong> (${meta.base}).</div>
+    `;
+  })();
+  </script>
 </body>
 </html>
