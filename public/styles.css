@@ -11,6 +11,9 @@
   --container:1100px;
   --pad:16px;
   --fade: 360ms;
+
+  /* Force light UI for form controls, etc. */
+  color-scheme: light;
 }
 
 *{box-sizing:border-box}
@@ -79,7 +82,7 @@ img{max-width:100%;height:auto;display:block}
 
 .overall{display:grid;place-items:center}
 
-/* Animateable custom property for the conic-gradient */
+/* Animateable custom property for the conic-gradient (single definition) */
 @property --angle {
   syntax: '<percentage>';
   inherits: false;
@@ -243,13 +246,23 @@ img{max-width:100%;height:auto;display:block}
 /* --- Big 4 Pop & Gem section --- */
 .pop-gem { padding: 22px 0; }
 
-/* Brand dots (just visual accents) */
-.dot.psa{ display:inline-block; width:10px; height:10px; border-radius:50%; background:#d22; margin-right:6px; }
-.dot.sgc{ display:inline-block; width:10px; height:10px; border-radius:50%; background:#0a8f5b; margin-right:6px; }
-.dot.cgc{ display:inline-block; width:10px; height:10px; border-radius:50%; background:#3ba4f0; margin-right:6px; }
-.dot.bgs{ display:inline-block; width:10px; height:10px; border-radius:50%; background:#b48b2c; margin-right:6px; }
+/* ===== Big 4 brand palette ===== */
+:root{
+  --psa-red:#d0021b;
+  --psa-blue:#1155cc;
+  --sgc-black:#000000;
+  --sgc-white:#ffffff;
+  --cgc-red:#cc1f1f;
+  --cgc-black:#000000;
+  --bgs-gold:#b48b2c;
+  --bgs-black:#000000;
+}
 
-.bgs-note{ font-weight:700; }
+/* Brand dots next to labels (single, consistent set) */
+.dot.psa{ display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--psa-blue);margin-right:6px; }
+.dot.sgc{ display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--sgc-black);margin-right:6px;border:1px solid #444; }
+.dot.cgc{ display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--cgc-red);margin-right:6px; }
+.dot.bgs{ display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--bgs-gold);margin-right:6px; }
 
 /* POP bars */
 .pop-bars{
@@ -275,10 +288,19 @@ img{max-width:100%;height:auto;display:block}
   transition: width .8s cubic-bezier(.2,.7,.2,1);
 }
 /* Colored fills per brand */
-.pop-row[data-co="psa"] .bar > span{ background:linear-gradient(90deg,#d22,#1a73e8); }
-.pop-row[data-co="sgc"] .bar > span{ background:#0a8f5b; }
-.pop-row[data-co="cgc"] .bar > span{ background:#3ba4f0; }
-.pop-row[data-co="bgs"] .bar > span{ background:#b48b2c; }
+.pop-row[data-co="psa"] .co{ color:var(--psa-red); }
+.pop-row[data-co="psa"] .bar > span{ background: linear-gradient(90deg, var(--psa-blue) 0%, #1a73e8 100%); }
+
+.pop-row[data-co="sgc"] .co{ color:var(--sgc-black); }
+.pop-row[data-co="sgc"] .bar{ background: #e6e6e6; } /* light track keeps contrast */
+.pop-row[data-co="sgc"] .bar > span{ background: var(--sgc-black); }
+
+.pop-row[data-co="cgc"] .co{ color: var(--cgc-black); }
+.pop-row[data-co="cgc"] .bar > span{ background: var(--cgc-red); }
+
+.pop-row[data-co="bgs"] .co{ color: var(--bgs-black); }
+.pop-row[data-co="bgs"] .bar > span{ background: var(--bgs-gold); }
+
 .pop-row .val{ font-weight:800; min-width:5ch; text-align:right; }
 
 /* GEM rings grid */
@@ -298,16 +320,11 @@ img{max-width:100%;height:auto;display:block}
   background:var(--white);
 }
 
-@property --angle {
-  syntax: '<percentage>';
-  inherits: false;
-  initial-value: 0%;
-}
-
+/* Gem ring (single definition, brandable) */
 .gem-ring{
-  --size: 120px; --thick: 12px; --angle: 0%;
+  --size: 120px; --thick: 12px; --angle: 0%; --brand: var(--green);
   width:var(--size); height:var(--size); border-radius:50%;
-  background: conic-gradient(var(--green) var(--angle), var(--gray-200) 0);
+  background: conic-gradient(var(--brand) var(--angle), var(--gray-200) 0);
   display:grid; place-items:center;
   transition: --angle .9s cubic-bezier(.2,.7,.2,1);
   box-shadow: 0 1px 6px rgba(0,0,0,.06);
@@ -321,77 +338,44 @@ img{max-width:100%;height:auto;display:block}
 .gem-kpi .num{ font-weight:900; font-size:1.2rem; }
 .gem-label{ font-weight:700; text-align:center; }
 
-.small-note{ margin-top:8px; }
-
-/* Dark mode polish */
-@media (prefers-color-scheme: dark){
-  .pop-bars, .gem{ background:#111; border-color:#222; }
-  .pop-row .bar{ background:#2a2a2a; }
-  .gem-ring::before{ background:#111; }
-}
-
-/* ===== Big 4 brand palette ===== */
-:root{
-  --psa-red:#d0021b;
-  --psa-blue:#1155cc;
-  --sgc-black:#000000;
-  --sgc-white:#ffffff;
-  --cgc-red:#cc1f1f;
-  --cgc-black:#000000;
-  --bgs-gold:#b48b2c;
-  --bgs-black:#000000;
-}
-
-/* Brand dots next to labels */
-.dot.psa{ display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--psa-blue);margin-right:6px; }
-.dot.sgc{ display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--sgc-black);margin-right:6px;border:1px solid #444; }
-.dot.cgc{ display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--cgc-red);margin-right:6px; }
-.dot.bgs{ display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--bgs-gold);margin-right:6px; }
-
-/* POP bars: label color + fill per company */
-.pop-row[data-co="psa"] .co{ color:var(--psa-red); }
-.pop-row[data-co="psa"] .bar > span{ 
-  background: linear-gradient(90deg, var(--psa-blue) 0%, #1a73e8 100%);
-}
-
-.pop-row[data-co="sgc"] .co{ color:var(--sgc-black); }
-.pop-row[data-co="sgc"] .bar{ background: #e6e6e6; } /* light track keeps contrast */
-.pop-row[data-co="sgc"] .bar > span{ background: var(--sgc-black); }
-
-.pop-row[data-co="cgc"] .co{ color: var(--cgc-black); }
-.pop-row[data-co="cgc"] .bar > span{ background: var(--cgc-red); }
-
-.pop-row[data-co="bgs"] .co{ color: var(--bgs-black); }
-.pop-row[data-co="bgs"] .bar > span{ background: var(--bgs-gold); }
-
-/* GEM rings use brand color instead of generic green */
-.gem-ring{ 
-  --size: 120px; --thick: 12px; --angle: 0%; --brand: var(--green);
-  width:var(--size); height:var(--size); border-radius:50%;
-  background: conic-gradient(var(--brand) var(--angle), var(--gray-200) 0);
-  display:grid; place-items:center;
-  transition: --angle .9s cubic-bezier(.2,.7,.2,1);
-  box-shadow: 0 1px 6px rgba(0,0,0,.06);
-  position: relative;
-}
 .gem[data-co="psa"] .gem-ring{ --brand: var(--psa-blue); }
 .gem[data-co="sgc"] .gem-ring{ --brand: var(--sgc-black); }
 .gem[data-co="cgc"] .gem-ring{ --brand: var(--cgc-red); }
 .gem[data-co="bgs"] .gem-ring{ --brand: var(--bgs-gold); }
 
-/* Optional: brand the gem label text a bit (PSA red accent) */
-.gem[data-co="psa"] .gem-label{ color: var(--psa-red); }
-.gem[data-co="sgc"] .gem-label{ color: var(--sgc-black); }
-.gem[data-co="cgc"] .gem-label{ color: var(--cgc-black); }
-.gem[data-co="bgs"] .gem-label{ color: var(--bgs-black); }
+.small-note{ margin-top:8px; }
 
-/* Dark mode polish */
-@media (prefers-color-scheme: dark){
-  .pop-bars, .gem{ background:#111; border-color:#222; }
-  .pop-row .bar{ background:#2a2a2a; }
-  .gem-ring::before{ background:#111; }
-  .pop-row[data-co="psa"] .co,
-  .pop-row[data-co="sgc"] .co,
-  .pop-row[data-co="cgc"] .co,
-  .pop-row[data-co="bgs"] .co { color:#eaeaea; } /* keep labels legible in dark */
+/* ============================
+   OPTIONAL: Manual Dark Theme
+   Enable by setting <html data-theme="dark">
+   ============================ */
+html[data-theme="dark"]{
+  color-scheme: dark;
+  --white:#0f0f10;
+  --black:#f1f1f1;
+  --gray-50:#111214;
+  --gray-100:#181a1c;
+  --gray-200:#25282c;
+  --gray-400:#9aa0a6;
+  --gray-500:#b0b6bc;
+  background:var(--white);
+  color:var(--black);
 }
+html[data-theme="dark"] .site-header,
+html[data-theme="dark"] .hero,
+html[data-theme="dark"] .tile,
+html[data-theme="dark"] .pop-bars,
+html[data-theme="dark"] .gem,
+html[data-theme="dark"] .bars,
+html[data-theme="dark"] .site-footer{
+  background:var(--white);
+  border-color:var(--gray-200);
+}
+html[data-theme="dark"] #q{ border-color:var(--gray-200); }
+html[data-theme="dark"] .btn{ border-color:var(--black); color:var(--black); background:var(--white); }
+html[data-theme="dark"] .btn:hover{ background:#16181a; }
+
+html[data-theme="dark"] .pop-row .bar{ background:var(--gray-200); }
+html[data-theme="dark"] .gem-ring::before{ background:var(--white); }
+html[data-theme="dark"] .barv-fill{ background:var(--green); }
+html[data-theme="dark"] .bar > span{ background:var(--green); }
