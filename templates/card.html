@@ -82,41 +82,41 @@
   </header>
 
   <!-- HERO -->
-  <section class="hero reveal is-visible">
-    <div class="container hero-inner">
+<section class="hero reveal is-visible">
+  <div class="container hero-inner">
 
-      <!-- Title + meta -->
-      <div class="hero-head">
-        <h1 class="tight">
-          <span class="dim">{{player}}</span>
-          <span class="slash">—</span>
-          {{set}} <span class="no-wrap">{{number}}</span>
-        </h1>
-        <p class="meta">
-          <strong>Serial:</strong> {{serial}}
-          <span class="dot">•</span>
-          <strong>Grade Valid as of:</strong> {{graded_at}}
-          <span class="dot">•</span>
-          <strong>Team:</strong> {{team}}
-        </p>
-      </div>
+    <!-- Title + meta -->
+    <div class="hero-head">
+      <h1 class="tight">
+        <span class="dim">{{player}}</span>
+        <span class="slash">—</span>
+        {{set}} <span class="no-wrap">{{number}}</span>
+      </h1>
+      <p class="meta">
+        <strong>Serial:</strong> {{serial}}
+        <span class="dot">•</span>
+        <strong>Graded:</strong> {{graded_at}}
+        <span class="dot">•</span>
+        <strong>Team:</strong> {{team}}
+      </p>
+    </div>
 
-      <!-- Actions row = buttons (left) + overall circle (right) -->
-
-        <!-- Right column: circle + badge -->
-        <div class="grade-side">
-          <div class="overall" data-circle data-angle="{{overall_pct}}">
-            <div class="circle" style="--angle: 0%">
-              <div class="circle-inner">{{overall_grade}}</div>
-            </div>
-            <div class="circle-label">Overall</div>
+    <!-- Actions row (we’re only using the right side now) -->
+    <div class="hero-actions">
+      <!-- Right column: circle + badge -->
+      <div class="grade-side">
+        <div class="overall" data-circle data-angle="{{overall_pct}}">
+          <div class="circle" style="--angle: 0%">
+            <div class="circle-inner">{{overall_grade}}</div>
           </div>
-          <div class="grade-tier" data-tier aria-live="polite" aria-label="Grade tier"></div>
-        </div><!-- /grade-side -->
-      </div><!-- /hero-actions -->
+          <div class="circle-label">Overall</div>
+        </div>
+        <div class="grade-tier" data-tier aria-live="polite" aria-label="Grade tier"></div>
+      </div><!-- /grade-side -->
+    </div><!-- /hero-actions -->
 
-    </div><!-- /container -->
-  </section><!-- /hero -->
+  </div><!-- /container -->
+</section><!-- /hero -->
 
   <!-- Flip Viewer -->
 <section class="viewer">
