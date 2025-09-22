@@ -463,3 +463,18 @@ html[data-theme="dark"] .bar > span{ background:var(--green); }
   font-weight: 600;
   text-align: center;
 }
+
+.footer-buttons {
+  display: flex;
+  flex-direction: column;   /* stack vertically */
+  align-items: center;      /* center horizontally */
+  gap: 12px;                /* spacing between the two */
+}
+
+.footer-buttons .btn {
+  min-width: 220px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+}
