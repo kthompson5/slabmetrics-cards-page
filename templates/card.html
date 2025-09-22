@@ -453,6 +453,65 @@
       <div class="tier-help">Your ${raw.toFixed(1).replace(/\.0$/,'')} maps to <strong>${meta.name}</strong> (${meta.base}).</div>
     `;
   })();
+  // --- Pop & Gem init (robust parse + multiple triggers) ---
+(function(){
+  const section = document.getElementById('popGem');
+  if (!section) return;
+
+  // Strip commas, % and non-numeric chars safely
+  const toNum = (v) => {
+    if (v == null) return 0;
+    const s = String(v).trim().replace(/[^0-9.]/g, '');
+    const n = parseFloat(s);
+    return isFinite(n) ? n : 0;
+  };
+
+  function go(){
+    // POP bars
+    const rows = Array.from(section.querySelectorAll('[data-popbars] .pop-row'));
+    const pops = rows.map(r => Math.max(0, toNum(r.dataset.pop)));
+    const max = Math.max(...pops, 0);
+
+    rows.forEach((r, i) => {
+      const val = pops[i] || 0;
+      const out = r.querySelector('[data-out]');
+      const fill = r.querySelector('.bar > span');
+
+      out.textContent = val ? val.toLocaleString() : '0';
+
+      const pct = max ? (val / max) * 100 : 0;
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) fill.style.width = pct + '%';
+      else requestAnimationFrame(() => { fill.style.width = pct + '%'; });
+    });
+
+    // GEM rings
+    section.querySelectorAll('[data-gemrings] .gem').forEach(card => {
+      const rate = Math.max(0, Math.min(100, toNum(card.dataset.rate)));
+      const ring = card.querySelector('.gem-ring');
+      const label = card.querySelector('[data-rate-out]');
+      animateCircleAngle(ring, rate, 900);
+      label.textContent = Math.round(rate) + '%';
+    });
+  }
+
+  // Run once when section reveals
+  const revealIo = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      go();
+      revealIo.disconnect();
+    });
+  }, { threshold: 0.2 });
+  revealIo.observe(section);
+
+  // Also run on DOM ready in case section is already in view
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', go, { once:true });
+  } else {
+    setTimeout(go, 0);
+  }
+})();
   </script>
 </body>
 </html>
