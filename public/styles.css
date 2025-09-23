@@ -478,3 +478,40 @@ html[data-theme="dark"] .bar > span{ background:var(--green); }
   font-weight: 600;
   text-align: center;
 }
+
+/* EDGE centering section */
+.edge-section {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.edge-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #111; /* neutral dark text */
+  border-bottom: 2px solid #e5e7eb; /* subtle light gray underline */
+  display: inline-block;
+  padding-bottom: .25rem;
+}
+
+.edge-frame {
+  display: inline-block;
+  background: #fff;
+  border: 1px solid #e5e7eb; /* light neutral border */
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08); /* soft shadow */
+  padding: .75rem;
+}
+
+.edge-frame img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.edge-disclaimer {
+  font-size: .85rem;
+  color: #6b7280; /* muted gray */
+  margin-top: .75rem;
+}
