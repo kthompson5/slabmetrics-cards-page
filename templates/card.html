@@ -208,17 +208,41 @@
     </div>
   </section>
 
-{{#edge_img}}
-<section class="edge-section">
+<section class="edge-section" id="edgeAnalysis" style="display:none;">
   <h2 class="edge-title">Centering Analysis</h2>
   <div class="edge-frame">
-    <img src="{{edge_img}}" alt="EDGE centering report for {{player}}" loading="lazy" />
+    <img id="edgeImg" src="{{edge_img}}" alt="EDGE centering report for {{player}}" loading="lazy" />
   </div>
   <p class="edge-disclaimer">
     Estimates are based on EDGE centering ratios shown above. Final grades may vary by grader.
   </p>
 </section>
-{{/edge_img}}
+
+<script>
+  (function () {
+    var img = document.getElementById('edgeImg');
+    var wrap = document.getElementById('edgeAnalysis');
+    if (!img || !wrap) return;
+
+    function show() { wrap.style.display = ''; }
+    function hide() { wrap.remove(); }
+
+    if (!img.getAttribute('src') || img.getAttribute('src') === '{{edge_img}}') {
+      // no value injected
+      hide();
+      return;
+    }
+
+    if (img.complete) {
+      // already loaded (from cache) – check if valid
+      (img.naturalWidth > 0) ? show() : hide();
+    } else {
+      img.addEventListener('load', show, { once: true });
+      img.addEventListener('error', hide, { once: true });
+    }
+  })();
+</script>
+
 
 
     <!-- POP & GEM -->
