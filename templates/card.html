@@ -208,24 +208,17 @@
     </div>
   </section>
 
-  ---
-// props coming from JSON built from CSV
-const { player, edge_img } = Astro.props;
----
-
-<!-- existing card details -->
-
-{edge_img && (
-  <section class="edge-section">
-    <h2 class="edge-title">Centering Analysis</h2>
-    <div class="edge-frame">
-      <img src={edge_img} alt={`EDGE centering report for ${player}`} loading="lazy" />
-    </div>
-    <p class="edge-disclaimer">
-      Estimates are based on EDGE centering ratios shown above. Final grades may vary by grader.
-    </p>
-  </section>
-)}
+{{#edge_img}}
+<section class="edge-section">
+  <h2 class="edge-title">Centering Analysis</h2>
+  <div class="edge-frame">
+    <img src="{{edge_img}}" alt="EDGE centering report for {{player}}" loading="lazy" />
+  </div>
+  <p class="edge-disclaimer">
+    Estimates are based on EDGE centering ratios shown above. Final grades may vary by grader.
+  </p>
+</section>
+{{/edge_img}}
 
 
     <!-- POP & GEM -->
