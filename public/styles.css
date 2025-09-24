@@ -552,3 +552,21 @@ html[data-theme="dark"] .bar > span{ background:var(--green); }
   color: #6b7280; /* muted gray */
   margin-top: .75rem;
 }
+/* Reusable soft frame (matches edge frame look) */
+.soft-frame{
+  border:1px solid var(--gray-200);
+  border-radius:14px;
+  background:var(--gray-50);
+  box-shadow:0 4px 14px rgba(0,0,0,.08);
+}
+
+/* Padding just for the viewer wrapper */
+.viewer-frame{ padding:12px; }
+
+/* Make sure the flipper fits nicely inside the frame */
+.viewer .flip-wrap{
+  display:block;
+  margin:0 auto;
+  max-width: 580px; /* adjust if your images are larger/smaller */
+}
+
