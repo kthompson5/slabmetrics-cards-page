@@ -333,11 +333,12 @@ function build() {
       number: safe(c.number),
       variant: safe(c.variant),
       serial: safe(c.serial),
-      team: safe(c.card_info?.team || c.team),
+      team: safe(c.team),
       sport: safe(c.card_info?.sport || c.sport),
       graded_at: safe(c.graded_at || todayISO()),
       front_img: safe(frontImg),
       back_img: safe(backImg),
+      edge_img: safe(edgeImg),
       ebay: safe(c.links?.ebay_comps || c.ebay || '#'),
 
       // grades
