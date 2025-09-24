@@ -723,3 +723,66 @@ html[data-theme="dark"] .bar > span{ background:var(--green); }
   font-weight: 600;
   text-align: center;
   line-height: 1.2;
+
+/* ===== OVERRIDES: circle + badge (poster style) ===== */
+.hero-actions .grade-side{
+  /* one row: circle | badge */
+  display:grid !important;
+  grid-template-columns:auto 1fr;
+  column-gap:12px;
+  align-items:center;
+}
+
+/* keep circle size/aesthetic exactly as-is */
+.hero-actions .grade-side .overall{
+  min-width:0;
+  margin:0 !important;        /* kill any bottom margins from old mobile stack */
+}
+
+/* badge: poster-shaped, wraps inside itself, never overflows */
+.hero-actions .grade-side .grade-tier{
+  /* layout */
+  display:inline-flex !important;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+
+  /* text & wrapping */
+  white-space:normal !important;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+  min-width:0;                 /* allow shrinking in grid */
+  max-width: 160px;            /* <- keeps it from becoming a banner */
+  
+  /* poster proportions */
+  padding: 1rem .6rem;         /* taller, less wide */
+  min-height: 88px;            /* poster height target */
+  border-radius: 10px;
+  font-weight:600;
+  line-height:1.2;
+}
+
+/* tighten on smaller viewports */
+@media (max-width:600px){
+  .hero-actions .grade-side{
+    column-gap:10px;
+  }
+  .hero-actions .grade-side .grade-tier{
+    font-size:clamp(.8rem, 3.2vw, .95rem);
+    max-width: 140px;          /* a touch narrower on small screens */
+    min-height: 84px;          /* keep the poster feel */
+    padding: .9rem .55rem;
+  }
+}
+
+/* ultra-narrow: if needed, stack intentionally (badge full width) */
+@media (max-width:360px){
+  .hero-actions .grade-side{
+    grid-template-columns:1fr; /* stack */
+    row-gap:8px;
+  }
+  .hero-actions .grade-side .grade-tier{
+    max-width: 100%;
+    min-height: 76px;          /* still poster-ish */
+  }
+}
