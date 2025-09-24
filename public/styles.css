@@ -627,3 +627,23 @@ html[data-theme="dark"] .bar > span{ background:var(--green); }
     padding: 0.5em 0.4em; /* a touch tighter on narrow screens */
   }
 }
+
+/* FORCE circle + badge on one line */
+.hero-actions .grade-side{
+  display:flex !important;
+  flex-direction:row !important;
+  align-items:center;
+  gap:12px;
+}
+
+/* Make sure children aren't forced full-width */
+.hero-actions .grade-side .overall,
+.hero-actions .grade-side .grade-tier{
+  flex:0 0 auto;
+  width:auto !important;
+  max-width:none;
+  margin:0;
+}
+
+/* Some themes add bottom margins on blocks—kill it */
+.hero-actions .grade-side .overall{ margin-bottom:0 !important; }
