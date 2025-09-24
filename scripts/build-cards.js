@@ -132,6 +132,12 @@ function loadCSVCards() {
       variant: r.variant || '',
       serial: r.serial || '',
       graded_at: r.graded_at && String(r.graded_at).trim() ? r.graded_at : todayISO(),
+      team: r.team || '',
+      edge_img: (r.edge_img && r.edge_img.trim())
+        ? (r.edge_img.startsWith('/') ? r.edge_img
+          : '/edge/' + r.edge_img.replace(/^\.?\/?edge\//,''))
+        : `/edge/${id}.jpg`,
+
       images: {
         front: r.front_img && r.front_img.trim()
           ? r.front_img
@@ -323,6 +329,8 @@ function build() {
     // Resolve image fields from either structure
     const frontImg = c.images?.front || c.front_img;
     const backImg  = c.images?.back  || c.back_img;
+    const edgeImg  = c.edge_img || `/edge/${c.id}.jpg`;
+
 
     // Bars %: use CSV pcts if present, else compute from averages
     const p = c.pcts || {};
