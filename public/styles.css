@@ -586,3 +586,44 @@ html[data-theme="dark"] .bar > span{ background:var(--green); }
 .dot {
   margin: 0 0.25em;
 }
+
+/* Circle + badge side by side */
+.grade-side {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: nowrap;
+}
+
+/* Circle stays fixed */
+.grade-side .overall {
+  flex: 0 0 auto;
+}
+
+/* Badge base */
+.grade-side .grade-tier {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  white-space: nowrap;
+  line-height: 1.2;
+
+  /* Taller / less wide */
+  padding: 0.6em 0.5em;
+  border-radius: 10px;
+  min-width: 2.5em;   /* ensures it doesn’t collapse too thin */
+  text-align: center;
+}
+
+/* Responsive scaling for badge text + padding */
+@media (max-width: 600px) {
+  .grade-side {
+    gap: 8px;
+  }
+
+  .grade-side .grade-tier {
+    font-size: clamp(0.75rem, 3vw, 0.95rem);
+    padding: 0.5em 0.4em; /* a touch tighter on narrow screens */
+  }
+}
