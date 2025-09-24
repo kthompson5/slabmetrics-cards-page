@@ -681,3 +681,36 @@ html[data-theme="dark"] .bar > span{ background:var(--green); }
   }
   .grade-side{ gap:8px; }
 }
+
+/* Keep circle and badge on one row; let badge wrap inside the row */
+.grade-side{
+  display: grid;
+  grid-template-columns: auto 1fr; /* circle | badge */
+  column-gap: 12px;
+  align-items: center;
+}
+
+/* Circle stays its natural size */
+.grade-side .overall{
+  min-width: 0;
+}
+
+/* Badge fills remaining space and wraps instead of overflowing */
+.grade-side .grade-tier{
+  min-width: 0;              /* critical so it can shrink */
+  max-width: 100%;
+  white-space: normal;        /* allow multi-line text */
+  overflow-wrap: anywhere;    /* break long tokens if needed */
+  word-break: break-word;
+  text-align: center;         /* optional: keep it centered */
+  padding: 0.6em 0.5em;       /* your taller/less-wide look */
+  border-radius: 10px;
+}
+
+/* If you REALLY need to stack on ultra-narrow screens, do it intentionally */
+@media (max-width: 360px){
+  .grade-side{
+    grid-template-columns: 1fr; /* stack only at very tiny widths */
+    row-gap: 8px;
+  }
+}
