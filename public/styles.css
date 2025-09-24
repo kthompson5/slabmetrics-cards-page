@@ -786,3 +786,64 @@ html[data-theme="dark"] .bar > span{ background:var(--green); }
     min-height: 76px;          /* still poster-ish */
   }
 }
+
+/* ===== FINAL OVERRIDES: Overall circle + Badge (poster style) ===== */
+.hero-actions .grade-side{
+  /* keep BOTH on one row: [circle] [badge] */
+  display: grid !important;
+  grid-template-columns: auto 1fr;   /* circle | badge grows */
+  align-items: center;
+  column-gap: 12px;
+}
+
+/* circle stays exactly as-is */
+.hero-actions .grade-side .overall{
+  min-width: 0;
+  margin: 0 !important;
+}
+
+/* badge: tall "poster", wraps inside itself, never overflows */
+.hero-actions .grade-side .grade-tier{
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: 600;
+  line-height: 1.2;
+
+  /* allow wrapping inside badge */
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  min-width: 0;                 /* allow shrinking in grid */
+  max-inline-size: 16ch;        /* <= prevents banner width */
+  inline-size: fit-content;     /* hug content within the cap */
+
+  /* poster proportions */
+  padding: 1rem .6rem;          /* taller, less wide */
+  min-height: 90px;             /* poster height */
+  border-radius: 10px;
+}
+
+/* tighten slightly on phones */
+@media (max-width: 600px){
+  .hero-actions .grade-side{ column-gap: 10px; }
+  .hero-actions .grade-side .grade-tier{
+    font-size: clamp(.8rem, 3.2vw, .95rem);
+    max-inline-size: 14ch;      /* a little narrower on small screens */
+    min-height: 84px;
+    padding: .9rem .55rem;
+  }
+}
+
+/* ultra-narrow fallback (only if absolutely necessary) */
+@media (max-width: 360px){
+  .hero-actions .grade-side{
+    grid-template-columns: 1fr; /* intentional stack at tiny widths */
+    row-gap: 8px;
+  }
+  .hero-actions .grade-side .grade-tier{
+    max-inline-size: 100%;
+    min-height: 76px;
+  }
+}
