@@ -569,4 +569,6 @@ html[data-theme="dark"] .bar > span{ background:var(--green); }
   margin:0 auto;
   max-width: 580px; /* adjust if your images are larger/smaller */
 }
-
+.meta .team {
+  white-space: nowrap;
+}
