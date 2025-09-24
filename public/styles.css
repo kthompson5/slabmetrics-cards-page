@@ -723,12 +723,3 @@ html[data-theme="dark"] .bar > span{ background:var(--green); }
   font-weight: 600;
   text-align: center;
   line-height: 1.2;
-
-  /* Make it taller and less wide */
-  padding: 1.2em 0.6em;   /* ↑ taller, ↓ narrower */
-  border-radius: 8px;     /* less pill-shaped, more poster-like */
-  max-width: 120px;       /* keeps it from stretching across screen */
-  min-height: 80px;       /* enforces poster height */
-  white-space: normal;    /* allow text wrapping inside */
-  word-break: break-word;
-}
