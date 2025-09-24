@@ -572,3 +572,17 @@ html[data-theme="dark"] .bar > span{ background:var(--green); }
 .meta .team {
   white-space: nowrap;
 }
+.meta {
+  display: flex;
+  flex-wrap: wrap; /* allows wrapping cleanly if needed */
+  gap: 0.5em;       /* spacing between items */
+}
+
+.meta-item {
+  white-space: nowrap; /* keeps label + value on one line */
+  display: inline-block;
+}
+
+.dot {
+  margin: 0 0.25em;
+}
