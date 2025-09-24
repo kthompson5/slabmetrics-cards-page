@@ -647,3 +647,37 @@ html[data-theme="dark"] .bar > span{ background:var(--green); }
 
 /* Some themes add bottom margins on blocks—kill it */
 .hero-actions .grade-side .overall{ margin-bottom:0 !important; }
+/* Let the row wrap on small screens */
+.grade-side{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;         /* <— key so items can break to next line */
+}
+
+/* Allow flex items to actually shrink */
+.grade-side .overall,
+.grade-side .grade-tier{
+  min-width:0;            /* <— critical in flex layouts */
+}
+
+/* Make the badge wrap nicely instead of stretching off-screen */
+.grade-side .grade-tier{
+  flex:1 1 220px;         /* can grow, can shrink, preferred width */
+  max-width:100%;
+  display:block;          /* block makes text wrap reliably */
+  text-align:center;
+  white-space:normal;     /* allow multi-line */
+  overflow-wrap:anywhere; /* break long words/strings if needed */
+  word-break:break-word;  /* safety net for unbroken tokens */
+  padding:0.6em 0.5em;    /* your “taller/less-wide” padding */
+  border-radius:10px;
+}
+
+/* On very narrow phones, push badge to its own line full-width */
+@media (max-width:480px){
+  .grade-side .grade-tier{
+    flex:1 1 100%;
+  }
+  .grade-side{ gap:8px; }
+}
