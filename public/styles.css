@@ -974,3 +974,67 @@ html[data-theme="dark"] .bar > span{ background:var(--green); }
   .hero-actions .grade-side{ grid-template-columns:1fr !important; row-gap:8px; }
   .hero-actions .grade-side .grade-tier{ max-inline-size:100%; min-height:76px; }
 }
+
+/* Circle + slab label side-by-side */
+.hero-actions .grade-side{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr);
+  column-gap:12px;
+  align-items:center;
+}
+
+/* === Slab badge (poster-style) === */
+.slab-badge{
+  --ring:#22c55e; --ink:#0a0a0a; --bg:#ffffff;
+  display:grid;
+  grid-template-columns: 1fr auto; /* text block | big grade */
+  align-items:center;
+  gap:10px;
+  padding:12px 14px;
+  min-height:92px;                     /* poster height */
+  max-inline-size:18ch;                /* prevents banner stretch */
+  background:var(--bg);
+  color:var(--ink);
+  border:1px solid var(--gray-200);
+  border-radius:12px;
+  position:relative;
+  box-shadow:0 4px 14px rgba(0,0,0,.08);
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
+
+.slab-badge::before{
+  content:"";
+  position:absolute; inset:8px auto 8px 0;
+  width:4px; border-radius:4px; background:var(--ring);
+}
+
+.slab-left{ display:grid; gap:6px; align-content:center; }
+.slab-tier{ font-weight:900; letter-spacing:.02em; font-size:1.05rem; }
+.slab-sub { font-weight:700; font-size:.95rem; color:#0a0a0acc;
+  padding:2px 8px; border-radius:999px; border:1px solid var(--gray-200); background:var(--gray-50);
+}
+
+.slab-grade{
+  font-weight:900;
+  font-size:1.6rem;
+  line-height:1;
+  justify-self:end;
+}
+
+/* Responsive tweaks */
+@media (max-width:600px){
+  .hero-actions .grade-side{ column-gap:10px; }
+  .slab-badge{ max-inline-size:16ch; min-height:88px; padding:10px 12px; }
+  .slab-grade{ font-size:1.45rem; }
+}
+@media (max-width:360px){
+  .hero-actions .grade-side{ grid-template-columns:1fr; row-gap:8px; }
+  .slab-badge{ max-inline-size:100%; }
+}
+
+/* Dark-mode match */
+@media (prefers-color-scheme: dark){
+  .slab-badge{ background:#111; color:#f5f5f5; border-color:#222; }
+  .slab-sub{ background:#181818; border-color:#2a2a2a; color:#e7e7e7; }
+}
