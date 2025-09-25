@@ -1,18 +1,8 @@
 :root{
-  --white:#ffffff;
-  --black:#0a0a0a;
-  --green:#22c55e;
-  --gray-50:#fafafa;
-  --gray-100:#f5f5f5;
-  --gray-200:#e5e7eb;
-  --gray-400:#9ca3af;
-  --gray-500:#6b7280;
-  --radius:14px;
-  --container:1100px;
-  --pad:16px;
-  --fade: 360ms;
-
-  /* Force light UI for form controls, etc. */
+  --white:#ffffff; --black:#0a0a0a; --green:#22c55e;
+  --gray-50:#fafafa; --gray-100:#f5f5f5; --gray-200:#e5e7eb;
+  --gray-400:#9ca3af; --gray-500:#6b7280;
+  --radius:14px; --container:1100px; --pad:16px; --fade:360ms;
   color-scheme: light;
 }
 
@@ -30,336 +20,127 @@ img{max-width:100%;height:auto;display:block}
 .hero-inner{display:grid;grid-template-columns:1fr;gap:16px}
 .hero .tight{margin:0;font-size:clamp(1.3rem,3.2vw,2rem)}
 .hero .meta{color:var(--gray-500);margin:8px 0}
+.meta{display:flex;flex-wrap:wrap;gap:.5em}.meta-item{white-space:nowrap}.dot{padding:0 8px;color:var(--gray-400)}
 
-/* Actions row: buttons on left, circle on right */
-.hero-actions{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:16px;
-  align-items:center;
-}
-@media(min-width:860px){
-  .hero-actions{
-    grid-template-columns:1fr auto;
-    gap:24px;
-  }
-}
-
-/* Uniform buttons */
-.hero .cta{
-  display:grid;
-  gap:10px;
-  grid-auto-rows:44px;
-  align-content:start;
-  max-width:420px;
-}
-.hero .btn{
-  width:100%;
-  justify-content:center;
-}
-
-.hero-index .search-wrap{margin-top:12px}
-#q{width:min(520px,100%);padding:12px 14px;border:1px solid var(--gray-200);border-radius:10px;outline:none}
-#q:focus{border-color:var(--green);box-shadow:0 0 0 3px #22c55e22}
+.hero-actions{display:grid;grid-template-columns:1fr;gap:16px;align-items:center}
+@media(min-width:860px){.hero-actions{grid-template-columns:1fr auto;gap:24px}}
 
 .btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--black);color:var(--black);background:var(--white);padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:600}
 .btn:hover{background:var(--gray-100)}
 .btn-green{background:var(--green);border-color:var(--green);color:var(--white)}
-.btn-green:hover{filter:brightness(0.95)}
-
-.dot{padding:0 8px;color:var(--gray-400)}
-.dim{opacity:.9}
-.slash{color:var(--green)}
-.meta strong{font-weight:700}
+.btn-green:hover{filter:brightness(.95)}
 
 .viewer{padding:22px 0}
 .flip-wrap{position:relative;width:min(420px,100%);margin:0 auto;aspect-ratio:63/88;transform-style:preserve-3d;perspective:1000px;cursor:pointer}
 .flip-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;backface-visibility:hidden;transition:transform .35s ease}
-.flip-img.back{transform:rotateY(180deg)}
-.flipped .front{transform:rotateY(180deg)}
-.flipped .back{transform:rotateY(360deg)}
+.flip-img.back{transform:rotateY(180deg)}.flipped .front{transform:rotateY(180deg)}.flipped .back{transform:rotateY(360deg)}
 .hint{text-align:center;color:var(--gray-500);font-size:.9rem;margin-top:8px}
 
 .overall{display:grid;place-items:center}
-
-/* Animateable custom property for the conic-gradient (single definition) */
-@property --angle {
-  syntax: '<percentage>';
-  inherits: false;
-  initial-value: 0%;
-}
-
-.circle {
-  --angle: 0%;
-  width:120px;
-  height:120px;
-  border-radius:50%;
-  background: conic-gradient(var(--green) var(--angle), var(--gray-200) 0);
-  display:grid;
-  place-items:center;
-  transition: --angle 0.9s cubic-bezier(.2,.7,.2,1);
-}
-.circle-inner{
-  width:86px;
-  height:86px;
-  border-radius:50%;
-  background:var(--white);
-  display:grid;
-  place-items:center;
-  font-size:1.6rem;
-  font-weight:800;
-  color:var(--black);
-  border:2px solid var(--gray-200);
-}
+@property --angle { syntax:'<percentage>'; inherits:false; initial-value:0% }
+.circle{--angle:0%;width:120px;height:120px;border-radius:50%;background:conic-gradient(var(--green) var(--angle),var(--gray-200) 0);display:grid;place-items:center;transition:--angle .9s cubic-bezier(.2,.7,.2,1)}
+.circle-inner{width:86px;height:86px;border-radius:50%;background:var(--white);display:grid;place-items:center;font-size:1.6rem;font-weight:800;color:var(--black);border:2px solid var(--gray-200)}
 .circle-label{text-align:center;margin-top:8px;font-weight:700}
 
+/* Circle + slab badge row */
+.grade-side{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;column-gap:12px;justify-items:start}
+
+/* Slab badge */
+.slab-badge{
+  --ring:#22c55e; --ink:#0a0a0a; --bg:#ffffff;
+  display:grid; grid-template-columns:1fr auto; align-items:center; gap:10px;
+  padding:12px 14px; min-height:92px; max-inline-size:18ch;
+  background:var(--bg); color:var(--ink);
+  border:1px solid var(--gray-200); border-radius:12px; position:relative;
+  box-shadow:0 4px 14px rgba(0,0,0,.08); white-space:normal; overflow-wrap:anywhere;
+}
+.slab-badge::before{content:""; position:absolute; inset:8px auto 8px 0; width:4px; border-radius:4px; background:var(--ring)}
+.slab-left{display:grid;gap:6px;align-content:center}
+.slab-tier{font-weight:900;letter-spacing:.02em;font-size:1.05rem}
+.slab-sub{font-weight:700;font-size:.95rem;color:#0a0a0acc;padding:2px 8px;border-radius:999px;border:1px solid var(--gray-200);background:var(--gray-50)}
+.slab-grade{font-weight:900;font-size:1.6rem;line-height:1;justify-self:end}
+
+@media (max-width:600px){
+  .grade-side{column-gap:10px}
+  .slab-badge{max-inline-size:16ch;min-height:88px;padding:10px 12px}
+  .slab-grade{font-size:1.45rem}
+}
+@media (max-width:360px){
+  .grade-side{grid-template-columns:1fr;row-gap:8px}
+  .slab-badge{max-inline-size:100%}
+}
+
+/* Grades & bars */
 .grades{padding:18px 0}
 .grid-2{display:grid;grid-template-columns:1fr;gap:20px}
 @media(min-width:860px){.grid-2{grid-template-columns:1fr 1fr}}
-
-/* Subgrade rows: label/value above, bar full width below */
-.g { margin: 12px 0; }
-.g-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 12px;
-}
-.g-head .label { font-weight: 700; }
-.g-head .value { font-weight: 700; min-width: 2ch; text-align: right; }
-
-/* Stacked subgrade rows: text above, full-width bar below */
-.subgrade { margin: 12px 0; }
-.subgrade-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 12px;
-}
-.subgrade-head .label { font-weight: 700; }
-.subgrade-head .value { font-weight: 700; min-width: 2ch; text-align: right; }
-
-/* Ensure the bar is 100% width and animates */
-.subgrade .bar { width: 100%; height: 10px; background: var(--gray-200); border-radius: 999px; overflow: hidden; }
-.subgrade .bar > span { display: block; height: 100%; width: 0; background: var(--green); transition: width .6s ease; }
-
-/* Full-width bar */
-.bar { height: 10px; background: var(--gray-200); border-radius: 999px; overflow: hidden; width: 100%; }
-.bar > span { display: block; height: 100%; width: 0; background: var(--green); transition: width .6s ease; }
-
-.remarks{margin-top:10px;padding:10px;border:1px solid var(--gray-200);border-radius:var(--radius);background:var(--gray-50);font-size:.95rem}
-.remarks div{margin:4px 0}
+.subgrade{margin:12px 0}
+.subgrade-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.subgrade-head .label{font-weight:700}.subgrade-head .value{font-weight:700;min-width:2ch;text-align:right}
+.subgrade .bar{width:100%;height:10px;background:var(--gray-200);border-radius:999px;overflow:hidden}
+.subgrade .bar>span{display:block;height:100%;width:0;background:var(--green);transition:width .6s ease}
 
 .compare{padding:18px 0}
 .bars{display:grid;grid-auto-flow:column;gap:16px;align-items:end;justify-content:center;min-height:160px;padding:8px;border:1px solid var(--gray-200);border-radius:var(--radius);background:var(--white)}
 .barv{display:grid;grid-template-rows:1fr auto auto;gap:6px;width:90px;text-align:center}
 .barv-fill{height:0;background:var(--green);border-radius:8px 8px 0 0;transition:height .6s ease}
-.bars.animate .barv-fill{height:var(--h)}
-.barv-count{font-weight:700}
-.barv-label{font-size:.9rem;color:var(--gray-500)}
+.bars.animate .barv-fill{height:var(--h)}.barv-count{font-weight:700}.barv-label{font-size:.9rem;color:var(--gray-500)}
 
-.grid-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;padding:18px 0}
-.tile{border:1px solid var(--gray-200);border-radius:12px;overflow:hidden;text-decoration:none;color:inherit;background:var(--white);transform:translateY(8px);opacity:0;transition:opacity var(--fade) ease, transform var(--fade) ease}
-.tile.is-visible{opacity:1;transform:none}
-.thumb{aspect-ratio:63/88;width:100%;object-fit:cover}
-.tile .meta{padding:10px}
-.tile .meta strong{display:block}
-.tile .meta small{display:block;color:var(--gray-500)}
-.tile .meta .serial{color:var(--black)}
+.pop-gem{padding:22px 0}
+.dot.psa,.dot.sgc,.dot.cgc,.dot.bgs{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
+:root{--psa-red:#d0021b;--psa-blue:#1155cc;--sgc-black:#000;--cgc-red:#cc1f1f;--bgs-gold:#b48b2c}
+.dot.psa{background:var(--psa-blue)}.dot.sgc{background:var(--sgc-black);border:1px solid #444}.dot.cgc{background:var(--cgc-red)}.dot.bgs{background:var(--bgs-gold)}
+.pop-bars{display:grid;gap:10px;border:1px solid var(--gray-200);border-radius:var(--radius);padding:12px;background:var(--white);margin-top:10px}
+.pop-row{display:grid;grid-template-columns:90px 1fr auto;gap:10px;align-items:center}
+.pop-row .co{font-weight:700}
+.pop-row .bar{height:12px;background:var(--gray-200);border-radius:999px;overflow:hidden}
+.pop-row .bar>span{display:block;height:100%;width:0;border-radius:999px;transition:width .8s cubic-bezier(.2,.7,.2,1)}
+.pop-row[data-co="psa"] .co{color:var(--psa-red)}.pop-row[data-co="psa"] .bar>span{background:linear-gradient(90deg,var(--psa-blue) 0%,#1a73e8 100%)}
+.pop-row[data-co="sgc"] .co{color:#000}.pop-row[data-co="sgc"] .bar{background:#e6e6e6}.pop-row[data-co="sgc"] .bar>span{background:#000}
+.pop-row[data-co="cgc"] .co{color:#000}.pop-row[data-co="cgc"] .bar>span{background:var(--cgc-red)}
+.pop-row[data-co="bgs"] .co{color:#000}.pop-row[data-co="bgs"] .bar>span{background:var(--bgs-gold)}
+.pop-row .val{font-weight:800;min-width:5ch;text-align:right}
+
+.gem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-top:16px}
+.gem{display:grid;gap:6px;justify-items:center;border:1px solid var(--gray-200);border-radius:var(--radius);padding:12px;background:var(--white)}
+.gem-ring{--size:120px;--thick:12px;--angle:0%;--brand:var(--green);width:var(--size);height:var(--size);border-radius:50%;background:conic-gradient(var(--brand) var(--angle),var(--gray-200) 0);display:grid;place-items:center;transition:--angle .9s cubic-bezier(.2,.7,.2,1);box-shadow:0 1px 6px rgba(0,0,0,.06);position:relative}
+.gem-ring::before{content:"";position:absolute;inset:var(--thick);background:var(--white);border-radius:50%}
+.gem-kpi{position:relative;z-index:1}.gem-kpi .num{font-weight:900;font-size:1.2rem}
+.gem-label{font-weight:700;text-align:center}
+.gem[data-co="psa"] .gem-ring{--brand:var(--psa-blue)}
+.gem[data-co="sgc"] .gem-ring{--brand:#000}
+.gem[data-co="cgc"] .gem-ring{--brand:var(--cgc-red)}
+.gem[data-co="bgs"] .gem-ring{--brand:var(--bgs-gold)}
+
+.soft-frame{border:1px solid var(--gray-200);border-radius:14px;background:var(--gray-50);box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.viewer-frame{padding:12px}
+.viewer .flip-wrap{display:block;margin:0 auto;max-width:580px}
+
+.downloads{margin-top:20px;text-align:center}.downloads .btn-jpg{margin:0 8px}
+.btn-jpg{position:relative;font-weight:700;letter-spacing:.01em;border-radius:10px;background:var(--green);color:var(--white);border:1px solid var(--black);padding:10px 14px;overflow:hidden}
+.btn-jpg::before,.btn-jpg::after{content:"";position:absolute;top:0;bottom:0;width:4px;background:var(--green)}
+.btn-jpg::before{left:0}.btn-jpg::after{right:0}
+.btn-jpg:hover{filter:brightness(1.1)}.btn-jpg:focus-visible{outline:3px solid #22c55e66;outline-offset:2px}
 
 .site-footer{border-top:1px solid var(--gray-200);padding:18px 0;margin-top:14px;background:var(--white)}
-.fine{color:var(--gray-500);font-size:.9rem}
+.footer-buttons{display:flex;flex-direction:column;align-items:center;gap:12px}
+.footer-buttons .btn{min-width:220px;padding:12px 20px;font-size:1rem;font-weight:600;text-align:center}
 
-/* Default: visible (so pages never look blank if JS fails) */
-.reveal { opacity: 1; transform: none; }
-
-/* When JS is active, add animations */
-.js .reveal { 
-  opacity: 0; 
-  transform: translateY(10px); 
-  transition: opacity var(--fade) ease, transform var(--fade) ease; 
-}
-.js .reveal.is-visible { opacity: 1; transform: none; }
-
-/* Tiles too (optional but nice) */
-.js .tile { opacity: 0; transform: translateY(8px); transition: opacity var(--fade) ease, transform var(--fade) ease; }
-.js .tile.is-visible { opacity: 1; transform: none; }
+.reveal{opacity:1;transform:none}
+.js .reveal{opacity:0;transform:translateY(10px);transition:opacity var(--fade) ease,transform var(--fade) ease}
+.js .reveal.is-visible{opacity:1;transform:none}
 
 @media (prefers-reduced-motion: reduce){
-  .reveal,.tile{opacity:1;transform:none;transition:none}
+  .reveal{opacity:1;transform:none;transition:none}
   .bar>span,.barv-fill{transition:none}
-  .circle{background: conic-gradient(var(--green) var(--angle), var(--gray-200) 0)}
+  .circle{background:conic-gradient(var(--green) var(--angle),var(--gray-200) 0)}
 }
 
-/* --- Subgrade heading stays on its own line --- */
-.grades h2 {
-  display: block;
-  width: 100%;
-  margin: 0 0 10px;
-  line-height: 1.2;
-}
-
-/* --- Re-layout legacy .g rows (no HTML changes needed) --- */
-.grades .g {
-  display: grid !important;
-  grid-template-columns: 1fr auto;
-  grid-template-rows: auto auto;
-  grid-template-areas:
-    "label value"
-    "bar bar";
-  align-items: center;
-  gap: 6px 12px;
-  margin: 12px 0;
-}
-.grades .g .label { grid-area: label; font-weight: 700; }
-.grades .g .value { grid-area: value; font-weight: 700; text-align: right; }
-.grades .g .bar {
-  grid-area: bar;
-  width: 100%;
-  height: 10px;
-  background: var(--gray-200);
-  border-radius: 999px;
-  overflow: hidden;
-}
-.grades .g .bar > span {
-  display: block;
-  height: 100%;
-  width: 0;
-  background: var(--green);
-  transition: width .6s ease;
-}
-
-/* Circle + badge side-by-side on desktop, stacked on mobile */
-.grade-side{
-  display:grid;
-  gap:10px;
-  justify-items:center;
-}
-@media (min-width: 860px){
-  .grade-side{
-    grid-auto-flow: column;
-    align-items: center;
-    gap:14px;
-  }
-}
-
-/* --- Big 4 Pop & Gem section --- */
-.pop-gem { padding: 22px 0; }
-
-/* ===== Big 4 brand palette ===== */
-:root{
-  --psa-red:#d0021b;
-  --psa-blue:#1155cc;
-  --sgc-black:#000000;
-  --sgc-white:#ffffff;
-  --cgc-red:#cc1f1f;
-  --cgc-black:#000000;
-  --bgs-gold:#b48b2c;
-  --bgs-black:#000000;
-}
-
-/* Brand dots next to labels (single, consistent set) */
-.dot.psa{ display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--psa-blue);margin-right:6px; }
-.dot.sgc{ display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--sgc-black);margin-right:6px;border:1px solid #444; }
-.dot.cgc{ display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--cgc-red);margin-right:6px; }
-.dot.bgs{ display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--bgs-gold);margin-right:6px; }
-
-/* POP bars */
-.pop-bars{
-  display:grid;
-  gap:10px;
-  border:1px solid var(--gray-200);
-  border-radius:var(--radius);
-  padding:12px;
-  background:var(--white);
-  margin-top:10px;
-}
-.pop-row{
-  display:grid;
-  grid-template-columns: 90px 1fr auto;
-  gap:10px;
-  align-items:center;
-}
-.pop-row .co{ font-weight:700; }
-.pop-row .bar{ height:12px; background:var(--gray-200); border-radius:999px; overflow:hidden; }
-.pop-row .bar > span{
-  display:block; height:100%; width:0%;
-  border-radius:999px;
-  transition: width .8s cubic-bezier(.2,.7,.2,1);
-}
-/* Colored fills per brand */
-.pop-row[data-co="psa"] .co{ color:var(--psa-red); }
-.pop-row[data-co="psa"] .bar > span{ background: linear-gradient(90deg, var(--psa-blue) 0%, #1a73e8 100%); }
-
-.pop-row[data-co="sgc"] .co{ color:var(--sgc-black); }
-.pop-row[data-co="sgc"] .bar{ background: #e6e6e6; } /* light track keeps contrast */
-.pop-row[data-co="sgc"] .bar > span{ background: var(--sgc-black); }
-
-.pop-row[data-co="cgc"] .co{ color: var(--cgc-black); }
-.pop-row[data-co="cgc"] .bar > span{ background: var(--cgc-red); }
-
-.pop-row[data-co="bgs"] .co{ color: var(--bgs-black); }
-.pop-row[data-co="bgs"] .bar > span{ background: var(--bgs-gold); }
-
-.pop-row .val{ font-weight:800; min-width:5ch; text-align:right; }
-
-/* GEM rings grid */
-.gem-grid{
-  display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px,1fr));
-  gap:14px;
-  margin-top:16px;
-}
-.gem{ 
-  display:grid; 
-  gap:6px; 
-  justify-items:center; 
-  border:1px solid var(--gray-200); 
-  border-radius:var(--radius); 
-  padding:12px; 
-  background:var(--white);
-}
-
-/* Gem ring (single definition, brandable) */
-.gem-ring{
-  --size: 120px; --thick: 12px; --angle: 0%; --brand: var(--green);
-  width:var(--size); height:var(--size); border-radius:50%;
-  background: conic-gradient(var(--brand) var(--angle), var(--gray-200) 0);
-  display:grid; place-items:center;
-  transition: --angle .9s cubic-bezier(.2,.7,.2,1);
-  box-shadow: 0 1px 6px rgba(0,0,0,.06);
-  position: relative;
-}
-.gem-ring::before{
-  content:""; position:absolute; inset: var(--thick);
-  background: var(--white); border-radius:50%;
-}
-.gem-kpi{ position:relative; z-index:1; }
-.gem-kpi .num{ font-weight:900; font-size:1.2rem; }
-.gem-label{ font-weight:700; text-align:center; }
-
-.gem[data-co="psa"] .gem-ring{ --brand: var(--psa-blue); }
-.gem[data-co="sgc"] .gem-ring{ --brand: var(--sgc-black); }
-.gem[data-co="cgc"] .gem-ring{ --brand: var(--cgc-red); }
-.gem[data-co="bgs"] .gem-ring{ --brand: var(--bgs-gold); }
-
-.small-note{ margin-top:8px; }
-
-/* ============================
-   OPTIONAL: Manual Dark Theme
-   Enable by setting <html data-theme="dark">
-   ============================ */
+/* Dark theme (optional opt-in via <html data-theme="dark">) */
 html[data-theme="dark"]{
   color-scheme: dark;
-  --white:#0f0f10;
-  --black:#f1f1f1;
-  --gray-50:#111214;
-  --gray-100:#181a1c;
-  --gray-200:#25282c;
-  --gray-400:#9aa0a6;
-  --gray-500:#b0b6bc;
-  background:var(--white);
-  color:var(--black);
+  --white:#0f0f10; --black:#f1f1f1; --gray-50:#111214; --gray-100:#181a1c; --gray-200:#25282c; --gray-400:#9aa0a6; --gray-500:#b0b6bc;
+  background:var(--white); color:var(--black);
 }
 html[data-theme="dark"] .site-header,
 html[data-theme="dark"] .hero,
@@ -367,737 +148,11 @@ html[data-theme="dark"] .tile,
 html[data-theme="dark"] .pop-bars,
 html[data-theme="dark"] .gem,
 html[data-theme="dark"] .bars,
-html[data-theme="dark"] .site-footer{
-  background:var(--white);
-  border-color:var(--gray-200);
-}
-html[data-theme="dark"] #q{ border-color:var(--gray-200); }
-html[data-theme="dark"] .btn{ border-color:var(--black); color:var(--black); background:var(--white); }
-html[data-theme="dark"] .btn:hover{ background:#16181a; }
-
-html[data-theme="dark"] .pop-row .bar{ background:var(--gray-200); }
-html[data-theme="dark"] .gem-ring::before{ background:var(--white); }
-html[data-theme="dark"] .barv-fill{ background:var(--green); }
-html[data-theme="dark"] .bar > span{ background:var(--green); }
-
-/* --- JPG buttons: black body, white text, green edges --- */
-.btn-jpg {
-  position: relative;
-  font-weight: 700;
-  letter-spacing: .01em;
-  border-radius: 10px;
-  background: var(--green);
-  color: var(--white);
-  border: 1px solid var(--black);
-  padding: 10px 14px;
-  overflow: hidden;
-}
-
-/* green vertical edge stripes */
-.btn-jpg::before,
-.btn-jpg::after {
-  content: "";
-  position: absolute;
-  top: 0; bottom: 0;
-  width: 4px;
-  background: var(--green);
-}
-.btn-jpg::before { left: 0; }
-.btn-jpg::after  { right: 0; }
-
-.btn-jpg:hover { filter: brightness(1.1); }
-.btn-jpg:focus-visible { outline: 3px solid #22c55e66; outline-offset: 2px; }
-
-/* space above the eBay button under Big 4 */
-.comps-cta { margin-top: 16px; }
-
-.downloads { margin-top: 20px; text-align:center; }
-.downloads .btn-jpg { margin: 0 8px; }
-
-.comps-cta {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-}
-
-.comps-cta .btn {
-  min-width: 240px;   /* adjust this width as you like */
-  text-align: center;
-  padding: 12px 20px; /* makes it taller and more "button-like" */
-  font-size: 1rem;
-  font-weight: 600;
-}
-.comps-cta {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center; /* center the whole button */
-}
-
-.comps-cta .btn {
-  display: flex;              /* make button a flexbox */
-  justify-content: center;    /* center text horizontally */
-  align-items: center;        /* center text vertically */
-  min-width: 240px;           /* wider look */
-  text-align: center;
-  padding: 12px 20px;
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-.site-footer {
-  margin-top: 30px;
-}
-
-.site-footer .container {
-  display: flex;
-  justify-content: center; /* centers the button */
-}
-
-.site-footer .btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-width: 220px;   /* adjust as you like */
-  padding: 12px 20px;
-  font-size: 1rem;
-  font-weight: 600;
-  text-align: center;
-}
-
-.footer-buttons {
-  display: flex;
-  flex-direction: column;   /* stack vertically */
-  align-items: center;      /* center horizontally */
-  gap: 12px;                /* spacing between the two */
-}
-
-.footer-buttons .btn {
-  min-width: 220px;
-  padding: 12px 20px;
-  font-size: 1rem;
-  font-weight: 600;
-  text-align: center;
-}
-
-/* EDGE centering section */
-.edge-section {
-  margin: 2rem 0;
-  text-align: center;
-}
-
-.edge-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  color: #111; /* neutral dark text */
-  border-bottom: 2px solid #e5e7eb; /* subtle light gray underline */
-  display: inline-block;
-  padding-bottom: .25rem;
-}
-
-.edge-frame {
-  display: inline-block;
-  background: #fff;
-  border: 1px solid #e5e7eb; /* light neutral border */
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08); /* soft shadow */
-  padding: .75rem;
-}
-
-.edge-frame img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-}
-
-.edge-disclaimer {
-  font-size: .85rem;
-  color: #6b7280; /* muted gray */
-  margin-top: .75rem;
-}
-
-/* EDGE centering section */
-.edge-section {
-  margin: 2rem 0;
-  text-align: center;
-}
-
-.edge-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  color: #111; /* neutral dark text */
-  border-bottom: 2px solid #e5e7eb; /* subtle light gray underline */
-  display: inline-block;
-  padding-bottom: .25rem;
-}
-
-.edge-frame {
-  display: inline-block;
-  background: #fff;
-  border: 1px solid #e5e7eb; /* light neutral border */
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08); /* soft shadow */
-  padding: .75rem;
-}
-
-.edge-frame img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-}
-
-.edge-disclaimer {
-  font-size: .85rem;
-  color: #6b7280; /* muted gray */
-  margin-top: .75rem;
-}
-/* Reusable soft frame (matches edge frame look) */
-.soft-frame{
-  border:1px solid var(--gray-200);
-  border-radius:14px;
-  background:var(--gray-50);
-  box-shadow:0 4px 14px rgba(0,0,0,.08);
-}
-
-/* Padding just for the viewer wrapper */
-.viewer-frame{ padding:12px; }
-
-/* Make sure the flipper fits nicely inside the frame */
-.viewer .flip-wrap{
-  display:block;
-  margin:0 auto;
-  max-width: 580px; /* adjust if your images are larger/smaller */
-}
-.meta .team {
-  white-space: nowrap;
-}
-.meta {
-  display: flex;
-  flex-wrap: wrap; /* allows wrapping cleanly if needed */
-  gap: 0.5em;       /* spacing between items */
-}
-
-.meta-item {
-  white-space: nowrap; /* keeps label + value on one line */
-  display: inline-block;
-}
-
-.dot {
-  margin: 0 0.25em;
-}
-
-/* Circle + badge side by side */
-.grade-side {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: nowrap;
-}
-
-/* Circle stays fixed */
-.grade-side .overall {
-  flex: 0 0 auto;
-}
-
-/* Badge base */
-.grade-side .grade-tier {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  white-space: nowrap;
-  line-height: 1.2;
-
-  /* Taller / less wide */
-  padding: 0.6em 0.5em;
-  border-radius: 10px;
-  min-width: 2.5em;   /* ensures it doesn’t collapse too thin */
-  text-align: center;
-}
-
-/* Responsive scaling for badge text + padding */
-@media (max-width: 600px) {
-  .grade-side {
-    gap: 8px;
-  }
-
-  .grade-side .grade-tier {
-    font-size: clamp(0.75rem, 3vw, 0.95rem);
-    padding: 0.5em 0.4em; /* a touch tighter on narrow screens */
-  }
-}
-
-/* FORCE circle + badge on one line */
-.hero-actions .grade-side{
-  display:flex !important;
-  flex-direction:row !important;
-  align-items:center;
-  gap:12px;
-}
-
-/* Make sure children aren't forced full-width */
-.hero-actions .grade-side .overall,
-.hero-actions .grade-side .grade-tier{
-  flex:0 0 auto;
-  width:auto !important;
-  max-width:none;
-  margin:0;
-}
-
-/* Some themes add bottom margins on blocks—kill it */
-.hero-actions .grade-side .overall{ margin-bottom:0 !important; }
-/* Let the row wrap on small screens */
-.grade-side{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  flex-wrap:wrap;         /* <— key so items can break to next line */
-}
-
-/* Allow flex items to actually shrink */
-.grade-side .overall,
-.grade-side .grade-tier{
-  min-width:0;            /* <— critical in flex layouts */
-}
-
-/* Make the badge wrap nicely instead of stretching off-screen */
-.grade-side .grade-tier{
-  flex:1 1 220px;         /* can grow, can shrink, preferred width */
-  max-width:100%;
-  display:block;          /* block makes text wrap reliably */
-  text-align:center;
-  white-space:normal;     /* allow multi-line */
-  overflow-wrap:anywhere; /* break long words/strings if needed */
-  word-break:break-word;  /* safety net for unbroken tokens */
-  padding:0.6em 0.5em;    /* your “taller/less-wide” padding */
-  border-radius:10px;
-}
-
-/* On very narrow phones, push badge to its own line full-width */
-@media (max-width:480px){
-  .grade-side .grade-tier{
-    flex:1 1 100%;
-  }
-  .grade-side{ gap:8px; }
-}
-
-/* Keep circle and badge on one row; let badge wrap inside the row */
-.grade-side{
-  display: grid;
-  grid-template-columns: auto 1fr; /* circle | badge */
-  column-gap: 12px;
-  align-items: center;
-}
-
-/* Circle stays its natural size */
-.grade-side .overall{
-  min-width: 0;
-}
-
-/* Badge fills remaining space and wraps instead of overflowing */
-.grade-side .grade-tier{
-  min-width: 0;              /* critical so it can shrink */
-  max-width: 100%;
-  white-space: normal;        /* allow multi-line text */
-  overflow-wrap: anywhere;    /* break long tokens if needed */
-  word-break: break-word;
-  text-align: center;         /* optional: keep it centered */
-  padding: 0.6em 0.5em;       /* your taller/less-wide look */
-  border-radius: 10px;
-}
-
-/* If you REALLY need to stack on ultra-narrow screens, do it intentionally */
-@media (max-width: 360px){
-  .grade-side{
-    grid-template-columns: 1fr; /* stack only at very tiny widths */
-    row-gap: 8px;
-  }
-}
-
-.grade-side .grade-tier {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  font-weight: 600;
-  text-align: center;
-  line-height: 1.2;
-
-/* ===== OVERRIDES: circle + badge (poster style) ===== */
-.hero-actions .grade-side{
-  /* one row: circle | badge */
-  display:grid !important;
-  grid-template-columns:auto 1fr;
-  column-gap:12px;
-  align-items:center;
-}
-
-/* keep circle size/aesthetic exactly as-is */
-.hero-actions .grade-side .overall{
-  min-width:0;
-  margin:0 !important;        /* kill any bottom margins from old mobile stack */
-}
-
-/* badge: poster-shaped, wraps inside itself, never overflows */
-.hero-actions .grade-side .grade-tier{
-  /* layout */
-  display:inline-flex !important;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-
-  /* text & wrapping */
-  white-space:normal !important;
-  overflow-wrap:anywhere;
-  word-break:break-word;
-  min-width:0;                 /* allow shrinking in grid */
-  max-width: 160px;            /* <- keeps it from becoming a banner */
-  
-  /* poster proportions */
-  padding: 1rem .6rem;         /* taller, less wide */
-  min-height: 88px;            /* poster height target */
-  border-radius: 10px;
-  font-weight:600;
-  line-height:1.2;
-}
-
-/* tighten on smaller viewports */
-@media (max-width:600px){
-  .hero-actions .grade-side{
-    column-gap:10px;
-  }
-  .hero-actions .grade-side .grade-tier{
-    font-size:clamp(.8rem, 3.2vw, .95rem);
-    max-width: 140px;          /* a touch narrower on small screens */
-    min-height: 84px;          /* keep the poster feel */
-    padding: .9rem .55rem;
-  }
-}
-
-/* ultra-narrow: if needed, stack intentionally (badge full width) */
-@media (max-width:360px){
-  .hero-actions .grade-side{
-    grid-template-columns:1fr; /* stack */
-    row-gap:8px;
-  }
-  .hero-actions .grade-side .grade-tier{
-    max-width: 100%;
-    min-height: 76px;          /* still poster-ish */
-  }
-}
-
-/* ===== FINAL OVERRIDES: Overall circle + Badge (poster style) ===== */
-.hero-actions .grade-side{
-  /* keep BOTH on one row: [circle] [badge] */
-  display: grid !important;
-  grid-template-columns: auto 1fr;   /* circle | badge grows */
-  align-items: center;
-  column-gap: 12px;
-}
-
-/* circle stays exactly as-is */
-.hero-actions .grade-side .overall{
-  min-width: 0;
-  margin: 0 !important;
-}
-
-/* badge: tall "poster", wraps inside itself, never overflows */
-.hero-actions .grade-side .grade-tier{
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-weight: 600;
-  line-height: 1.2;
-
-  /* allow wrapping inside badge */
-  white-space: normal !important;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-  min-width: 0;                 /* allow shrinking in grid */
-  max-inline-size: 16ch;        /* <= prevents banner width */
-  inline-size: fit-content;     /* hug content within the cap */
-
-  /* poster proportions */
-  padding: 1rem .6rem;          /* taller, less wide */
-  min-height: 90px;             /* poster height */
-  border-radius: 10px;
-}
-
-/* tighten slightly on phones */
-@media (max-width: 600px){
-  .hero-actions .grade-side{ column-gap: 10px; }
-  .hero-actions .grade-side .grade-tier{
-    font-size: clamp(.8rem, 3.2vw, .95rem);
-    max-inline-size: 14ch;      /* a little narrower on small screens */
-    min-height: 84px;
-    padding: .9rem .55rem;
-  }
-}
-
-/* ultra-narrow fallback (only if absolutely necessary) */
-@media (max-width: 360px){
-  .hero-actions .grade-side{
-    grid-template-columns: 1fr; /* intentional stack at tiny widths */
-    row-gap: 8px;
-  }
-  .hero-actions .grade-side .grade-tier{
-    max-inline-size: 100%;
-    min-height: 76px;
-  }
-}
-
-/* ====== Circle + Badge layout + Badge styles (FIX) ====== */
-.grade-side{
-  display: grid;
-  grid-template-columns: auto minmax(0,1fr); /* [circle] | [badge grows & wraps] */
-  align-items: center;
-  column-gap: 12px;
-  justify-items: start; /* keep items left-aligned */
-}
-
-/* keep circle exactly as-is */
-.overall{ min-width: 0; }
-
-/* poster-style badge that wraps inside itself */
-.grade-tier{
-  --ring:#22c55e; --ink:#0a0a0a; --bg:#ffffff;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-weight: 600;
-  line-height: 1.2;
-
-  /* poster proportions (taller, less wide) */
-  padding: 1rem .6rem;
-  min-height: 88px;
-  border: 1px solid var(--gray-200);
-  border-radius: 10px;
-  background: var(--bg);
-  color: var(--ink);
-  box-shadow: 0 4px 14px rgba(0,0,0,.08);
-  position: relative;
-
-  /* allow wrapping within the badge, never overflow */
-  white-space: normal;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-  min-width: 0;              /* allow shrinking in grid */
-  max-inline-size: 16ch;     /* prevents banner-stretch on wide screens */
-}
-
-/* optional colored spine on the left */
-.grade-tier::after{
-  content:"";
-  position:absolute; left:0; top:8px; bottom:8px; width:4px;
-  border-radius:4px; background:var(--ring);
-}
-
-/* tidy inner lines if you keep them */
-.grade-tier .tier-line{display:flex;align-items:baseline;gap:8px;justify-content:center}
-.grade-tier .tier-name{font-weight:900;font-size:1.05rem;letter-spacing:.02em}
-.grade-tier .tier-base{
-  font-weight:800;font-size:.95rem;color:#0a0a0acc;
-  padding:2px 8px;border-radius:999px;border:1px solid var(--gray-200);background:var(--gray-50)
-}
-
-/* slight tighten on phones */
-@media (max-width:600px){
-  .grade-side{ column-gap:10px; }
-  .grade-tier{
-    font-size: clamp(.82rem, 3.2vw, .95rem);
-    max-inline-size: 14ch;
-    min-height: 84px;
-    padding: .9rem .55rem;
-  }
-}
-
-/* ultra-narrow: intentionally stack if truly needed */
-@media (max-width:360px){
-  .grade-side{
-    grid-template-columns: 1fr;  /* stack at very tiny widths */
-    row-gap: 8px;
-  }
-  .grade-tier{
-    max-inline-size: 100%;
-    min-height: 76px;
-  }
-}
-
-/* dark mode match */
-@media (prefers-color-scheme: dark){
-  .grade-tier{ background:#111; color:#f5f5f5; border-color:#222; }
-  .grade-tier .tier-base{ background:#181818; border-color:#2a2a2a; color:#e7e7e7; }
-}
-/* ===== FINAL: circle + badge row (poster badge) ===== */
-.hero-actions .grade-side{
-  display:grid !important;
-  grid-template-columns:auto 1fr !important; /* circle | badge */
-  column-gap:12px;
-  align-items:center;
-}
-
-.hero-actions .grade-side .overall{
-  min-width:0;
-  margin:0 !important;
-}
-
-.hero-actions .grade-side .grade-tier{
-  display:inline-flex !important;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  font-weight:600;
-  line-height:1.2;
-
-  /* poster look */
-  padding:1rem .6rem;
-  min-height:88px;
-  border-radius:10px;
-  border:1px solid var(--gray-200);
-  background:var(--white);
-  box-shadow:0 4px 14px rgba(0,0,0,.08);
-
-  /* wrap inside, never overflow */
-  white-space:normal !important;
-  overflow-wrap:anywhere;
-  word-break:break-word;
-  min-width:0;             /* allow shrinking in grid */
-  max-inline-size:16ch;    /* prevents banner stretch */
-}
-
-/* tiny phones: optionally stack */
-@media (max-width:360px){
-  .hero-actions .grade-side{ grid-template-columns:1fr !important; row-gap:8px; }
-  .hero-actions .grade-side .grade-tier{ max-inline-size:100%; min-height:76px; }
-}
-
-/* Circle + slab label side-by-side */
-.hero-actions .grade-side{
-  display:grid;
-  grid-template-columns:auto minmax(0,1fr);
-  column-gap:12px;
-  align-items:center;
-}
-
-/* === Slab badge (poster-style) === */
-.slab-badge{
-  --ring:#22c55e; --ink:#0a0a0a; --bg:#ffffff;
-  display:grid;
-  grid-template-columns: 1fr auto; /* text block | big grade */
-  align-items:center;
-  gap:10px;
-  padding:12px 14px;
-  min-height:92px;                     /* poster height */
-  max-inline-size:18ch;                /* prevents banner stretch */
-  background:var(--bg);
-  color:var(--ink);
-  border:1px solid var(--gray-200);
-  border-radius:12px;
-  position:relative;
-  box-shadow:0 4px 14px rgba(0,0,0,.08);
-  white-space:normal;
-  overflow-wrap:anywhere;
-}
-
-.slab-badge::before{
-  content:"";
-  position:absolute; inset:8px auto 8px 0;
-  width:4px; border-radius:4px; background:var(--ring);
-}
-
-.slab-left{ display:grid; gap:6px; align-content:center; }
-.slab-tier{ font-weight:900; letter-spacing:.02em; font-size:1.05rem; }
-.slab-sub { font-weight:700; font-size:.95rem; color:#0a0a0acc;
-  padding:2px 8px; border-radius:999px; border:1px solid var(--gray-200); background:var(--gray-50);
-}
-
-.slab-grade{
-  font-weight:900;
-  font-size:1.6rem;
-  line-height:1;
-  justify-self:end;
-}
-
-/* Responsive tweaks */
-@media (max-width:600px){
-  .hero-actions .grade-side{ column-gap:10px; }
-  .slab-badge{ max-inline-size:16ch; min-height:88px; padding:10px 12px; }
-  .slab-grade{ font-size:1.45rem; }
-}
-@media (max-width:360px){
-  .hero-actions .grade-side{ grid-template-columns:1fr; row-gap:8px; }
-  .slab-badge{ max-inline-size:100%; }
-}
-
-/* Dark-mode match */
-@media (prefers-color-scheme: dark){
-  .slab-badge{ background:#111; color:#f5f5f5; border-color:#222; }
-  .slab-sub{ background:#181818; border-color:#2a2a2a; color:#e7e7e7; }
-}
-
-/* ====== Circle + Slab badge layout + styles (final) ====== */
-.grade-side{
-  display:grid;
-  grid-template-columns:auto minmax(0,1fr); /* [circle] | [badge] */
-  align-items:center;
-  column-gap:12px;
-  justify-items:start;
-}
-
-/* New slab badge (poster-style) */
-.slab-badge{
-  --ring:#22c55e; --ink:#0a0a0a; --bg:#ffffff;
-  display:grid;
-  grid-template-columns: 1fr auto;  /* text stack | big grade */
-  align-items:center;
-  gap:10px;
-  padding:12px 14px;
-  min-height:92px;
-  max-inline-size:18ch;            /* prevents banner-stretch */
-  background:var(--bg);
-  color:var(--ink);
-  border:1px solid var(--gray-200);
-  border-radius:12px;
-  position:relative;
-  box-shadow:0 4px 14px rgba(0,0,0,.08);
-  white-space:normal;
-  overflow-wrap:anywhere;
-}
-.slab-badge::before{
-  content:"";
-  position:absolute; inset:8px auto 8px 0;
-  width:4px; border-radius:4px; background:var(--ring);
-}
-.slab-left{ display:grid; gap:6px; align-content:center; }
-.slab-tier{ font-weight:900; letter-spacing:.02em; font-size:1.05rem; }
-.slab-sub { font-weight:700; font-size:.95rem; color:#0a0a0acc;
-  padding:2px 8px; border-radius:999px; border:1px solid var(--gray-200); background:var(--gray-50);
-}
-.slab-grade{
-  font-weight:900;
-  font-size:1.6rem;
-  line-height:1;
-  justify-self:end;
-}
-
-/* phones */
-@media (max-width:600px){
-  .grade-side{ column-gap:10px; }
-  .slab-badge{ max-inline-size:16ch; min-height:88px; padding:10px 12px; }
-  .slab-grade{ font-size:1.45rem; }
-}
-/* ultra-narrow: optionally stack */
-@media (max-width:360px){
-  .grade-side{ grid-template-columns:1fr; row-gap:8px; }
-  .slab-badge{ max-inline-size:100%; }
-}
-
-/* dark mode */
-@media (prefers-color-scheme: dark){
-  .slab-badge{ background:#111; color:#f5f5f5; border-color:#222; }
-  .slab-sub{ background:#181818; border-color:#2a2a2a; color:#e7e7e7; }
-}
+html[data-theme="dark"] .site-footer{ background:var(--white); border-color:var(--gray-200) }
+html[data-theme="dark"] #q{ border-color:var(--gray-200) }
+html[data-theme="dark"] .btn{ border-color:var(--black); color:var(--black); background:var(--white) }
+html[data-theme="dark"] .btn:hover{ background:#16181a }
+html[data-theme="dark"] .pop-row .bar{ background:var(--gray-200) }
+html[data-theme="dark"] .gem-ring::before{ background:var(--white) }
+html[data-theme="dark"] .barv-fill{ background:var(--green) }
+html[data-theme="dark"] .bar > span{ background:var(--green) }
