@@ -422,18 +422,21 @@
   })();
 
   <script>
+  })();  <!-- closes the "Comparison chart" IIFE -->
+</script>
+
+<script>
 /* --- SlabMetrics slab badge: reads grade from CSV (data-grade) and applies same bins --- */
 (function(){
   const badge = document.querySelector('[data-slabbadge]');
   if (!badge) return;
 
   // Prefer CSV value; fallback to the circle text if needed
-  const csvVal = parseFloat((badge.getAttribute('data-grade') || '').replace(/[^\d.]/g,'')); 
+  const csvVal = parseFloat((badge.getAttribute('data-grade') || '').replace(/[^\d.]/g,''));
   const circleVal = parseFloat((document.querySelector('.circle-inner')?.textContent || '').replace(/[^\d.]/g,''));
   const grade = (isFinite(csvVal) ? csvVal : circleVal);
   if (!isFinite(grade)) return;
 
-  // Same bins you used before
   function binVal(v){
     if (v >= 9.75) return 10.0;
     if (v >= 9.25) return 9.5;
@@ -468,21 +471,18 @@
   const meta = NAMES[b] || {tier:'—', sub:'', base:'—'};
 
   // Write into the slab badge
-  const nameEl = badge.querySelector('[data-tier-name]');
-  const subEl  = badge.querySelector('[data-tier-sub]');
-  const numEl  = badge.querySelector('[data-tier-grade]');
-  if (nameEl) nameEl.textContent = meta.tier;
-  if (subEl)  subEl.textContent  = meta.sub || '';
-  if (numEl)  numEl.textContent  = String(grade.toFixed(1)).replace(/\.0$/,'');
+  badge.querySelector('[data-tier-name]').textContent  = meta.tier;
+  badge.querySelector('[data-tier-sub]').textContent   = meta.sub || '';
+  badge.querySelector('[data-tier-grade]').textContent = String(grade.toFixed(1)).replace(/\.0$/,'');
 })();
 </script>
 
-  // --- Pop & Gem init (robust parse + multiple triggers) ---
+<script>
+// --- Pop & Gem init (unchanged, just in its own <script>) ---
 (function(){
   const section = document.getElementById('popGem');
   if (!section) return;
 
-  // Strip commas, % and non-numeric chars safely
   const toNum = (v) => {
     if (v == null) return 0;
     const s = String(v).trim().replace(/[^0-9.]/g, '');
@@ -491,7 +491,6 @@
   };
 
   function go(){
-    // POP bars
     const rows = Array.from(section.querySelectorAll('[data-popbars] .pop-row'));
     const pops = rows.map(r => Math.max(0, toNum(r.dataset.pop)));
     const max = Math.max(...pops, 0);
@@ -509,7 +508,6 @@
       else requestAnimationFrame(() => { fill.style.width = pct + '%'; });
     });
 
-    // GEM rings
     section.querySelectorAll('[data-gemrings] .gem').forEach(card => {
       const rate = Math.max(0, Math.min(100, toNum(card.dataset.rate)));
       const ring = card.querySelector('.gem-ring');
@@ -519,7 +517,6 @@
     });
   }
 
-  // Run once when section reveals
   const revealIo = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (!e.isIntersecting) return;
@@ -529,13 +526,12 @@
   }, { threshold: 0.2 });
   revealIo.observe(section);
 
-  // Also run on DOM ready in case section is already in view
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', go, { once:true });
   } else {
     setTimeout(go, 0);
   }
 })();
-  </script>
+</script>
 </body>
 </html>
