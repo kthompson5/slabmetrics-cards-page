@@ -110,7 +110,14 @@
           </div>
           <div class="circle-label">Overall</div>
         </div>
-        <div class="grade-tier" data-tier aria-live="polite" aria-label="Grade tier"></div>
+<!-- New slab badge: includes tier, sublabel, and grade number -->
+<div class="slab-badge" data-slabbadge data-grade="{{overall_grade}}" aria-live="polite" aria-label="Grade label">
+  <div class="slab-left">
+    <div class="slab-tier" data-tier-name>—</div>
+    <div class="slab-sub"  data-tier-sub></div>
+  </div>
+  <div class="slab-grade" data-tier-grade>{{overall_grade}}</div>
+</div>
       </div><!-- /grade-side -->
     </div><!-- /hero-actions -->
 
@@ -414,55 +421,62 @@
     requestAnimationFrame(() => { el.classList.add('animate'); });
   })();
 
-  /* --- SlabMetrics grade tier badge logic --- */
-  (function(){
-    const el = document.querySelector('[data-tier]');
-    const rawText = document.querySelector('.circle-inner')?.textContent || '';
-    if (!el || !rawText) return;
+  <script>
+/* --- SlabMetrics slab badge: reads grade from CSV (data-grade) and applies same bins --- */
+(function(){
+  const badge = document.querySelector('[data-slabbadge]');
+  if (!badge) return;
 
-    const raw = Math.max(1, Math.min(10, parseFloat(rawText.replace(/[^\d.]/g,'')) || 0));
+  // Prefer CSV value; fallback to the circle text if needed
+  const csvVal = parseFloat((badge.getAttribute('data-grade') || '').replace(/[^\d.]/g,'')); 
+  const circleVal = parseFloat((document.querySelector('.circle-inner')?.textContent || '').replace(/[^\d.]/g,''));
+  const grade = (isFinite(csvVal) ? csvVal : circleVal);
+  if (!isFinite(grade)) return;
 
-    function binned(v){
-      if (v >= 9.75) return 10.0;
-      if (v >= 9.25) return 9.5;
-      if (v >= 8.75) return 9.0;
-      if (v >= 8.25) return 8.5;
-      if (v >= 7.50) return 8.0;
-      if (v >= 6.50) return 7.0;
-      if (v >= 5.50) return 6.0;
-      if (v >= 4.50) return 5.0;
-      if (v >= 3.50) return 4.0;
-      if (v >= 2.50) return 3.0;
-      if (v >= 1.50) return 2.0;
-      return 1.0;
-    }
+  // Same bins you used before
+  function binVal(v){
+    if (v >= 9.75) return 10.0;
+    if (v >= 9.25) return 9.5;
+    if (v >= 8.75) return 9.0;
+    if (v >= 8.25) return 8.5;
+    if (v >= 7.50) return 8.0;
+    if (v >= 6.50) return 7.0;
+    if (v >= 5.50) return 6.0;
+    if (v >= 4.50) return 5.0;
+    if (v >= 3.50) return 4.0;
+    if (v >= 2.50) return 3.0;
+    if (v >= 1.50) return 2.0;
+    return 1.0;
+  }
 
-    const NAMES = {
-      10.0: {name:'Apex (Gem Mint)', base:'10'},
-      9.5:  {name:'Elite (Mint+)', base:'9.5'},
-      9.0:  {name:'Mint', base:'9'},
-      8.5:  {name:'Strong', base:'8.5'},
-      8.0:  {name:'Solid (NM-MT)', base:'8'},
-      7.0:  {name:'Collector (NM)', base:'7'},
-      6.0:  {name:'Playable (EX-MT)', base:'6'},
-      5.0:  {name:'Classic (EX)', base:'5'},
-      4.0:  {name:'Vintage (VG-EX)', base:'4'},
-      3.0:  {name:'Worn (VG)', base:'3'},
-      2.0:  {name:'Poor+', base:'2'},
-      1.0:  {name:'Poor', base:'1'},
-    };
+  const NAMES = {
+    10.0: { tier:'APEX',      sub:'GEM MINT', base:'10'  },
+    9.5:  { tier:'ELITE',     sub:'MINT+',    base:'9.5' },
+    9.0:  { tier:'MINT',      sub:'',         base:'9'   },
+    8.5:  { tier:'STRONG',    sub:'',         base:'8.5' },
+    8.0:  { tier:'SOLID',     sub:'NM-MT',    base:'8'   },
+    7.0:  { tier:'COLLECTOR', sub:'NM',       base:'7'   },
+    6.0:  { tier:'PLAYABLE',  sub:'EX-MT',    base:'6'   },
+    5.0:  { tier:'CLASSIC',   sub:'EX',       base:'5'   },
+    4.0:  { tier:'VINTAGE',   sub:'VG-EX',    base:'4'   },
+    3.0:  { tier:'WORN',      sub:'VG',       base:'3'   },
+    2.0:  { tier:'POOR+',     sub:'',         base:'2'   },
+    1.0:  { tier:'POOR',      sub:'',         base:'1'   },
+  };
 
-    const bin = binned(raw);
-    const meta = NAMES[bin] || {name:'—', base:'—'};
+  const b = binVal(grade);
+  const meta = NAMES[b] || {tier:'—', sub:'', base:'—'};
 
-    el.innerHTML = `
-      <div class="tier-line">
-        <span class="tier-name">${meta.name}</span>
-        <span class="tier-base">· ${meta.base}</span>
-      </div>
-      <div class="tier-help">Your ${raw.toFixed(1).replace(/\.0$/,'')} maps to <strong>${meta.name}</strong> (${meta.base}).</div>
-    `;
-  })();
+  // Write into the slab badge
+  const nameEl = badge.querySelector('[data-tier-name]');
+  const subEl  = badge.querySelector('[data-tier-sub]');
+  const numEl  = badge.querySelector('[data-tier-grade]');
+  if (nameEl) nameEl.textContent = meta.tier;
+  if (subEl)  subEl.textContent  = meta.sub || '';
+  if (numEl)  numEl.textContent  = String(grade.toFixed(1)).replace(/\.0$/,'');
+})();
+</script>
+
   // --- Pop & Gem init (robust parse + multiple triggers) ---
 (function(){
   const section = document.getElementById('popGem');
