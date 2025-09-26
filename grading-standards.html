@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <script>document.documentElement.classList.add('js');</script>
+  <title>SLABMETRICS — Grading Standards</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <!-- Reuse site styles just like card.html -->
+  <link rel="stylesheet" href="/styles.css?v=99" />
+  <!-- Minimal page-specific polish -->
+  <style>
+    /* Tight mobile stacking + small helpers (kept minimal) */
+    .stack-tight > * + *{ margin-top:14px }
+    .tight-table{ width:100%; border-collapse:collapse; }
+    .tight-table th,.tight-table td{ padding:8px 10px; border-bottom:1px solid rgba(0,0,0,.08); text-align:left; }
+    .tight-table th{ font-weight:600; font-size:.95rem; }
+    .badge-note{ margin-top:6px; font-size:.9rem; color:var(--muted, #666); text-align:center; }
+    .formula{ font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,"Ubuntu Mono",Consolas,monospace; background:rgba(0,0,0,.03); padding:10px 12px; border-radius:8px; }
+    .grid-2{ display:grid; grid-template-columns:1fr; gap:20px }
+    @media (min-width: 860px){ .grid-2{ grid-template-columns:1fr 1fr } }
+    .grid-3{ display:grid; grid-template-columns:1fr; gap:16px }
+    @media (min-width: 900px){ .grid-3{ grid-template-columns:repeat(3,1fr) } }
+    .calc-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px }
+    @media (min-width:700px){ .calc-grid{ grid-template-columns:repeat(4,1fr) } }
+    .field{ display:flex; flex-direction:column; gap:6px }
+    .field label{ font-size:.9rem; font-weight:600 }
+    .field input{ padding:10px 12px; border:1px solid rgba(0,0,0,.15); border-radius:8px; font-size:1rem; }
+    .kpi{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:12px }
+    .kpi .card{ padding:12px; border:1px solid rgba(0,0,0,.08); border-radius:10px; background:#fff }
+    .kpi .val{ font-weight:700; font-size:1.4rem }
+    .soft-frame.small-pad{ padding:14px }
+    .faq details{ border:1px solid rgba(0,0,0,.08); border-radius:10px; padding:10px 12px; background:#fff }
+    .faq details + details{ margin-top:10px }
+    .faq summary{ cursor:pointer; font-weight:600 }
+    .note{ font-size:.9rem; color:var(--muted, #555) }
+    .center{ text-align:center }
+    .dim{ opacity:.7 }
+    .slash{ margin:0 .35em; opacity:.35 }
+    .no-wrap{ white-space:nowrap }
+    .pill{ display:inline-block; border:1px solid rgba(0,0,0,.1); border-radius:999px; padding:3px 10px; font-size:.86rem; background:#fff }
+    .tier-legend{ display:flex; flex-wrap:wrap; gap:8px }
+    .example-box{ border:1px dashed rgba(0,0,0,.15); border-radius:10px; padding:12px }
+    .spaced > * + *{ margin-top:10px }
+    .subtle{ color:var(--muted,#666) }
+    .mt-6{ margin-top:6px }
+    .mt-12{ margin-top:12px }
+    .mt-20{ margin-top:20px }
+    .mb-0{ margin-bottom:0 }
+    .badge-wrap{ display:flex; justify-content:center }
+    .slab-badge{ margin-inline:auto }
+  </style>
+</head>
+<body>
+  <!-- Header mirrors card.html -->
+  <header class="site-header">
+    <div class="container">
+      <a href="/index.html" class="brand">
+        <img src="/logo.png" alt="SLABMETRICS" class="logo" />
+        <span>SLABMETRICS</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero reveal">
+    <div class="container hero-inner">
+      <div class="hero-head">
+        <h1 class="tight">Grading Standards<span class="slash">—</span><span class="no-wrap">Customer Guide</span></h1>
+        <p class="meta">
+          <span class="meta-item"><strong>Scale:</strong> 1–10 subgrades</span>
+          <span class="dot">•</span>
+          <span class="meta-item"><strong>Output:</strong> SlabMetrics Score (SM) + Badge</span>
+        </p>
+      </div>
+
+      <!-- Actions: show a demo badge that mirrors calculator -->
+      <div class="hero-actions">
+        <div class="grade-side">
+          <!-- Instead of the circle, we emphasize the live badge mapping below; keep label for consistency -->
+          <div class="overall" aria-hidden="true">
+            <div class="circle" style="--angle:100%">
+              <div class="circle-inner" id="smCircleVal">—</div>
+            </div>
+            <div class="circle-label">SlabMetrics Score</div>
+          </div>
+
+          <!-- Reused slab badge structure (will update live) -->
+          <div class="slab-badge" data-slabbadge data-grade="9.72" aria-live="polite" aria-label="Live badge grade">
+            <div class="slab-left">
+              <div class="slab-tier" data-tier-name>—</div>
+              <div class="slab-sub"  data-tier-sub></div>
+            </div>
+            <div class="slab-grade" data-tier-grade>—</div>
+          </div>
+          <div class="badge-note">SlabMetrics suggested overall score equates to this badge grade.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMULA -->
+  <section class="reveal">
+    <div class="container">
+      <h2>How Your Overall Score Is Calculated</h2>
+      <div class="soft-frame small-pad stack-tight">
+        <div class="formula">
+          Front = (S<sub>f</sub> + C<sub>f</sub> + E<sub>f</sub> + K<sub>f</sub>) / 4<br/>
+          Back&nbsp; = (S<sub>b</sub> + C<sub>b</sub> + E<sub>b</sub> + K<sub>b</sub>) / 4<br/>
+          <strong>SlabMetrics Score (SM)</strong> = 0.80 × Front + 0.20 × Back
+        </div>
+        <p class="note mb-0">We show Front and Back to <strong>one decimal</strong> and the SlabMetrics Score (SM) to <strong>two decimals</strong> (e.g., 9.72). The badge simplifies that precise score into industry-style tiers (see below).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RUBRICS -->
+  <section class="grades reveal">
+    <div class="container grid-2">
+      <!-- FRONT rubric -->
+      <div>
+        <h2>Front Subgrade Standards</h2>
+
+        <!-- Centering bands (Front) -->
+        <h3>Centering (use the worse axis: L–R or T–B)</h3>
+        <table class="tight-table">
+          <thead>
+            <tr><th>Ratio</th><th>Score</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>50/50–55/45</td><td>10</td><td>Ideal; negligible tilt</td></tr>
+            <tr><td>&gt;55/45–60/40</td><td>9</td><td>Within hobby “mint” expectation</td></tr>
+            <tr><td>&gt;60/40–65/35</td><td>8</td><td>Minor visual pull</td></tr>
+            <tr><td>&gt;65/35–70/30</td><td>7</td><td>Visible off-center</td></tr>
+            <tr><td>&gt;70/30–75/25</td><td>6</td><td>Clearly off-center</td></tr>
+            <tr><td>&gt;75/25–80/20</td><td>5</td><td>Border weight dominates</td></tr>
+            <tr><td>&gt;80/20–85/15</td><td>4</td><td>Severe off-center</td></tr>
+            <tr><td>&gt;85/15–90/10</td><td>3</td><td>Extremely off-center</td></tr>
+            <tr><td>&gt;90/10–95/5</td><td>2</td><td>Border nearly absent on one side</td></tr>
+            <tr><td>&gt;95/5 or tilt &gt; 1.5°</td><td>1</td><td>Misaligned/diamond cut</td></tr>
+          </tbody>
+        </table>
+        <p class="note">Tilt penalties stack on the centering band: &gt;0.5° = −0.5; &gt;1.0° = −1.0; &gt;1.5° caps ≤ 2. Visible registration (color/plate shift) = −0.5 to −1.0.</p>
+
+        <!-- Surface (Front) -->
+        <h3 class="mt-12">Surface</h3>
+        <table class="tight-table">
+          <thead><tr><th>Score</th><th>Front Expectations</th></tr></thead>
+          <tbody>
+            <tr><td>10</td><td>Pristine gloss; no print lines; no dimples; no scratches under normal light; no stains or residue.</td></tr>
+            <tr><td>9</td><td>Micro line(s) only visible on angle; ≤1 pinpoint dimple; <em>no</em> color-break.</td></tr>
+            <tr><td>8</td><td>Light, short hairline(s) visible at angle; ≤2 tiny dimples; faint roller mark allowed.</td></tr>
+            <tr><td>7</td><td>Multiple fine lines or one moderate line; light speck/stain removable; minor print snow acceptable.</td></tr>
+            <tr><td>6</td><td>Noticeable scratch not through paper; small stain/ink dot; light surface ripple.</td></tr>
+            <tr><td>5</td><td>Clusters of lines; moderate roller/print issues; small impression/indention.</td></tr>
+            <tr><td>4</td><td>Heavy scratches or several impressions; small crease that <em>does not</em> break color.</td></tr>
+            <tr><td>≤4 cap</td><td><strong>Any paper-breaking crease on front caps Surface ≤4</strong>.</td></tr>
+            <tr><td>3–1</td><td>Progressively heavier damage, stains, writing, scuffs, or creases.</td></tr>
+          </tbody>
+        </table>
+
+        <!-- Edges (Front, per-edge then average) -->
+        <h3 class="mt-12">Edges (average of 4)</h3>
+        <table class="tight-table">
+          <thead><tr><th>Score</th><th>Per-Edge Guidance</th></tr></thead>
+          <tbody>
+            <tr><td>10</td><td>Sharp cut; no chipping/fuzz. Foil/chrome intact.</td></tr>
+            <tr><td>9</td><td>&lt;0.5% micro chipping total length; no color-break. Foil nick ≤0.5mm = −0.5.</td></tr>
+            <tr><td>8</td><td>~1% light chipping; ≤2 small ticks (≤1mm). Chrome color-break = −0.5 to −1.0.</td></tr>
+            <tr><td>7</td><td>2–3% scattered chipping; short roughness runs.</td></tr>
+            <tr><td>6</td><td>3–5% chipping; one moderate rough cut.</td></tr>
+            <tr><td>5</td><td>&gt;5% chipping or one deep nick.</td></tr>
+            <tr><td>Vintage exception</td><td>Clearly factory rough-cut with <em>no</em> flaking: limit −1 on that edge.</td></tr>
+          </tbody>
+        </table>
+
+        <!-- Corners (Front, per-corner then average) -->
+        <h3 class="mt-12">Corners (average of 4)</h3>
+        <table class="tight-table">
+          <thead><tr><th>Score</th><th>Per-Corner Guidance</th></tr></thead>
+          <tbody>
+            <tr><td>10</td><td>Needle-sharp radius; no fray; no white.</td></tr>
+            <tr><td>9</td><td>Tiny radius softening; ≤1 micro white speck.</td></tr>
+            <tr><td>8</td><td>Small rounding; 1–2 white ticks total.</td></tr>
+            <tr><td>7</td><td>Moderate rounding or single tiny ding.</td></tr>
+            <tr><td>6</td><td>Obvious rounding; minor press-in.</td></tr>
+            <tr><td>5</td><td>Dinged corner or spread white; still structurally sound.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- BACK rubric -->
+      <div>
+        <h2>Back Subgrade Standards</h2>
+
+        <!-- Centering bands (Back uses same table) -->
+        <h3>Centering (use worse axis)</h3>
+        <table class="tight-table">
+          <thead><tr><th>Ratio</th><th>Score</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>50/50–55/45</td><td>10</td><td>Ideal</td></tr>
+            <tr><td>&gt;55/45–60/40</td><td>9</td><td>Mint expectation</td></tr>
+            <tr><td>&gt;60/40–65/35</td><td>8</td><td>Minor pull</td></tr>
+            <tr><td>&gt;65/35–70/30</td><td>7</td><td>Visible off-center</td></tr>
+            <tr><td>&gt;70/30–75/25</td><td>6</td><td>Clearly off-center</td></tr>
+            <tr><td>&gt;75/25–80/20</td><td>5</td><td>Border dominates</td></tr>
+            <tr><td>&gt;80/20–85/15</td><td>4</td><td>Severe</td></tr>
+            <tr><td>&gt;85/15–90/10</td><td>3</td><td>Extreme</td></tr>
+            <tr><td>&gt;90/10–95/5</td><td>2</td><td>Border nearly gone</td></tr>
+            <tr><td>&gt;95/5 or tilt &gt; 1.5°</td><td>1</td><td>Misaligned</td></tr>
+          </tbody>
+        </table>
+        <p class="note">Same tilt/registration adjustments apply to Back.</p>
+
+        <!-- Surface (Back slightly more tolerant) -->
+        <h3 class="mt-12">Surface</h3>
+        <table class="tight-table">
+          <thead><tr><th>Score</th><th>Back Expectations</th></tr></thead>
+          <tbody>
+            <tr><td>10</td><td>Pristine; no rub, no lines or stains.</td></tr>
+            <tr><td>9</td><td>Micro line at angle; faint print transfer allowed.</td></tr>
+            <tr><td>8</td><td>Light hairline(s) or tiny rub; small printer hickeys.</td></tr>
+            <tr><td>7</td><td>Multiple light lines, minor speck/stain.</td></tr>
+            <tr><td>6</td><td>Noticeable scratch or rub patch; small impression.</td></tr>
+            <tr><td>5</td><td>Heavier scratch cluster or small crease (no color-break).</td></tr>
+            <tr><td>≤4 cap</td><td><strong>Paper-breaking crease on back caps Surface ≤4 (back)</strong>.</td></tr>
+          </tbody>
+        </table>
+
+        <!-- Edges (Back) -->
+        <h3 class="mt-12">Edges (average of 4)</h3>
+        <p class="note">Same per-edge guidance as Front; foil/chrome color-breaks are more harsh (−0.5 to −1.0) even on the back if visibly distracting.</p>
+
+        <!-- Corners (Back) -->
+        <h3 class="mt-12">Corners (average of 4)</h3>
+        <p class="note">If Front corners are pristine (≥9.5 average) and Back shows only micro ticks, Back corners may round to the higher tenth (judgment allowance).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BADGE MAPPING -->
+  <section class="reveal">
+    <div class="container">
+      <h2>Badge Conversion (Industry-Style Label)</h2>
+      <p class="note">We keep your detailed decimal <strong>SlabMetrics Score</strong> for transparency, and also show an industry-style <strong>Badge</strong> that’s easier to skim.</p>
+
+      <div class="grid-3">
+        <div class="soft-frame small-pad">
+          <h3 class="mb-0">Mapping Rules</h3>
+          <ul class="spaced mt-12">
+            <li>Badge choices: <strong>10, 9.5, 9, 8.5, 8, 7, 6, 5, 4, 3, 2, 1</strong>.</li>
+            <li><strong>Rule:</strong> If <strong>SM &gt; 9.75 → Badge = 10</strong>. (An <strong>exact</strong> 9.75 maps to <strong>9.5</strong>.)</li>
+            <li>Threshold bands (inclusive of the number shown):</li>
+          </ul>
+          <table class="tight-table">
+            <tbody>
+              <tr><td>≥ 9.75</td><td>→ 10</td></tr>
+              <tr><td>≥ 9.25</td><td>→ 9.5</td></tr>
+              <tr><td>≥ 8.75</td><td>→ 9</td></tr>
+              <tr><td>≥ 8.25</td><td>→ 8.5</td></tr>
+              <tr><td>≥ 7.50</td><td>→ 8</td></tr>
+              <tr><td>≥ 6.50</td><td>→ 7</td></tr>
+              <tr><td>≥ 5.50</td><td>→ 6</td></tr>
+              <tr><td>≥ 4.50</td><td>→ 5</td></tr>
+              <tr><td>≥ 3.50</td><td>→ 4</td></tr>
+              <tr><td>≥ 2.50</td><td>→ 3</td></tr>
+              <tr><td>≥ 1.50</td><td>→ 2</td></tr>
+              <tr><td>else</td><td>→ 1</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="soft-frame small-pad">
+          <h3 class="mb-0">Tier Names/Sub-labels</h3>
+          <p class="note mt-6">These labels match the slab badge component on card pages.</p>
+          <div class="tier-legend mt-12">
+            <span class="pill">10 — APEX / GEM MINT</span>
+            <span class="pill">9.5 — ELITE / MINT+</span>
+            <span class="pill">9 — MINT</span>
+            <span class="pill">8.5 — STRONG</span>
+            <span class="pill">8 — SOLID / NM-MT</span>
+            <span class="pill">7 — COLLECTOR / NM</span>
+            <span class="pill">6 — PLAYABLE / EX-MT</span>
+            <span class="pill">5 — CLASSIC / EX</span>
+            <span class="pill">4 — VINTAGE / VG-EX</span>
+            <span class="pill">3 — WORN / VG</span>
+            <span class="pill">2 — POOR+</span>
+            <span class="pill">1 — POOR</span>
+          </div>
+        </div>
+
+        <div class="soft-frame small-pad">
+          <h3 class="mb-0">Transparency</h3>
+          <p class="mt-12">We always compute a precise decimal SM. The badge is a <strong>simplified</strong> view that matches industry expectations.</p>
+          <p class="badge-note">SlabMetrics suggested overall score equates to this badge grade.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALCULATOR -->
+  <section class="reveal">
+    <div class="container">
+      <h2>Try the Calculator</h2>
+      <div class="soft-frame">
+        <div class="calc-grid" id="calc">
+          <!-- FRONT inputs -->
+          <div class="field">
+            <label for="Sf">Front Surface (S<sub>f</sub>)</label>
+            <input id="Sf" type="number" step="0.1" min="1" max="10" value="9.5" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label for="Cf">Front Centering (C<sub>f</sub>)</label>
+            <input id="Cf" type="number" step="0.1" min="1" max="10" value="9.5" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label for="Ef">Front Edges avg (E<sub>f</sub>)</label>
+            <input id="Ef" type="number" step="0.1" min="1" max="10" value="9.4" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label for="Kf">Front Corners avg (K<sub>f</sub>)</label>
+            <input id="Kf" type="number" step="0.1" min="1" max="10" value="9.6" inputmode="decimal">
+          </div>
+
+          <!-- BACK inputs -->
+          <div class="field">
+            <label for="Sb">Back Surface (S<sub>b</sub>)</label>
+            <input id="Sb" type="number" step="0.1" min="1" max="10" value="9.2" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label for="Cb">Back Centering (C<sub>b</sub>)</label>
+            <input id="Cb" type="number" step="0.1" min="1" max="10" value="9.3" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label for="Eb">Back Edges avg (E<sub>b</sub>)</label>
+            <input id="Eb" type="number" step="0.1" min="1" max="10" value="9.1" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label for="Kb">Back Corners avg (K<sub>b</sub>)</label>
+            <input id="Kb" type="number" step="0.1" min="1" max="10" value="9.3" inputmode="decimal">
+          </div>
+        </div>
+
+        <div class="kpi" aria-live="polite">
+          <div class="card center">
+            <div class="label dim">Front</div>
+            <div class="val" id="frontOut">—</div>
+          </div>
+          <div class="card center">
+            <div class="label dim">Back</div>
+            <div class="val" id="backOut">—</div>
+          </div>
+          <div class="card center">
+            <div class="label">SlabMetrics Score</div>
+            <div class="val" id="smOut">—</div>
+          </div>
+        </div>
+
+        <div class="badge-wrap mt-12">
+          <!-- Reuse exact slab badge component; JS will write into it -->
+          <div class="slab-badge" data-slabbadge id="liveBadge" data-grade="9.72" aria-live="polite" aria-label="Calculated badge">
+            <div class="slab-left">
+              <div class="slab-tier" data-tier-name>—</div>
+              <div class="slab-sub"  data-tier-sub></div>
+            </div>
+            <div class="slab-grade" data-tier-grade>—</div>
+          </div>
+        </div>
+        <div class="badge-note">SlabMetrics suggested overall score equates to this badge grade.</div>
+
+        <div class="center mt-12">
+          <button class="btn" id="resetBtn" type="button">Reset Example</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXAMPLE WALKTHROUGH -->
+  <section class="reveal">
+    <div class="container">
+      <h2>Example Walkthrough</h2>
+      <div class="example-box stack-tight">
+        <p><strong>Inputs:</strong> S<sub>f</sub>=9.5, C<sub>f</sub>=9.5, E<sub>f</sub>=9.4, K<sub>f</sub>=9.6; S<sub>b</sub>=9.2, C<sub>b</sub>=9.3, E<sub>b</sub>=9.1, K<sub>b</sub>=9.3</p>
+        <p>Front = (9.5+9.5+9.4+9.6)/4 = <strong>9.5</strong> • Back = (9.2+9.3+9.1+9.3)/4 = <strong>9.2</strong></p>
+        <p><strong>SM</strong> = 0.80×9.5 + 0.20×9.2 = <strong>9.44</strong> → Badge mapping: <strong>9</strong> (MINT)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="reveal faq">
+    <div class="container">
+      <h2>FAQ</h2>
+      <details>
+        <summary>Why is the Front weighted 80%?</summary>
+        <p>The front face drives overall eye appeal and market perception, so we weight it more heavily while keeping the back meaningful (20%).</p>
+      </details>
+      <details>
+        <summary>Can a card with a light scratch still get a 10?</summary>
+        <p>On the front, a visible scratch generally prevents a 10. Micro lines at certain angles may still qualify for 9.5–10 depending on severity and visibility.</p>
+      </details>
+      <details>
+        <summary>Do SlabMetrics badges match PSA/SGC/BGS/CGC?</summary>
+        <p>Badges are <em>industry-style</em> tiers, not direct cross-grades. We also show your precise decimal SlabMetrics Score for transparency.</p>
+      </details>
+      <details>
+        <summary>How strict are chrome/foil defects?</summary>
+        <p>Color-breaking on chrome/foil is penalized more harshly (−0.5 to −1.0 per affected edge) because it’s highly visible.</p>
+      </details>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-buttons">
+        <a class="btn" href="/index.html">← Back to All Cards</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== Minimal, vanilla JS (no external libs) ===== -->
+  <script>
+  /* Reveal-on-scroll (mirror pattern) */
+  (function(){
+    try{
+      const reveals = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) {
+        reveals.forEach(el => el.classList.add('is-visible'));
+        return;
+      }
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); });
+      }, {threshold:0.2});
+      reveals.forEach(el => io.observe(el));
+    }catch(e){ console.error('reveal', e); }
+  })();
+
+  /* Slab badge binning + naming (matches card.html but with explicit 9.75 rule) */
+  function binBadgeFromSM(v){
+    // Special rule: >9.75 => 10; exact 9.75 goes to 9.5 via thresholds below.
+    if (v > 9.75) return 10.0;
+    if (v >= 9.75) return 9.5; // exact 9.75
+    if (v >= 9.25) return 9.5;
+    if (v >= 8.75) return 9.0;
+    if (v >= 8.25) return 8.5;
+    if (v >= 7.50) return 8.0;
+    if (v >= 6.50) return 7.0;
+    if (v >= 5.50) return 6.0;
+    if (v >= 4.50) return 5.0;
+    if (v >= 3.50) return 4.0;
+    if (v >= 2.50) return 3.0;
+    if (v >= 1.50) return 2.0;
+    return 1.0;
+  }
+  const BADGE_META = {
+    10.0: { tier:'APEX',      sub:'GEM MINT', base:'10'  },
+    9.5:  { tier:'ELITE',     sub:'MINT+',    base:'9.5' },
+    9.0:  { tier:'MINT',      sub:'',         base:'9'   },
+    8.5:  { tier:'STRONG',    sub:'',         base:'8.5' },
+    8.0:  { tier:'SOLID',     sub:'NM-MT',    base:'8'   },
+    7.0:  { tier:'COLLECTOR', sub:'NM',       base:'7'   },
+    6.0:  { tier:'PLAYABLE',  sub:'EX-MT',    base:'6'   },
+    5.0:  { tier:'CLASSIC',   sub:'EX',       base:'5'   },
+    4.0:  { tier:'VINTAGE',   sub:'VG-EX',    base:'4'   },
+    3.0:  { tier:'WORN',      sub:'VG',       base:'3'   },
+    2.0:  { tier:'POOR+',     sub:'',         base:'2'   },
+    1.0:  { tier:'POOR',      sub:'',         base:'1'   },
+  };
+
+  function writeBadge(badgeEl, smVal){
+    try{
+      if (!badgeEl) return;
+      const bin  = binBadgeFromSM(smVal);
+      const meta = BADGE_META[bin] || {tier:'—', sub:'', base:'—'};
+      const nameEl = badgeEl.querySelector('[data-tier-name]');
+      const subEl  = badgeEl.querySelector('[data-tier-sub]');
+      const numEl  = badgeEl.querySelector('[data-tier-grade]');
+      if (nameEl) nameEl.textContent = meta.tier;
+      if (subEl)  subEl.textContent  = meta.sub || '';
+      if (numEl)  numEl.textContent  = meta.base;
+      // Also reflect the raw SM in the hero circle text (to 2 decimals)
+      const circ = document.getElementById('smCircleVal');
+      if (circ && isFinite(smVal)) circ.textContent = smVal.toFixed(2);
+    }catch(e){ console.error('writeBadge', e); }
+  }
+
+  /* Calculator wiring */
+  (function(){
+    try{
+      const ids = ['Sf','Cf','Ef','Kf','Sb','Cb','Eb','Kb'];
+      const els = Object.fromEntries(ids.map(id => [id, document.getElementById(id)]));
+      const outFront = document.getElementById('frontOut');
+      const outBack  = document.getElementById('backOut');
+      const outSM    = document.getElementById('smOut');
+      const badge    = document.getElementById('liveBadge');
+      const heroBadge= document.querySelector('.hero [data-slabbadge]');
+      const resetBtn = document.getElementById('resetBtn');
+
+      function clamp(v){ v = parseFloat(v); if (!isFinite(v)) return 1; return Math.max(1, Math.min(10, v)); }
+      function calc(){
+        const Sf = clamp(els.Sf.value), Cf = clamp(els.Cf.value), Ef = clamp(els.Ef.value), Kf = clamp(els.Kf.value);
+        const Sb = clamp(els.Sb.value), Cb = clamp(els.Cb.value), Eb = clamp(els.Eb.value), Kb = clamp(els.Kb.value);
+        const front = (Sf + Cf + Ef + Kf) / 4;
+        const back  = (Sb + Cb + Eb + Kb) / 4;
+        const sm    = 0.80 * front + 0.20 * back;
+        if (outFront) outFront.textContent = front.toFixed(1);
+        if (outBack)  outBack.textContent  = back.toFixed(1);
+        if (outSM)    outSM.textContent    = sm.toFixed(2);
+        writeBadge(badge, sm);
+        writeBadge(heroBadge, sm);
+      }
+
+      ids.forEach(id => els[id].addEventListener('input', calc));
+      if (resetBtn){
+        resetBtn.addEventListener('click', () => {
+          els.Sf.value=9.5; els.Cf.value=9.5; els.Ef.value=9.4; els.Kf.value=9.6;
+          els.Sb.value=9.2; els.Cb.value=9.3; els.Eb.value=9.1; els.Kb.value=9.3;
+          calc();
+        });
+      }
+      // initial run
+      calc();
+    }catch(e){ console.error('calc', e); }
+  })();
+
+  // Initialize top hero badge once on load (fallback if calculator not run yet)
+  (function(){
+    try{
+      const badge = document.querySelector('.hero [data-slabbadge]');
+      const attrVal = parseFloat((badge?.getAttribute('data-grade')||'').replace(/[^\d.]/g,''));
+      if (badge && isFinite(attrVal)) writeBadge(badge, attrVal);
+    }catch(e){ console.error('init hero badge', e); }
+  })();
+  </script>
+</body>
+</html>
