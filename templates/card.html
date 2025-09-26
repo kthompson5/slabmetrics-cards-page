@@ -83,82 +83,84 @@
   </section>
 
   <!-- Subgrades -->
-  <section class="grades reveal">
-    <div class="container grid-2">
-      <div>
-        <h2>Front Subgrades</h2>
+<section class="grades reveal">
+  <div class="container grid-2">
+    <!-- FRONT -->
+    <div>
+      <h2>Front Subgrades</h2>
 
-        <div class="subgrade">
-          <div class="subgrade-head"><div class="label">Surface</div><div class="value">{{f_surface}}</div></div>
-          <div class="bar"><span style="--pct: {{f_surface_pct}}%"></span></div>
-        </div>
-
-        <div class="subgrade">
-          <div class="subgrade-head"><div class="label">Centering</div><div class="value">{{f_centering}}</div></div>
-          <div class="bar"><span style="--pct: {{f_centering_pct}}%"></span></div>
-        </div>
-
-        <div class="subgrade">
-          <div class="subgrade-head"><div class="label">Corners (avg)</div><div class="value">{{f_corners_avg}}</div></div>
-          <div class="bar"><span style="--pct: {{f_corners_pct}}%"></span></div>
-        </div>
-
-        <div class="subgrade">
-          <div class="subgrade-head"><div class="label">Edges (avg)</div><div class="value">{{f_edges_avg}}</div></div>
-          <div class="bar"><span style="--pct: {{f_edges_pct}}%"></span></div>
-        </div>
-
-        <div class="remarks">
-          <div><strong>Surface:</strong> {{f_remarks_surface}}</div>
-          <div><strong>Centering:</strong> {{f_remarks_centering}}</div>
-          <div><strong>Corners:</strong> {{f_remarks_corners}}</div>
-          <div><strong>Edges:</strong> {{f_remarks_edges}}</div>
-        </div>
+      <div class="subgrade">
+        <div class="subgrade-head"><div class="label">Surface</div><div class="value">{{f_surface}}</div></div>
+        <div class="bar"><span style="--pct: {{f_surface_pct}}%"></span></div>
       </div>
 
-      <div>
-        <h2>Back Subgrades</h2>
+      <div class="subgrade">
+        <div class="subgrade-head"><div class="label">Centering</div><div class="value">{{f_centering}}</div></div>
+        <div class="bar"><span style="--pct: {{f_centering_pct}}%"></span></div>
+      </div>
 
-        <div class="subgrade">
-          <div class="subgrade-head"><div class="label">Surface</div><div class="value">{{b_surface}}</div></div>
-          <div class="bar"><span style="--pct: {{b_surface_pct}}%"></span></div>
-        </div>
+      <div class="subgrade">
+        <div class="subgrade-head"><div class="label">Corners (avg)</div><div class="value">{{f_corners_avg}}</div></div>
+        <div class="bar"><span style="--pct: {{f_corners_pct}}%"></span></div>
+      </div>
 
-        <div class="subgrade">
-          <div class="subgrade-head"><div class="label">Centering</div><div class="value">{{b_centering}}</div></div>
-          <div class="bar"><span style="--pct: {{b_centering_pct}}%"></span></div>
-        </div>
+      <div class="subgrade">
+        <div class="subgrade-head"><div class="label">Edges (avg)</div><div class="value">{{f_edges_avg}}</div></div>
+        <div class="bar"><span style="--pct: {{f_edges_pct}}%"></span></div>
+      </div>
 
-        <div class="subgrade">
-          <div class="subgrade-head"><div class="label">Corners (avg)</div><div class="value">{{b_corners_avg}}</div></div>
-          <div class="bar"><span style="--pct: {{b_corners_pct}}%"></span></div>
-        </div>
-
-        <div class="subgrade">
-          <div class="subgrade-head"><div class="label">Edges (avg)</div><div class="value">{{b_edges_avg}}</div></div>
-          <div class="bar"><span style="--pct: {{b_edges_pct}}%"></span></div>
-        </div>
-
-        <div class="remarks">
-          <div><strong>Surface:</strong> {{b_remarks_surface}}</div>
-          <div><strong>Centering:</strong> {{b_remarks_centering}}</div>
-          <div><strong>Corners:</strong> {{b_remarks_corners}}</div>
-          <div><strong>Edges:</strong> {{b_remarks_edges}}</div>
-        </div>
+      <div class="remarks">
+        <div><strong>Surface:</strong> {{f_remarks_surface}}</div>
+        <div><strong>Centering:</strong> {{f_remarks_centering}}</div>
+        <div><strong>Corners:</strong> {{f_remarks_corners}}</div>
+        <div><strong>Edges:</strong> {{f_remarks_edges}}</div>
       </div>
     </div>
-  </section>
 
-  <!-- EDGE centering -->
-  <section class="edge-section">
-    <h2 class="edge-title">Centering Analysis</h2>
-    <div class="edge-frame">
-      <img src="{{edge_img}}" alt="EDGE centering report for {{player}}" loading="eager" />
+    <!-- EDGE (now between Front and Back) -->
+    <section class="edge-section edge-in-grid">
+      <h2 class="edge-title">Centering Analysis</h2>
+      <div class="edge-frame">
+        <img src="{{edge_img}}" alt="EDGE centering report for {{player}}" loading="eager" />
+      </div>
+      <p class="edge-disclaimer">
+        Estimates are based on EDGE centering ratios shown above. Final grades may vary by grader.
+      </p>
+    </section>
+
+    <!-- BACK -->
+    <div>
+      <h2>Back Subgrades</h2>
+
+      <div class="subgrade">
+        <div class="subgrade-head"><div class="label">Surface</div><div class="value">{{b_surface}}</div></div>
+        <div class="bar"><span style="--pct: {{b_surface_pct}}%"></span></div>
+      </div>
+
+      <div class="subgrade">
+        <div class="subgrade-head"><div class="label">Centering</div><div class="value">{{b_centering}}</div></div>
+        <div class="bar"><span style="--pct: {{b_centering_pct}}%"></span></div>
+      </div>
+
+      <div class="subgrade">
+        <div class="subgrade-head"><div class="label">Corners (avg)</div><div class="value">{{b_corners_avg}}</div></div>
+        <div class="bar"><span style="--pct: {{b_corners_pct}}%"></span></div>
+      </div>
+
+      <div class="subgrade">
+        <div class="subgrade-head"><div class="label">Edges (avg)</div><div class="value">{{b_edges_avg}}</div></div>
+        <div class="bar"><span style="--pct: {{b_edges_pct}}%"></span></div>
+      </div>
+
+      <div class="remarks">
+        <div><strong>Surface:</strong> {{b_remarks_surface}}</div>
+        <div><strong>Centering:</strong> {{b_remarks_centering}}</div>
+        <div><strong>Corners:</strong> {{b_remarks_corners}}</div>
+        <div><strong>Edges:</strong> {{b_remarks_edges}}</div>
+      </div>
     </div>
-    <p class="edge-disclaimer">
-      Estimates are based on EDGE centering ratios shown above. Final grades may vary by grader.
-    </p>
-  </section>
+  </div>
+</section>
 
   <!-- POP & GEM -->
   <section class="pop-gem reveal" id="popGem">
