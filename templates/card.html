@@ -339,58 +339,66 @@
     }catch(e){ console.error('overall reduced motion', e); }
   })();
 
-  /* 4) Slab badge (reads CSV overall grade via data-grade) */
-  (function(){
-    try{
-      const badge = document.querySelector('[data-slabbadge]');
-      if (!badge) return;
+/* 4) Slab badge (reads CSV overall grade via data-grade) */
+(function(){
+  try {
+    const badge = document.querySelector('[data-slabbadge]');
+    if (!badge) return;
 
-      const csvVal = parseFloat((badge.getAttribute('data-grade') || '').replace(/[^\d.]/g,''));
-      const circleVal = parseFloat((document.querySelector('.circle-inner')?.textContent || '').replace(/[^\d.]/g,''));
-      const grade = (isFinite(csvVal) ? csvVal : circleVal);
-      if (!isFinite(grade)) return;
+    // pull from CSV attribute or fallback to circle text
+    const csvVal    = parseFloat((badge.getAttribute('data-grade') || '').replace(/[^\d.]/g,''));
+    const circleVal = parseFloat((document.querySelector('.circle-inner')?.textContent || '').replace(/[^\d.]/g,''));
+    const grade     = (isFinite(csvVal) ? csvVal : circleVal);
+    if (!isFinite(grade)) return;
 
-      function binVal(v){
-        if (v >= 9.75) return 10.0;
-        if (v >= 9.25) return 9.5;
-        if (v >= 8.75) return 9.0;
-        if (v >= 8.25) return 8.5;
-        if (v >= 7.50) return 8.0;
-        if (v >= 6.50) return 7.0;
-        if (v >= 5.50) return 6.0;
-        if (v >= 4.50) return 5.0;
-        if (v >= 3.50) return 4.0;
-        if (v >= 2.50) return 3.0;
-        if (v >= 1.50) return 2.0;
-        return 1.0;
-      }
+    // binning function: converts raw grade → 10, 9.5, 9, etc.
+    function binVal(v){
+      if (v >= 9.75) return 10.0;
+      if (v >= 9.25) return 9.5;
+      if (v >= 8.75) return 9.0;
+      if (v >= 8.25) return 8.5;
+      if (v >= 7.50) return 8.0;
+      if (v >= 6.50) return 7.0;
+      if (v >= 5.50) return 6.0;
+      if (v >= 4.50) return 5.0;
+      if (v >= 3.50) return 4.0;
+      if (v >= 2.50) return 3.0;
+      if (v >= 1.50) return 2.0;
+      return 1.0;
+    }
 
-      const NAMES = {
-        10.0: { tier:'APEX',      sub:'GEM MINT', base:'10'  },
-        9.5:  { tier:'ELITE',     sub:'MINT+',    base:'9.5' },
-        9.0:  { tier:'MINT',      sub:'',         base:'9'   },
-        8.5:  { tier:'STRONG',    sub:'',         base:'8.5' },
-        8.0:  { tier:'SOLID',     sub:'NM-MT',    base:'8'   },
-        7.0:  { tier:'COLLECTOR', sub:'NM',       base:'7'   },
-        6.0:  { tier:'PLAYABLE',  sub:'EX-MT',    base:'6'   },
-        5.0:  { tier:'CLASSIC',   sub:'EX',       base:'5'   },
-        4.0:  { tier:'VINTAGE',   sub:'VG-EX',    base:'4'   },
-        3.0:  { tier:'WORN',      sub:'VG',       base:'3'   },
-        2.0:  { tier:'POOR+',     sub:'',         base:'2'   },
-        1.0:  { tier:'POOR',      sub:'',         base:'1'   },
-      };
+    const NAMES = {
+      10.0: { tier:'APEX',      sub:'GEM MINT', base:'10'  },
+      9.5:  { tier:'ELITE',     sub:'MINT+',    base:'9.5' },
+      9.0:  { tier:'MINT',      sub:'',         base:'9'   },
+      8.5:  { tier:'STRONG',    sub:'',         base:'8.5' },
+      8.0:  { tier:'SOLID',     sub:'NM-MT',    base:'8'   },
+      7.0:  { tier:'COLLECTOR', sub:'NM',       base:'7'   },
+      6.0:  { tier:'PLAYABLE',  sub:'EX-MT',    base:'6'   },
+      5.0:  { tier:'CLASSIC',   sub:'EX',       base:'5'   },
+      4.0:  { tier:'VINTAGE',   sub:'VG-EX',    base:'4'   },
+      3.0:  { tier:'WORN',      sub:'VG',       base:'3'   },
+      2.0:  { tier:'POOR+',     sub:'',         base:'2'   },
+      1.0:  { tier:'POOR',      sub:'',         base:'1'   },
+    };
 
-      const bin = binVal(grade);
-      const meta = NAMES[bin] || {tier:'—', sub:'', base:'—'};
+    const bin  = binVal(grade);
+    const meta = NAMES[bin] || { tier:'—', sub:'', base:'—' };
 
-      const nameEl = badge.querySelector('[data-tier-name]');
-      const subEl  = badge.querySelector('[data-tier-sub]');
-      const numEl  = badge.querySelector('[data-tier-grade]');
-      if (nameEl) nameEl.textContent = meta.tier;
-      if (subEl)  subEl.textContent  = meta.sub || '';
-      if (numEl)  numEl.textContent  = String(grade.toFixed(1)).replace(/\.0$/,'');
-    }catch(e){ console.error('slab badge', e); }
-  })();
+    // write into badge slots
+    const nameEl = badge.querySelector('[data-tier-name]');
+    const subEl  = badge.querySelector('[data-tier-sub]');
+    const numEl  = badge.querySelector('[data-tier-grade]');
+    if (nameEl) nameEl.textContent = meta.tier;
+    if (subEl)  subEl.textContent  = meta.sub || '';
+
+    // ✅ now shows the binned "equivalent" instead of raw decimal
+    if (numEl)  numEl.textContent  = meta.base;
+
+  } catch(e){ 
+    console.error('slab badge', e); 
+  }
+})();
 
   /* 5) Pop & Gem */
   (function(){
