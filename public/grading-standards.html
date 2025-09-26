@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <script>document.documentElement.classList.add('js');</script>
+  <title>Grading Standards — SLABMETRICS</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="/styles.css?v=99" />
+  <style>
+    /* Page-specific helpers (keeps your global CSS intact) */
+    .hero .tight { margin-bottom: .25rem; }
+    .standards h2 { margin: 24px 0 12px; }
+    .standards h3 { margin: 20px 0 8px; }
+    .standards .fine { color: var(--dim, #666); font-size: .95rem; }
+    .std-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    @media (min-width: 900px){ .std-grid { grid-template-columns: 1fr 1fr; } }
+    .cardy { border: 1px solid rgba(0,0,0,.08); border-radius: 12px; padding: 16px; background: var(--card, #fff); }
+    .soft-frame { border-radius: 14px; box-shadow: 0 2px 18px rgba(0,0,0,.06); }
+    .table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+    table.standards { width: 100%; border-collapse: collapse; font-size: .95rem; }
+    table.standards th, table.standards td { padding: 10px 12px; border-bottom: 1px solid rgba(0,0,0,.08); text-align: left; }
+    table.standards th { background: rgba(0,0,0,.03); font-weight: 600; }
+    .badge-map code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .92rem; }
+    details.std { border:1px solid rgba(0,0,0,.08); border-radius:10px; padding:12px 14px; background:#fff; }
+    details.std + details.std { margin-top:10px; }
+    details.std summary { cursor:pointer; font-weight:600; }
+    .lead { font-size: 1.05rem; }
+    .btn-row { display:flex; flex-wrap:wrap; gap:10px; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="/index.html" class="brand">
+        <img src="/logo.png" alt="SLABMETRICS" class="logo" />
+        <span>SLABMETRICS</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero reveal">
+    <div class="container hero-inner">
+      <div class="hero-head">
+        <h1 class="tight">Grading Standards</h1>
+        <p class="meta">How we turn detailed subgrades into a clear, customer-friendly badge grade.</p>
+      </div>
+      <div class="hero-actions">
+        <div class="grade-side">
+          <div class="slab-badge soft-frame" aria-label="Example badge">
+            <div class="slab-left">
+              <div class="slab-tier">APEX</div>
+              <div class="slab-sub">GEM MINT</div>
+            </div>
+            <div class="slab-grade">10</div>
+          </div>
+          <p class="fine" style="margin-top:8px; text-align:center;">
+            SlabMetrics <strong>suggested score</strong> equates to this badge grade.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OVERVIEW -->
+  <section class="standards reveal">
+    <div class="container">
+      <div class="std-grid">
+        <div class="cardy soft-frame">
+          <h2>What We Measure</h2>
+          <p class="lead">Each side of the card (Front &amp; Back) is scored across four categories on a 1–10 scale.</p>
+          <ul>
+            <li><strong>Surface (S)</strong>: print quality, scratches, dimples, stains.</li>
+            <li><strong>Centering (C)</strong>: left–right &amp; top–bottom balance; worst axis governs.</li>
+            <li><strong>Edges (E)</strong>: average of all 4 edges (each 1–10).</li>
+            <li><strong>Corners (K)</strong>: average of all 4 corners (each 1–10).</li>
+          </ul>
+          <p class="fine">Front and Back are graded independently using the same rubric. Front is weighted heavier in the overall score.</p>
+        </div>
+
+        <div class="cardy soft-frame">
+          <h2>How the Score is Calculated</h2>
+          <ol>
+            <li><strong>Front</strong> = (S<sub>f</sub> + C<sub>f</sub> + E<sub>f</sub> + K<sub>f</sub>)/4</li>
+            <li><strong>Back</strong> = (S<sub>b</sub> + C<sub>b</sub> + E<sub>b</sub> + K<sub>b</sub>)/4</li>
+            <li><strong>SlabMetrics Score (SM)</strong> = <strong>0.80 × Front + 0.20 × Back</strong></li>
+          </ol>
+          <p class="fine">We keep internal category/side scores to 1 decimal during grading; the final SM is kept to 2 decimals (e.g., 9.72).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BADGE CONVERSION -->
+  <section class="standards reveal">
+    <div class="container">
+      <div class="cardy soft-frame badge-map">
+        <h2>Badge Conversion (What You See on the Label)</h2>
+        <p>We show a simple badge grade that maps from your precise SlabMetrics Score. Top tiers use half-steps for clarity:</p>
+        <div class="table-wrap">
+          <table class="standards">
+            <thead>
+              <tr><th>SlabMetrics Score (SM)</th><th>Badge Grade</th><th>Tier Name</th><th>Sub-Label</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>SM &gt; 9.75</td><td><strong>10</strong></td><td>APEX</td><td>GEM MINT</td></tr>
+              <tr><td>9.25 &lt;= SM &lt;= 9.75</td><td><strong>9.5</strong></td><td>ELITE</td><td>MINT+</td></tr>
+              <tr><td>8.75 &lt;= SM &lt; 9.25</td><td><strong>9</strong></td><td>MINT</td><td>—</td></tr>
+              <tr><td>8.25 &lt;= SM &lt; 8.75</td><td><strong>8.5</strong></td><td>STRONG</td><td>—</td></tr>
+              <tr><td>7.50 &lt;= SM &lt; 8.25</td><td><strong>8</strong></td><td>SOLID</td><td>NM-MT</td></tr>
+              <tr><td>6.50 &lt;= SM &lt; 7.50</td><td><strong>7</strong></td><td>COLLECTOR</td><td>NM</td></tr>
+              <tr><td>5.50 &lt;= SM &lt; 6.50</td><td><strong>6</strong></td><td>PLAYABLE</td><td>EX-MT</td></tr>
+              <tr><td>4.50 &lt;= SM &lt; 5.50</td><td><strong>5</strong></td><td>CLASSIC</td><td>EX</td></tr>
+              <tr><td>3.50 &lt;= SM &lt; 4.50</td><td><strong>4</strong></td><td>VINTAGE</td><td>VG-EX</td></tr>
+              <tr><td>2.50 &lt;= SM &lt; 3.50</td><td><strong>3</strong></td><td>WORN</td><td>VG</td></tr>
+              <tr><td>1.50 &lt;= SM &lt; 2.50</td><td><strong>2</strong></td><td>POOR+</td><td>—</td></tr>
+              <tr><td>SM &lt; 1.50</td><td><strong>1</strong></td><td>POOR</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="fine">Edge behavior is strict at band edges. Example: SM = 9.75 exactly → Badge 9.5. SM = 9.76 → Badge 10.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORY RUBRICS -->
+  <section class="standards reveal">
+    <div class="container">
+      <div class="std-grid">
+        <div class="cardy soft-frame">
+          <h2>Centering (C)</h2>
+          <p>The <em>worse</em> of Left–Right or Top–Bottom governs the centering score. Measure to nearest 1%.</p>
+          <div class="table-wrap">
+            <table class="standards">
+              <thead><tr><th>Centering Band (worse axis)</th><th>Score</th><th>Notes</th></tr></thead>
+              <tbody>
+                <tr><td>50/50–55/45</td><td>10</td><td>Dead-center to very minor bias</td></tr>
+                <tr><td>&gt;55/45–60/40</td><td>9</td><td>Small bias</td></tr>
+                <tr><td>&gt;60/40–65/35</td><td>8</td><td>Noticeable bias</td></tr>
+                <tr><td>&gt;65/35–70/30</td><td>7</td><td>Obvious bias</td></tr>
+                <tr><td>&gt;70/30–75/25</td><td>6</td><td>Strong bias</td></tr>
+                <tr><td>&gt;75/25–80/20</td><td>5</td><td>Severe bias</td></tr>
+                <tr><td>&gt;80/20–85/15</td><td>4</td><td>Very severe</td></tr>
+                <tr><td>&gt;85/15–90/10</td><td>3</td><td>Extreme</td></tr>
+                <tr><td>&gt;90/10–95/5</td><td>2</td><td>Nearly miscut</td></tr>
+                <tr><td>&gt;95/5 or tilt &gt;1.5°</td><td>1</td><td>Miscut/diamond cut</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="fine">Tilt/diamond cut: &gt;0.5° (−0.5), &gt;1.0° (−1.0). Registration/print shift: −0.5 to −1.0 if colors visibly off.</p>
+        </div>
+
+        <div class="cardy soft-frame">
+          <h2>Surface (S)</h2>
+          <p>Judge print lines, scratches, dimples, creases, stains, gloss, ink lift. Use the largest single deduction plus ~50% of additional material issues (avoid double-penalizing the same flaw).</p>
+          <div class="table-wrap">
+            <table class="standards">
+              <thead><tr><th>Typical Condition</th><th>Score</th></tr></thead>
+              <tbody>
+                <tr><td>Flawless; no lines/scratches; original gloss; no stains</td><td>10</td></tr>
+                <tr><td>≤1 faint line (&lt;3mm) or hairline only on tilt; no dents</td><td>9</td></tr>
+                <tr><td>≤2 faint lines or 1 short light scratch (&lt;5mm); tiny speck stain ≤1mm</td><td>8</td></tr>
+                <tr><td>Multiple light lines or 1 moderate scratch (≤8mm) no color break; 1 pinhead dimple</td><td>7</td></tr>
+                <tr><td>Several scratches/lines; shallow dent ≤2mm; small stain ≤3mm; light print snow</td><td>6</td></tr>
+                <tr><td>Noticeable scratches; 2 shallow dimples; faint crease back-only or front ≤3mm not through</td><td>5</td></tr>
+                <tr><td>Obvious crease(s) ≤10mm; stain ≤6mm; paper-loss ≤2mm edge flake</td><td>4</td></tr>
+                <tr><td>Heavy creases; moderate paper loss; ink lift; small writing</td><td>3</td></tr>
+                <tr><td>Multiple creases; large stains; tape residue tearing fibers</td><td>2</td></tr>
+                <tr><td>Severe paper loss/tears/holes; large writing; water damage</td><td>1</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="fine">Back surface is judged one tolerance lighter unless paper/ink is broken or stain &gt;6mm—then treat like front.</p>
+        </div>
+
+        <div class="cardy soft-frame">
+          <h2>Edges (E)</h2>
+          <p>Score each edge, then average the four for the category score.</p>
+          <div class="table-wrap">
+            <table class="standards">
+              <thead><tr><th>Per-Edge Condition</th><th>Per-Edge Score</th></tr></thead>
+              <tbody>
+                <tr><td>Razor cut; no nicks or chip</td><td>10</td></tr>
+                <tr><td>≤1 micro-nick ≤0.5mm or trace roughness; no color break</td><td>9</td></tr>
+                <tr><td>2 micro-nicks or 1 small nick ≤1.0mm; ≤2 white specks</td><td>8</td></tr>
+                <tr><td>Several small nicks or light chipping ≤10% length</td><td>7</td></tr>
+                <tr><td>Moderate chipping 10–20% or 1 larger nick ≤2mm</td><td>6</td></tr>
+                <tr><td>Heavy speck/chip 20–35% or one flap/flake ≤3mm</td><td>5</td></tr>
+                <tr><td>Significant chipping/fray 35–50%</td><td>4</td></tr>
+                <tr><td>Severe chipping &gt;50%; rolled laminate</td><td>3</td></tr>
+                <tr><td>Tears/minor missing slivers; delamination</td><td>2</td></tr>
+                <tr><td>Major tears/missing sections</td><td>1</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="fine">Foil/chrome: color-break exposes substrate → additional −0.5 to −1.0 per affected edge. Vintage rough-cut: cap at −1 if clearly factory and no chipping.</p>
+        </div>
+
+        <div class="cardy soft-frame">
+          <h2>Corners (K)</h2>
+          <p>Score each corner, then average the four for the category score.</p>
+          <div class="table-wrap">
+            <table class="standards">
+              <thead><tr><th>Per-Corner Condition</th><th>Per-Corner Score</th></tr></thead>
+              <tbody>
+                <tr><td>Needle-sharp; no fuzz/white</td><td>10</td></tr>
+                <tr><td>Micro-softness ≤0.1mm radius; no white</td><td>9</td></tr>
+                <tr><td>Minor softness ≤0.25mm or tiny white ≤0.25mm</td><td>8</td></tr>
+                <tr><td>Visible rounding ≤0.5mm or small white ≤0.5mm</td><td>7</td></tr>
+                <tr><td>Moderate round ≤0.75mm or light ding; minimal fiber lift</td><td>6</td></tr>
+                <tr><td>Strong round ≤1.0mm or obvious ding; clear white</td><td>5</td></tr>
+                <tr><td>Heavy round &gt;1.0mm or crushed tip (intact)</td><td>4</td></tr>
+                <tr><td>Folded/crumpled; paper lift</td><td>3</td></tr>
+                <tr><td>Corner cracked through layers</td><td>2</td></tr>
+                <tr><td>Missing/broken-off corner</td><td>1</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="fine">Back corners are slightly more tolerant (micro-softness may still land 9–10 if front corners are pristine).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXAMPLES -->
+  <section class="standards reveal">
+    <div class="container">
+      <div class="cardy soft-frame">
+        <h2>How a Grade Comes Together (Example)</h2>
+        <p><strong>Front</strong>: S<sub>f</sub>=9.5, C<sub>f</sub>=9, E<sub>f</sub>=9, K<sub>f</sub>=9.5 → Front = (9.5+9+9+9.5)/4 = <strong>9.25</strong></p>
+        <p><strong>Back</strong>: S<sub>b</sub>=9, C<sub>b</sub>=9, E<sub>b</sub>=9, K<sub>b</sub>=9 → Back = (9+9+9+9)/4 = <strong>9.00</strong></p>
+        <p><strong>SM</strong> = 0.80×9.25 + 0.20×9.00 = <strong>9.20</strong> → <strong>Badge 9</strong></p>
+        <p class="fine">If SM were 9.26, it would map to <strong>Badge 9.5</strong>. If SM were 9.76, it maps to <strong>Badge 10</strong>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RULES & TIE-BREAKERS -->
+  <section class="standards reveal">
+    <div class="container">
+      <div class="std-grid">
+        <div class="cardy soft-frame">
+          <h2>Global Rules</h2>
+          <ul>
+            <li><strong>Creases breaking front ink/paper</strong> hard-cap Surface ≤4 on that side.</li>
+            <li><strong>Authentic factory defects</strong> (light roller/print dot): limit penalty to −0.5 to −1.0 if endemic to the issue.</li>
+            <li><strong>Autographs</strong> on-card are not penalized; smears count under Surface.</li>
+            <li><strong>Stains/Residue</strong>: grade as-is. Back is slightly more tolerant unless severe.</li>
+            <li><strong>Transparency line (on card pages)</strong>: “SlabMetrics suggested score equates to this badge grade.”</li>
+          </ul>
+        </div>
+
+        <div class="cardy soft-frame">
+          <h2>Tie-Breakers & Rounding</h2>
+          <ul>
+            <li>Internal category/side scores keep 1 decimal; SM displays at 2 decimals.</li>
+            <li>Badge mapping uses strict thresholds (no upward rounding), except explicit top rule: <strong>SM &gt; 9.75 → 10</strong>.</li>
+            <li>Exact ties on SM: prefer higher <strong>Front Surface</strong>, then <strong>Front Corners</strong>, then <strong>Front Centering</strong>.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="standards reveal">
+    <div class="container">
+      <div class="cardy soft-frame">
+        <h2>FAQ (Short)</h2>
+        <details class="std"><summary>Why is the Front weighted more than the Back?</summary>
+          <p>The front drives collector eye appeal and market value more strongly. Our mix (80/20) reflects that, while still respecting the back.</p>
+        </details>
+        <details class="std"><summary>Can a card with perfect centering but a light scratch get a 10?</summary>
+          <p>No. A 10 requires near-perfect across all categories. Even faint surface flaws typically place a card in the 9.5–9 range.</p>
+        </details>
+        <details class="std"><summary>Do you match PSA/SGC/BGS/CGC grades?</summary>
+          <p>We publish a transparent, consistent rubric. Our SlabMetrics Score is a <strong>suggested</strong> grade and may not match third-party results.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="standards reveal">
+    <div class="container">
+      <div class="btn-row">
+        <a class="btn" href="/index.html">← Back to All Cards</a>
+        <a class="btn btn-green" href="/index.html#how-it-works">Learn More</a>
+      </div>
+      <p class="fine" style="margin-top:10px;">
+        © SLABMETRICS — These standards are subject to revision as our measurement tools and research improve.
+      </p>
+    </div>
+  </section>
+
+  <!-- Minimal JS: reuse your reveal animation (safe copy) -->
+  <script>
+    (function(){
+      try{
+        const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const reveals = document.querySelectorAll('.reveal');
+        if (!('IntersectionObserver' in window)){
+          reveals.forEach(el => el.classList.add('is-visible'));
+          return;
+        }
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => {
+            if (!e.isIntersecting) return;
+            e.target.classList.add('is-visible');
+          });
+        }, { threshold: 0.2 });
+        reveals.forEach(el => io.observe(el));
+      }catch(e){ console.error('standards reveal', e); }
+    })();
+  </script>
+</body>
+</html>
