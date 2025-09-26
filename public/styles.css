@@ -182,3 +182,11 @@ html[data-theme="dark"] .bar > span{ background:var(--green) }
     margin-left: 4px;
   }
 }
+/* Subtle note under badge */
+.slab-note {
+  font-size: 0.82rem;
+  color: var(--gray-500);
+  text-align: center;
+  margin-top: 6px;
+  max-width: 220px;
+}
