@@ -156,3 +156,29 @@ html[data-theme="dark"] .pop-row .bar{ background:var(--gray-200) }
 html[data-theme="dark"] .gem-ring::before{ background:var(--white) }
 html[data-theme="dark"] .barv-fill{ background:var(--green) }
 html[data-theme="dark"] .bar > span{ background:var(--green) }
+
+/* === Circle + Badge centering + right shift === */
+.hero-actions .grade-side {
+  display: flex;
+  align-items: center;
+  justify-content: center;  /* center pair as a whole */
+  gap: 16px;
+}
+
+.hero-actions .grade-side .overall {
+  flex: 0 0 auto;
+}
+
+.hero-actions .grade-side .slab-badge {
+  flex: 0 0 auto;
+  margin-left: 8px;  /* subtle right shift */
+}
+
+@media (max-width: 600px) {
+  .hero-actions .grade-side {
+    gap: 12px;
+  }
+  .hero-actions .grade-side .slab-badge {
+    margin-left: 4px;
+  }
+}
